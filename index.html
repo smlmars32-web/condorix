@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Condorix - Early Bird Tickets met Korting</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="stylesheet" href="styles.css?v=20260320">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>CONDORIX</h1>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="#" onclick="showSection('ontdek'); return false;">ONTDEK</a></li>
+                        <li><a href="#" onclick="showSection('bezoek'); return false;">BEZOEK</a></li>
+                        <li><a href="#" onclick="showSection('nieuws'); return false;">NIEUWS</a></li>
+                        <li><a href="#" onclick="showSection('over'); return false;">OVER CONDORIX</a></li>
+                        <li><a href="#" onclick="openContactModal(); return false;">CONTACT</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <button onclick="openTicketModal()" class="btn-tickets">BESTEL TICKETS</button>
+                    <button onclick="openAccountModal()" class="btn-account" id="accountButton">Mijn Account</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Parallax Hero Section -->
+    <div class="parallax-hero">
+        <div class="parallax-layer" id="sky"></div>
+        <div class="parallax-layer" id="mountains-back"></div>
+        <div class="parallax-layer" id="mountains-mid"></div>
+        <div class="parallax-layer" id="mountains-front"></div>
+        <div class="parallax-layer" id="trees"></div>
+        
+        <div class="hero-content">
+            <img src="images/logo.png" alt="Condorix Logo" class="hero-logo" id="heroLogo">
+            <h1 class="hero-title" id="heroTitle">CONDORIX</h1>
+            <p class="hero-subtitle" id="heroSubtitle">Ontdek de Magie van de Natuur</p>
+        </div>
+    </div>
+
+    <!-- Cookie Melding -->
+    <div id="cookieBanner" class="cookie-banner">
+        <div class="cookie-content">
+            <h3>Onze site gebruikt cookies</h3>
+            <p>We gebruiken cookies om content en advertenties te personaliseren, om functies voor social media te bieden en om ons websiteverkeer te analyseren.</p>
+            <div class="cookie-buttons">
+                <button onclick="acceptAllCookies()" class="btn-primary">Alle cookies toestaan</button>
+                <button onclick="acceptNecessaryCookies()" class="btn-secondary">Alleen noodzakelijke cookies</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Banner -->
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Introductie -->
+            <section class="intro-section">
+                <h1>CONDORIX TICKETS MET KORTING</h1>
+                <p class="intro-text">Ben jij op zoek naar tickets voor Condorix met korting? De beste korting heb je te pakken met de Early Bird tickets. Reserveer je tickets minimaal 7 dagen van tevoren en ontvang 3 euro korting.</p>
+                <button class="btn-cta" onclick="scrollToBooking()">RESERVEER NU!</button>
+            </section>
+
+            <!-- USP Badges -->
+            <section class="usp-section">
+                <div class="usp-badge">
+                    <div class="badge-icon">🎟️</div>
+                    <h3>Exclusieve Ervaringen</h3>
+                    <p>Alleen bij Condorix</p>
+                </div>
+            </section>
+
+            <!-- Korting Sectie -->
+            <section class="discount-section">
+                <div class="discount-content">
+                    <h2>Met korting naar Condorix</h2>
+                    <p>Een leuk dagje uit met een leuke prijs. Met korting naar Condorix kan gewoon via deze weg! Beslis vroeg en profiteer van korting. Als je 7 dagen van tevoren reserveert, ontvang je 3 euro korting per kaartje.</p>
+                </div>
+                <div class="discount-image">
+                    <img src="images/logo mt.png" alt="Condorix Logo">
+                </div>
+            </section>
+
+            <!-- Waarom Sectie -->
+            <section class="why-section">
+                <h2>Dagje uit met korting</h2>
+                <div class="why-content">
+                    <h3>Waarom wij een dagje uit met korting aanbieden?</h3>
+                    <p>Omdat je ons helpt door van tevoren te reserveren. Hoe beter wij weten hoeveel gasten wij gaan ontvangen, hoe beter wij bijvoorbeeld onze producten kunnen inkopen. En zo zorgen we samen voor minder waste en dus beter voor de natuur!</p>
+                </div>
+            </section>
+
+            <!-- Voorwaarden -->
+            <section class="conditions-section">
+                <h2>Voorwaarden aankoop Early Bird tickets</h2>
+                <div class="conditions-grid">
+                    <div class="condition-card">
+                        <div class="condition-icon">⏰</div>
+                        <p>De Early Bird korting is alleen van toepassing bij aanschaf van de speciale online Early Bird tickets. De korting is niet van toepassing op andere (reeds aangekochte) tickets.</p>
+                    </div>
+                    <div class="condition-card">
+                        <div class="condition-icon">💰</div>
+                        <p>Het Early Bird ticket is niet inwisselbaar tegen contanten en/of andere diensten van Condorix.</p>
+                    </div>
+                    <div class="condition-card">
+                        <div class="condition-icon">📅</div>
+                        <p>De Early Bird korting is alleen van toepassing op reserveringen welke minimaal 7 dagen voor je bezoek gemaakt zijn.</p>
+                    </div>
+                    <div class="condition-card">
+                        <div class="condition-icon">🎫</div>
+                        <p>Het kan voorkomen dat een dag uitverkocht is (OP=OP), dus zorg dat je tijdig jouw reservering plaatst.</p>
+                    </div>
+                    <div class="condition-card">
+                        <div class="condition-icon">🚫</div>
+                        <p>Reeds gekochte Early Bird tickets kunnen niet worden verzet of geannuleerd.</p>
+                    </div>
+                    <div class="condition-card">
+                        <div class="condition-icon">🔄</div>
+                        <p>De Early Bird ticket kan niet worden gecombineerd met andere aanbiedingen of kortingen.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Alternatief -->
+            <section class="alternative-section">
+                <h3>Op korte termijn Condorix bezoeken?</h3>
+                <p>Kun jij geen week wachten en wil je eerder naar Condorix? Reserveer dan een dagticket op de datum naar keuze via de ticketshop.</p>
+                <button class="btn-cta" onclick="openTicketModal()">RESERVEER NU</button>
+            </section>
+
+            <!-- Dieren Sectie -->
+            <section id="ontdek" class="animals-section">
+                <h2>Ontdek Onze Dieren</h2>
+                <p class="section-subtitle">Leer meer over de bijzondere dieren die je bij Condorix kunt ontmoeten</p>
+                
+                <div class="carousel-and-status-wrapper">
+                    <div class="carousel-section">
+                        <div class="carousel-container">
+                    <button class="carousel-btn prev" onclick="changeSlide(-1)">❮</button>
+                    
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides">
+                            <!-- Dier 1: Andes Condor -->
+                            <div class="animal-card active">
+                                <div class="animal-image">
+                                    <img src="images/andes.png" alt="Andes Condor">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Andes Condor ⭐</h3>
+                                    <p class="animal-latin">Vultur gryphus</p>
+                                    <p class="animal-description">De Andes condor is een van 's werelds grootste vliegende vogels met een spanwijdte tot 3,3 meter! Deze majestueuze roofvogel is het symbool van Condorix en kan tot 17.000 voet hoog vliegen in de Andes.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Andes gebergte</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🦴</span>
+                                            <span>Aaseters</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 2: Rode Panda -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/rood.jpg" alt="Rode Panda">
+                                    <span class="status-badge endangered">Bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Rode Panda</h3>
+                                    <p class="animal-latin">Ailurus fulgens</p>
+                                    <p class="animal-description">De rode panda is een klein zoogdier dat voorkomt in de oostelijke Himalaya en zuidwestelijk China. Ze zijn uitstekende klimmers en leven voornamelijk in bomen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Himalaya & China</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🍃</span>
+                                            <span>Bamboe eter</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚡</span>
+                                            <span>Bedreigde soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 3: Bengaalse Tijger -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/tijg.jpg" alt="Bengaalse Tijger">
+                                    <span class="status-badge endangered">Bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Bengaalse Tijger</h3>
+                                    <p class="animal-latin">Panthera tigris tigris</p>
+                                    <p class="animal-description">De Bengaalse tijger is de meest voorkomende tijgersoort. Deze majestueuze roofdieren kunnen tot 3 meter lang worden en wegen tot 250 kg.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>India & Bangladesh</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🥩</span>
+                                            <span>Carnivoor</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚡</span>
+                                            <span>Bedreigde soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 4: Afrikaanse Olifant -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Afrikaanse Olifant">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Afrikaanse Olifant</h3>
+                                    <p class="animal-latin">Loxodonta africana</p>
+                                    <p class="animal-description">De Afrikaanse olifant is het grootste landdier ter wereld. Deze intelligente dieren leven in sociale groepen en kunnen tot 70 jaar oud worden.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Sub-Sahara Afrika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🌿</span>
+                                            <span>Herbivoor</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 5: Poolvos -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/poolvos.jpg" alt="Poolvos">
+                                    <span class="status-badge safe">Veilig</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Poolvos</h3>
+                                    <p class="animal-latin">Vulpes lagopus</p>
+                                    <p class="animal-description">De poolvos is perfect aangepast aan het leven in extreme kou. Hun dikke vacht verandert van kleur met de seizoenen: bruin in de zomer, wit in de winter.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Arctische gebieden</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🦅</span>
+                                            <span>Omnivoor</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Stabiele populatie</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 6: Zeeschildpad -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/karet.jpg" alt="Zeeschildpad">
+                                    <span class="status-badge critical">Kritiek</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Karetschildpad</h3>
+                                    <p class="animal-latin">Eretmochelys imbricata</p>
+                                    <p class="animal-description">Deze prachtige zeeschildpad staat bekend om zijn gekleurde schild. Ze kunnen tot 50 jaar oud worden en zwemmen duizenden kilometers door de oceanen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Tropische oceanen</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🪸</span>
+                                            <span>Koraal & sponsen</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🚨</span>
+                                            <span>Kritiek bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 7: Koala -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1459262838948-3e2de6c1ec80?w=600&h=400&fit=crop" alt="Koala">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Koala</h3>
+                                    <p class="animal-latin">Phascolarctos cinereus</p>
+                                    <p class="animal-description">Koala's zijn iconische buideldieren uit Australië. Ze slapen tot 20 uur per dag en eten alleen eucalyptusbladeren, wat weinig energie geeft.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Oost-Australië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🌿</span>
+                                            <span>Eucalyptus eter</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 8: Amerikaanse Zeearend -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/amerikaanse.jpg" alt="Amerikaanse Zeearend">
+                                    <span class="status-badge safe">Veilig</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Amerikaanse Zeearend</h3>
+                                    <p class="animal-latin">Haliaeetus leucocephalus</p>
+                                    <p class="animal-description">De Amerikaanse zeearend is het nationale symbool van de Verenigde Staten. Deze machtige roofvogel heeft een spanwijdte tot 2,3 meter en jaagt voornamelijk op vis.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Noord-Amerika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🦅</span>
+                                            <span>Spanwijdte 2,3m</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🐟</span>
+                                            <span>Visjager</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 9: Vale Gier -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/vale.jpg" alt="Vale Gier">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Vale Gier</h3>
+                                    <p class="animal-latin">Gyps fulvus</p>
+                                    <p class="animal-description">De vale gier is een imposante grote gier met een spanwijdte tot 2,8 meter. Deze aasetende vogel speelt een belangrijke rol in het ecosysteem door kadavers op te ruimen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuid-Europa & Azië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🦅</span>
+                                            <span>Spanwijdte 2,8m</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 10: Nijlpaard -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/nijlpaard.jpg" alt="Nijlpaard">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Nijlpaard</h3>
+                                    <p class="animal-latin">Hippopotamus amphibius</p>
+                                    <p class="animal-description">Het nijlpaard is een van de grootste landzoogdieren ter wereld. Overdag verblijven ze in het water en 's nachts gaan ze op zoek naar gras om te eten.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Afrika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚖️</span>
+                                            <span>Gewicht tot 3000kg</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 11: Kleinklauw Otter -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/klein.jpg" alt="Kleinklauw Otter">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Kleinklauw Otter</h3>
+                                    <p class="animal-latin">Aonyx cinereus</p>
+                                    <p class="animal-description">De kleinste ottersoort ter wereld, bekend om hun speelse gedrag en handige pootjes waarmee ze voedsel vasthouden en eten.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuidoost-Azië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">📏</span>
+                                            <span>Lengte 45-60cm</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 12: Toekan -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/Toekans-3888442939.jpg" alt="Toekan">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Toekan</h3>
+                                    <p class="animal-latin">Ramphastos toco</p>
+                                    <p class="animal-description">De toekan is bekend om zijn enorme, kleurrijke snavel die tot een derde van de totale lichaamslengte kan zijn. Deze vogel leeft in de tropische regenwouden.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuid-Amerika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🦜</span>
+                                            <span>Snavel tot 20cm</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 13: Pinguïn -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/pinguin.jpg" alt="Pinguïn">
+                                    <span class="status-badge near-threatened">Gevoelig</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Humboldtpinguïn</h3>
+                                    <p class="animal-latin">Spheniscus humboldti</p>
+                                    <p class="animal-description">Deze charmante vogel leeft in kolonies langs de kust van Zuid-Amerika. Pinguïns kunnen niet vliegen maar zijn uitstekende zwemmers.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuid-Amerika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🏊</span>
+                                            <span>Zwemsnelheid 35km/u</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Gevoelige soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 14: Wasbeer -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1497752531616-c3afd9760a11?w=600&h=400&fit=crop" alt="Wasbeer">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Wasbeer</h3>
+                                    <p class="animal-latin">Procyon lotor</p>
+                                    <p class="animal-description">De wasbeer is een intelligent en aanpassingsgericht dier, bekend om hun "wasgedrag" waarbij ze hun voedsel in water dompelen voor het eten.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Noord-Amerika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🧠</span>
+                                            <span>Zeer intelligent</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 15: Leeuw -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=600&h=400&fit=crop" alt="Leeuw">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Leeuw</h3>
+                                    <p class="animal-latin">Panthera leo</p>
+                                    <p class="animal-description">De koning der dieren is het enige katachtige dat in groepen leeft. Leeuwen worden gekenmerkt door de indrukwekkende manen van de mannetjes.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Afrika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">👑</span>
+                                            <span>Koning der dieren</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 16: Japanse Makaak -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=600&h=400&fit=crop" alt="Japanse Makaak">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Japanse Makaak</h3>
+                                    <p class="animal-latin">Macaca fuscata</p>
+                                    <p class="animal-description">Ook wel sneeuwapen genoemd, deze primaat leeft verder noordelijk dan welke andere aap dan ook. Ze staan bekend om hun ontspannende baden in warme bronnen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Japan</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">♨️</span>
+                                            <span>Baden in warmwaterbronnen</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 17: Ringstaartmaki -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/ringstaartmaki.jpg" alt="Ringstaartmaki">
+                                    <span class="status-badge endangered">Bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Ringstaartmaki</h3>
+                                    <p class="animal-latin">Lemur catta</p>
+                                    <p class="animal-description">De ringstaartmaki is herkenbaar aan zijn opvallende zwart-wit gestreepte staart. Deze sociale primaat leeft in groepen en is alleen te vinden op Madagaskar.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Madagaskar</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">👥</span>
+                                            <span>Leeft in groepen</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Bedreigde soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 18: Goudleeuw Aapje -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/goud.jpg" alt="Goudleeuw Aapje">
+                                    <span class="status-badge endangered">Bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Goudleeuw Aapje</h3>
+                                    <p class="animal-latin">Leontopithecus rosalia</p>
+                                    <p class="animal-description">Dit kleine aapje heeft een prachtige goudkleurige vacht die lijkt op een leeuwenmanen. Ze leven in de bedreigde Atlantische regenwouden van Brazilië.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Brazilië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">👶</span>
+                                            <span>Lengte 20-25cm</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Bedreigde soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 19: Chileense Flamingo -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/flamingo.jpg" alt="Chileense Flamingo">
+                                    <span class="status-badge near-threatened">Gevoelig</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Chileense Flamingo</h3>
+                                    <p class="animal-latin">Phoenicopterus chilensis</p>
+                                    <p class="animal-description">Deze elegante vogel met roze veren leeft in grote groepen bij zoutmeren. Hun kleur komt van de garnalen en algen die ze eten.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuid-Amerika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🦩</span>
+                                            <span>Hoogte tot 130cm</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Gevoelige soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 20: Rode Ibis -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/ibis.jpg" alt="Rode Ibis">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Rode Ibis</h3>
+                                    <p class="animal-latin">Eudocimus ruber</p>
+                                    <p class="animal-description">Deze spectaculaire vogel heeft felrode veren dankzij de garnalen in hun dieet. Ze nestelen in grote kolonies in mangrovebossen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuid-Amerika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🔴</span>
+                                            <span>Felrode kleur</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 21: Chimpansee -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/chi.jpg" alt="Chimpansee">
+                                    <span class="status-badge endangered">Bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Chimpansee</h3>
+                                    <p class="animal-latin">Pan troglodytes</p>
+                                    <p class="animal-description">Chimpansees zijn onze naaste levende verwanten en delen 98% van ons DNA. Ze zijn zeer intelligent, kunnen gereedschap gebruiken en hebben complexe sociale structuren.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Midden-Afrika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🧠</span>
+                                            <span>Zeer intelligent</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Bedreigde soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 22: Zeehond -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/zeehond.jpg" alt="Zeehond">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Zeehond</h3>
+                                    <p class="animal-latin">Phoca vitulina</p>
+                                    <p class="animal-description">De gewone zeehond is een behendig zwemmer die in kustwateren leeft. Ze kunnen tot 30 minuten duiken en eten vis, schaaldieren en inktvissen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Noord-Atlantische kust</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🏊</span>
+                                            <span>Duikt tot 200m diep</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 23: Stokstaartjes -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/stok.jpg" alt="Stokstaartjes">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Stokstaartje</h3>
+                                    <p class="animal-latin">Suricata suricatta</p>
+                                    <p class="animal-description">Deze sociale dieren leven in groepen tot 30 individuen. Bekend om hun kenmerkende rechtopstaande houding waarbij ze de omgeving in de gaten houden.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuid-Afrika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">👥</span>
+                                            <span>Leeft in grote groepen</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 24: Roze Pelikaan -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/roze.jpg" alt="Roze Pelikaan">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Roze Pelikaan</h3>
+                                    <p class="animal-latin">Pelecanus onocrotalus</p>
+                                    <p class="animal-description">Een grote watervogel met een kenmerkende keelzak. Ze vissen vaak samen in groepen en kunnen tot 10 liter water in hun keelzak dragen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Afrika & Europa</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🦅</span>
+                                            <span>Spanwijdte 3 meter</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 25: Blauwgele Ara -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/ara.jpg" alt="Blauwgele Ara">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Blauwgele Ara</h3>
+                                    <p class="animal-latin">Ara ararauna</p>
+                                    <p class="animal-description">Een grote, kleurrijke papegaai met prachtig blauw en geel gevederte. Ze kunnen tot 60 jaar oud worden en zijn bekend om hun luide kreten.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuid-Amerika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🎨</span>
+                                            <span>Kleurrijk gevederte</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 26: Grasparkiet -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/gras.jpg" alt="Grasparkiet">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Grasparkiet</h3>
+                                    <p class="animal-latin">Melopsittacus undulatus</p>
+                                    <p class="animal-description">Deze kleine, gezellige papegaai is een populair huisdier. In het wild leven ze in grote zwermen in Australië.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Australië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">📏</span>
+                                            <span>Lengte 18cm</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 27: Valkparkiet -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/valk.jpg" alt="Valkparkiet">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Valkparkiet</h3>
+                                    <p class="animal-latin">Nymphicus hollandicus</p>
+                                    <p class="animal-description">Herkenbaar aan hun opvallende kuif en oranje wangvlekken. Deze vogels zijn sociale dieren die in kleine groepen leven.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Australië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🎵</span>
+                                            <span>Melodieuze fluiter</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 28: Bruine Beer -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/beer.jpg" alt="Bruine Beer">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Bruine Beer</h3>
+                                    <p class="animal-latin">Ursus arctos</p>
+                                    <p class="animal-description">Een krachtig roofdier dat over het noordelijk halfrond verspreid leeft. Ze zijn alleseters en kunnen tot 350 kg wegen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Europa, Azië, N-Amerika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚖️</span>
+                                            <span>Gewicht tot 350kg</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 29: Goudfazant -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/fazant.jpg" alt="Goudfazant">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Goudfazant</h3>
+                                    <p class="animal-latin">Chrysolophus pictus</p>
+                                    <p class="animal-description">Een prachtig gekleurde vogel waarbij het mannetje opvalt door zijn gouden kuif en rode borst. Oorspronkelijk uit China.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>China</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🎨</span>
+                                            <span>Kleurrijk mannetje</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 30: Javaanse Neushoorn -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/neus.jpg" alt="Javaanse Neushoorn">
+                                    <span class="status-badge critically-endangered">Kritiek bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Javaanse Neushoorn</h3>
+                                    <p class="animal-latin">Rhinoceros sondaicus</p>
+                                    <p class="animal-description">Een van de zeldzaamste grote zoogdieren ter wereld met slechts enkele tientallen exemplaren in het wild. Ze hebben één hoorn en een gevouwen huid.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Java, Indonesië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🦏</span>
+                                            <span>Gewicht 900-2300kg</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🚨</span>
+                                            <span>Kritiek bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 31: Berggorilla -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/berg.jpg" alt="Berggorilla">
+                                    <span class="status-badge endangered">Bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Berggorilla</h3>
+                                    <p class="animal-latin">Gorilla beringei beringei</p>
+                                    <p class="animal-description">De grootste nog levende primaat, die slechts in de bergwouden van Centraal-Afrika voorkomt. Ze leven in families geleid door een zilverrug.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Centraal-Afrika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚖️</span>
+                                            <span>Gewicht tot 200kg</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Bedreigde soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 32: Schubdier -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/schubdier.jpg" alt="Schubdier">
+                                    <span class="status-badge critically-endangered">Kritiek bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Schubdier</h3>
+                                    <p class="animal-latin">Manis</p>
+                                    <p class="animal-description">Het meest illegaal verhandelde zoogdier ter wereld. Bedekt met keratineschubben en rolt zich op tot een bal bij gevaar.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Azië & Afrika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🛡️</span>
+                                            <span>Schubben als pantser</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🚨</span>
+                                            <span>Kritiek bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 33: Zebra -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/zebra.jpg" alt="Zebra">
+                                    <span class="status-badge near-threatened">Gevoelig</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Zebra</h3>
+                                    <p class="animal-latin">Equus quagga</p>
+                                    <p class="animal-description">Bekend om hun unieke zwart-witte strepenpatroon. Elke zebra heeft een uniek strepenpatroon, net als een vingerafdruk.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Afrika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🎨</span>
+                                            <span>Uniek strepenpatroon</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Gevoelige soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 34: Giraf -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/giraf.jpg" alt="Giraf">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Giraf</h3>
+                                    <p class="animal-latin">Giraffa camelopardalis</p>
+                                    <p class="animal-description">Het langste landdier ter wereld met een nek van 2 meter lang. Ze kunnen bladeren eten die voor andere dieren onbereikbaar zijn.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Afrika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">📏</span>
+                                            <span>Hoogte tot 5,5 meter</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 35: Antilope -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/an.jpg" alt="Antilope">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Springbok Antilope</h3>
+                                    <p class="animal-latin">Antidorcas marsupialis</p>
+                                    <p class="animal-description">Deze snelle loper kan sprongen maken tot 4 meter hoog. Ze leven in kuddes op de Afrikaanse savanne.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuid-Afrika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🏃</span>
+                                            <span>Snelheid 88 km/u</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 36: Kangoeroe -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/kangoeroe.jpg" alt="Kangoeroe">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Rode Kangoeroe</h3>
+                                    <p class="animal-latin">Macropus rufus</p>
+                                    <p class="animal-description">Het grootste buideldier ter wereld. Ze kunnen met één sprong 9 meter ver en 3 meter hoog springen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Australië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🦘</span>
+                                            <span>Springt tot 9 meter</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 37: Axolotl -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="images/ax.jpg" alt="Axolotl">
+                                    <span class="status-badge critically-endangered">Kritiek bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Axolotl</h3>
+                                    <p class="animal-latin">Ambystoma mexicanum</p>
+                                    <p class="animal-description">Een unieke salamander die zijn hele leven in larvenstadium blijft. Ze kunnen verloren lichaamsdelen regenereren, inclusief delen van het brein.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Mexico</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🔄</span>
+                                            <span>Kan regenereren</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🚨</span>
+                                            <span>Kritiek bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 38: IJsbeer -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600&h=400&fit=crop" alt="IJsbeer">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>IJsbeer</h3>
+                                    <p class="animal-latin">Ursus maritimus</p>
+                                    <p class="animal-description">Het grootste landroofdier ter wereld. IJsberen zijn afhankelijk van zee-ijs om te jagen op zeehonden en worden bedreigd door klimaatverandering.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Arctisch gebied</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚖️</span>
+                                            <span>Gewicht tot 800kg</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 39: Jaarvogel -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&h=400&fit=crop" alt="Jaarvogel">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Jaarvogel</h3>
+                                    <p class="animal-latin">Oriolus oriolus</p>
+                                    <p class="animal-description">Een trekvogel met opvallend gele en zwarte veren bij het mannetje. Ze bouwen hangend bekervorming nesten in bomen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Europa & Azië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🎵</span>
+                                            <span>Fluitende zang</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 40: Tijger -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1551969014-7d2c4cddf0b6?w=600&h=400&fit=crop" alt="Tijger">
+                                    <span class="status-badge endangered">Bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Tijger</h3>
+                                    <p class="animal-latin">Panthera tigris</p>
+                                    <p class="animal-description">De grootste katachtige ter wereld. Hun kenmerkende strepenpatroon is uniek voor elk individu en dient als camouflage tijdens het jagen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Azië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚖️</span>
+                                            <span>Gewicht tot 300kg</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Bedreigde soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 41: Okapi -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Okapi">
+                                    <span class="status-badge endangered">Bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Okapi</h3>
+                                    <p class="animal-latin">Okapia johnstoni</p>
+                                    <p class="animal-description">Lijkt op een kruising tussen zebra en giraf, maar is nauw verwant aan de giraf. Leeft alleen in de regenwouden van Congo.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Congo</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">👅</span>
+                                            <span>Tong van 45cm</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Bedreigde soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 42: Leguaan -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Leguaan">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Groene Leguaan</h3>
+                                    <p class="animal-latin">Iguana iguana</p>
+                                    <p class="animal-description">Een grote hagedis die uitstekend kan klimmen en zwemmen. Ze zijn herbivoor en kunnen tot 2 meter lang worden.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Midden & Zuid-Amerika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">📏</span>
+                                            <span>Lengte tot 2 meter</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 43: Vlinder -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop" alt="Vlinder">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Monarchvlinder</h3>
+                                    <p class="animal-latin">Danaus plexippus</p>
+                                    <p class="animal-description">Bekend om hun spectaculaire jaarlijkse migratie van duizenden kilometers. Hun oranje en zwarte kleuren waarschuwen roofdieren dat ze giftig zijn.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Noord-Amerika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✈️</span>
+                                            <span>Migreert 4000km</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 44: Violet Bidsprinkhaan -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Violet Bidsprinkhaan">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Violet Bidsprinkhaan</h3>
+                                    <p class="animal-latin">Empusa fasciata</p>
+                                    <p class="animal-description">Een prachtig insect met opvallende paarse kleuren. Ze hebben een karakteristieke bidhouding en jagen op andere insecten.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuid-Europa</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🎨</span>
+                                            <span>Violet gekleurd</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 45: Landschildpad -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=600&h=400&fit=crop" alt="Landschildpad">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Reuzenschildpad</h3>
+                                    <p class="animal-latin">Aldabrachelys gigantea</p>
+                                    <p class="animal-description">Een van de langstlevende dieren ter wereld, ze kunnen meer dan 100 jaar oud worden. Deze enorme schildpadden kunnen tot 250 kg wegen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Seychellen</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚖️</span>
+                                            <span>Gewicht tot 250kg</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 46: Capibara -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Capibara">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Capibara</h3>
+                                    <p class="animal-latin">Hydrochoerus hydrochaeris</p>
+                                    <p class="animal-description">Het grootste knaagdier ter wereld. Deze sociale dieren leven in groepen nabij water en zijn uitstekende zwemmers.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuid-Amerika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚖️</span>
+                                            <span>Gewicht tot 66kg</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 47: Wrattenzwijn -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Wrattenzwijn">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Wrattenzwijn</h3>
+                                    <p class="animal-latin">Phacochoerus africanus</p>
+                                    <p class="animal-description">Herkenbaar aan de grote wratachtige uitsteeksels op hun kop. Bij gevaar rennen ze weg met hun staart rechtop als een antenne.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Afrika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🏃</span>
+                                            <span>Snelheid 48 km/u</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 48: Vleerhond -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Vleerhond">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Vleerhond</h3>
+                                    <p class="animal-latin">Pteropus</p>
+                                    <p class="animal-description">Grote vleermuizen met een vosachtig gezicht. Ze eten voornamelijk fruit en spelen een belangrijke rol bij de bestuiving en zaadverspreiding.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuidoost-Azië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🦇</span>
+                                            <span>Spanwijdte 1,5 meter</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 49: Tapir -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Tapir">
+                                    <span class="status-badge endangered">Bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Tapir</h3>
+                                    <p class="animal-latin">Tapirus terrestris</p>
+                                    <p class="animal-description">Een prehistorisch uitziend dier met een grijpbare slurf. Ze zijn nauw verwant aan paarden en neushoorns en spelen een belangrijke rol in het verspreiden van zaden.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuid-Amerika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚖️</span>
+                                            <span>Gewicht tot 300kg</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Bedreigde soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 50: Uil -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&h=400&fit=crop" alt="Uil">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Kerkuil</h3>
+                                    <p class="animal-latin">Tyto alba</p>
+                                    <p class="animal-description">Een nachtelijke roofvogel met uitzonderlijk gehoor. Hun hartvormige gezichtsschijf helpt geluid naar hun oren te leiden.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Wereldwijd</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">👂</span>
+                                            <span>Extreem goed gehoor</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 51: Aal -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Aal">
+                                    <span class="status-badge critically-endangered">Kritiek bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Europese Aal</h3>
+                                    <p class="animal-latin">Anguilla anguilla</p>
+                                    <p class="animal-description">Deze vis maakt een ongelooflijke migratie van Europa naar de Sargassozee om te paaien. Hun populatie is dramatisch gedaald.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Europa & Atlantische Oceaan</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✈️</span>
+                                            <span>Migreert 5000km</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🚨</span>
+                                            <span>Kritiek bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 52: Kwal -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop" alt="Kwal">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Kompasskwal</h3>
+                                    <p class="animal-latin">Chrysaora hysoscella</p>
+                                    <p class="animal-description">Een prachtige kwal met 24 tentakels en een kompasachtig patroon op de koepel. Ze zweven door de oceaan en vangen plankton.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Europese kustwateren</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">📏</span>
+                                            <span>Diameter tot 30cm</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 53: Kogelvis -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Kogelvis">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Kogelvis</h3>
+                                    <p class="animal-latin">Tetraodontidae</p>
+                                    <p class="animal-description">Kan zich opblazen tot een bal wanneer bedreigd. De meeste soorten bevatten een dodelijk gif genaamd tetrodotoxine.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Tropische zeeën</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">💀</span>
+                                            <span>Zeer giftig</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 54: Bergduivel -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Bergduivel">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Bergduivel</h3>
+                                    <p class="animal-latin">Sebastes norvegicus</p>
+                                    <p class="animal-description">Een diepe zee vis met opvallende rode kleur. Ze kunnen zeer oud worden, sommige exemplaren leven meer dan 100 jaar.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Noordelijke Oceanen</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⏳</span>
+                                            <span>Leeft tot 100+ jaar</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 55: Vogelbekdier -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Vogelbekdier">
+                                    <span class="status-badge near-threatened">Gevoelig</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Vogelbekdier</h3>
+                                    <p class="animal-latin">Ornithorhynchus anatinus</p>
+                                    <p class="animal-description">Een van de weinige giftige zoogdieren en een van de enige zoogdieren die eieren leggen. Dit unieke dier heeft een eendenbek en bevervacht.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Australië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🥚</span>
+                                            <span>Eierleggend zoogdier</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Gevoelige soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 56: Blauwe Zeedraak -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop" alt="Blauwe Zeedraak">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Blauwe Zeedraak</h3>
+                                    <p class="animal-latin">Glaucus atlanticus</p>
+                                    <p class="animal-description">Een kleine maar spectaculaire zeenaaktslak met elektrisch blauwe en zilveren kleuren. Ze drijven ondersteboven op het wateroppervlak.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Tropische oceanen</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">📏</span>
+                                            <span>Lengte 3cm</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 57: Rafelvis -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Rafelvis">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Rafelvis</h3>
+                                    <p class="animal-latin">Pterois</p>
+                                    <p class="animal-description">Een prachtige maar giftige vis met lange straalvormige vinnen. Hun steek is zeer pijnlijk en kan gevaarlijk zijn voor mensen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Indo-Pacific</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">💉</span>
+                                            <span>Giftige stekels</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 58: Tasmaanse Duivel -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Tasmaanse Duivel">
+                                    <span class="status-badge endangered">Bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Tasmaanse Duivel</h3>
+                                    <p class="animal-latin">Sarcophilus harrisii</p>
+                                    <p class="animal-description">Het grootste roofzuchtige buideldier ter wereld. Bekend om hun luide, angstaanjagende geluid en krachtige kaken.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Tasmanië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">💪</span>
+                                            <span>Krachtige kaken</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Bedreigde soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 59: Wombat -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Wombat">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Wombat</h3>
+                                    <p class="animal-latin">Vombatus ursinus</p>
+                                    <p class="animal-description">Een graafbuideldier met korte poten en een gedrongen lichaam. Ze produceren kubusvormige uitwerpselen en zijn expert tunnelgravers.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Australië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🕳️</span>
+                                            <span>Graaft grote tunnels</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 60: Kraanvogel -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&h=400&fit=crop" alt="Kraanvogel">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Kraanvogel</h3>
+                                    <p class="animal-latin">Grus grus</p>
+                                    <p class="animal-description">Een grote trekvogel bekend om hun spectaculaire baltsrituelen met sprongen en buigingen. Ze maken lange migratietrekken.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Europa & Azië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">💃</span>
+                                            <span>Spectaculaire baltsdans</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 61: Helmkasuaris -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&h=400&fit=crop" alt="Helmkasuaris">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Helmkasuaris</h3>
+                                    <p class="animal-latin">Casuarius casuarius</p>
+                                    <p class="animal-description">Een grote, niet vliegende vogel met een kenmerkende helm op het hoofd. Ze kunnen gevaarlijk zijn vanwege hun scherpe klauwen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Nieuw-Guinea & Australië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚔️</span>
+                                            <span>Scherpe klauwen</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 62: Zeekoe -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Zeekoe">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Zeekoe</h3>
+                                    <p class="animal-latin">Trichechus manatus</p>
+                                    <p class="animal-description">Een groot, vredig zeezoogdier dat zich voedt met waterplanten. Ze zwemmen langzaam en kunnen tot 600 kg wegen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Caribisch gebied</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚖️</span>
+                                            <span>Gewicht tot 600kg</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 63: Vleermuisoorvos -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Vleermuisoorvos">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Vleermuisoorvos</h3>
+                                    <p class="animal-latin">Otocyon megalotis</p>
+                                    <p class="animal-description">Een kleine vos met enorme oren die tot 14 cm lang kunnen worden. Deze oren helpen bij het reguleren van lichaamstemperatuur en het lokaliseren van prooien.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Zuid-Afrika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">👂</span>
+                                            <span>Oren van 14cm</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 64: Fennek -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Fennek">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Fennek</h3>
+                                    <p class="animal-latin">Vulpes zerda</p>
+                                    <p class="animal-description">De kleinste vossensoort ter wereld, met opvallend grote oren. Ze zijn perfect aangepast aan het leven in de woestijn.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Noord-Afrika</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">📏</span>
+                                            <span>Lengte 24-41cm</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 65: Gestreepte Tenrek -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Gestreepte Tenrek">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Gestreepte Tenrek</h3>
+                                    <p class="animal-latin">Hemicentetes semispinosus</p>
+                                    <p class="animal-description">Een klein insectivoor uit Madagaskar bedekt met stekels. Ze communiceren door met hun stekels te trillen, wat een geluid produceert.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Madagaskar</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🎵</span>
+                                            <span>Communiceert met stekels</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 66: Fossa -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Fossa">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Fossa</h3>
+                                    <p class="animal-latin">Cryptoprocta ferox</p>
+                                    <p class="animal-description">Het grootste roofdier van Madagaskar, vaak vergeleken met een kat maar nauwer verwant aan mangoesten. Uitstekende klimmers die lemuren jagen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Madagaskar</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🐆</span>
+                                            <span>Top predator</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 67: Bladstaartgekko -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Bladstaartgekko">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Bladstaartgekko</h3>
+                                    <p class="animal-latin">Uroplatus</p>
+                                    <p class="animal-description">Een meester in camouflage die eruitziet als boomschors. Hun platte lichaam en gefranste huid helpen ze perfect op te gaan in hun omgeving.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Madagaskar</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🦎</span>
+                                            <span>Perfect gecamoufleerd</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 68: Malagassische Girafkever -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Malagassische Girafkever">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Malagassische Girafkever</h3>
+                                    <p class="animal-latin">Trachelophorus giraffa</p>
+                                    <p class="animal-description">Een opvallende kever waarbij het mannetje een extreem lange nek heeft die tot 2/3 van zijn lichaam kan zijn. Deze nek wordt gebruikt bij gevechten.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Madagaskar</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">📏</span>
+                                            <span>Lange nek</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 69: Vingerdier -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Vingerdier">
+                                    <span class="status-badge endangered">Bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Vingerdier (Aye-aye)</h3>
+                                    <p class="animal-latin">Daubentonia madagascariensis</p>
+                                    <p class="animal-description">Een nachtelijke primaat met een verlengde middelvinger waarmee ze op hout tikken om insecten te lokaliseren. Ze hebben enorme ogen en oren.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Madagaskar</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">👆</span>
+                                            <span>Unieke lange vinger</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Bedreigde soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 70: Wolf -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=600&h=400&fit=crop" alt="Wolf">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Wolf</h3>
+                                    <p class="animal-latin">Canis lupus</p>
+                                    <p class="animal-description">De voorouder van de hond. Wolven leven in roedels met een complexe sociale structuur en jagen samen op grote prooien.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Noord-Amerika & Eurazië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">👥</span>
+                                            <span>Leeft in roedels</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 71: Papegaaiduiker -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1444464666168-49d633b86797?w=600&h=400&fit=crop" alt="Papegaaiduiker">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Papegaaiduiker</h3>
+                                    <p class="animal-latin">Fratercula arctica</p>
+                                    <p class="animal-description">Een charmante zeevogel met een kleurrijke snavel. Ze zijn uitstekende zwemmers en kunnen tot 60 meter diep duiken om vis te vangen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Noordelijke Atlantische Oceaan</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🏊</span>
+                                            <span>Duikt tot 60m</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 72: Jerboa -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Jerboa">
+                                    <span class="status-badge least-concern">Niet bedreigd</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Jerboa</h3>
+                                    <p class="animal-latin">Jaculus jaculus</p>
+                                    <p class="animal-description">Een klein woestijnknaagdier met extreem lange achterpoten waarmee ze kunnen springen als een kangoeroe. Ze kunnen tot 3 meter ver springen.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Noord-Afrika & Azië</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">🦘</span>
+                                            <span>Springt tot 3 meter</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">✅</span>
+                                            <span>Niet bedreigd</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Dier 73: Reuzenmanta -->
+                            <div class="animal-card">
+                                <div class="animal-image">
+                                    <img src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=600&h=400&fit=crop" alt="Reuzenmanta">
+                                    <span class="status-badge vulnerable">Kwetsbaar</span>
+                                </div>
+                                <div class="animal-info">
+                                    <h3>Reuzenmanta</h3>
+                                    <p class="animal-latin">Mobula birostris</p>
+                                    <p class="animal-description">De grootste rog ter wereld met een spanwijdte tot 7 meter. Deze majestueuze vissen zijn filtervoeders en zijn zeer intelligent.</p>
+                                    <div class="animal-facts">
+                                        <div class="fact">
+                                            <span class="fact-icon">🌍</span>
+                                            <span>Tropische oceanen wereldwijd</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">📏</span>
+                                            <span>Spanwijdte tot 7 meter</span>
+                                        </div>
+                                        <div class="fact">
+                                            <span class="fact-icon">⚠️</span>
+                                            <span>Kwetsbare soort</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="carousel-btn next" onclick="changeSlide(1)">❯</button>
+                        </div>
+                        
+                        <div class="carousel-dots" id="carouselDots"></div>
+                    </div>
+                
+                    <div class="conservation-status-list">
+                        <h3>Beschermingsstatus</h3>
+                        <p class="status-intro">Van veilig naar levens bedreigd</p>
+                        <ul>
+                            <li class="status-item status-safe">
+                                <span class="status-indicator"></span>
+                                <span class="status-name">Veilig</span>
+                            </li>
+                            <li class="status-item status-not-threatened">
+                                <span class="status-indicator"></span>
+                                <span class="status-name">Niet bedreigd</span>
+                            </li>
+                            <li class="status-item status-vulnerable">
+                                <span class="status-indicator"></span>
+                                <span class="status-name">Kwetsbaar</span>
+                            </li>
+                            <li class="status-item status-endangered">
+                                <span class="status-indicator"></span>
+                                <span class="status-name">Bedreigd</span>
+                            </li>
+                            <li class="status-item status-critical">
+                                <span class="status-indicator"></span>
+                                <span class="status-name">Kritiek</span>
+                            </li>
+                        </ul>
+                        <div class="status-note">
+                            <p>🌱 Condorix steunt actief beschermingsprogramma's voor alle bedreigde dieren</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="conservation-info">
+                    <h3>🌱 Onze Bijdrage aan Natuurbescherming</h3>
+                    <p>Condorix draagt actief bij aan internationale beschermingsprogramma's voor bedreigde diersoorten. Met elk bezoek steun je deze belangrijke projecten!</p>
+                    <button class="btn-secondary" onclick="openConservationModal()">Lees Meer</button>
+                </div>
+            </section>
+            
+            <!-- Quick Links -->
+            <section class="quick-links">
+                <div class="quick-link-card" onclick="openTicketModal()">
+                    <h3>🎟️</h3>
+                    <p>Tickets Bestellen</p>
+                </div>
+                <div class="quick-link-card" onclick="openReservationModal()">
+                    <h3>📅</h3>
+                    <p>Reservering Maken</p>
+                </div>
+                <div class="quick-link-card" onclick="showSection('ontdek')">
+                    <h3>🔍</h3>
+                    <p>Ontdekken</p>
+                </div>
+                <div class="quick-link-card" onclick="openFAQModal()">
+                    <h3>❓</h3>
+                    <p>Veelgestelde Vragen</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Volg Condorix</h3>
+                    <div class="social-links">
+                        <a href="https://facebook.com" target="_blank" aria-label="Facebook">📘</a>
+                        <a href="https://instagram.com" target="_blank" aria-label="Instagram">📷</a>
+                        <a href="https://youtube.com" target="_blank" aria-label="YouTube">📹</a>
+                        <a href="#" onclick="openNewsletterModal(); return false;" aria-label="Nieuwsbrief">📧</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Ontdek</h4>
+                    <ul>
+                        <li><a href="#" onclick="showSection('ontdek'); return false;">Attracties</a></li>
+                        <li><a href="#" onclick="showSection('ontdek'); return false;">Evenementen</a></li>
+                        <li><a href="#" onclick="openMapModal(); return false;">Plattegrond</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Bezoek</h4>
+                    <ul>
+                        <li><a href="#" onclick="openInfoModal('openingstijden'); return false;">Openingstijden</a></li>
+                        <li><a href="#" onclick="openTicketModal(); return false;">Toegangsprijzen</a></li>
+                        <li><a href="#" onclick="openInfoModal('parkeren'); return false;">Parkeren</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Service</h4>
+                    <ul>
+                        <li><a href="#" onclick="openContactModal(); return false;">Contact</a></li>
+                        <li><a href="#" onclick="openFAQModal(); return false;">Veelgestelde Vragen</a></li>
+                        <li><a href="#" onclick="openInfoModal('privacy'); return false;">Privacybeleid</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Copyright 2026 ® Condorix</p>
+                <div class="footer-ratings">
+                    <span>TripAdvisor ⭐ 4.5/5</span>
+                    <span>Google ⭐ 4.4/5</span>
+                    <span>Facebook ⭐ 4.3/5</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="modalOverlay" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="script.js?v=20260320"></script>
+</body>
+</html>
