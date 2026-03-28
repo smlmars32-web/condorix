@@ -847,12 +847,16 @@ document.addEventListener('keydown', (e) => {
 
 // Carousel Functionality
 let currentSlide = 0;
-const totalSlides = 73; // Aantal dieren
+
+function getTotalSlides() {
+    return document.querySelectorAll('.animal-card').length;
+}
 
 function initializeCarousel() {
     // Maak dots aan
     const dotsContainer = document.getElementById('carouselDots');
-    for (let i = 0; i < totalSlides; i++) {
+    const total = getTotalSlides();
+    for (let i = 0; i < total; i++) {
         const dot = document.createElement('span');
         dot.className = 'dot';
         if (i === 0) dot.classList.add('active');
@@ -864,7 +868,8 @@ function initializeCarousel() {
 function changeSlide(direction) {
     const slides = document.querySelectorAll('.animal-card');
     const dots = document.querySelectorAll('.dot');
-    
+    const totalSlides = slides.length;
+
     // Verwijder active class van huidige slide
     slides[currentSlide].classList.remove('active');
     dots[currentSlide].classList.remove('active');
