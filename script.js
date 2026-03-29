@@ -777,15 +777,12 @@ function showSection(section) {
             // Sluit modal als deze open is
             closeModal();
         }
-    } else if (section === 'bezoek') {
+    } else if (section === 'kaart') {
         const content = `
-            <h2>BEZOEK</h2>
-            <div class="info-box" style="background: linear-gradient(135deg, rgba(212, 160, 23, 0.1), rgba(79, 125, 74, 0.1)); padding: 40px; border-radius: 8px; text-align: center;">
-                <p style="font-size: 1.5rem; line-height: 1.8; color: var(--primary-color); font-weight: 600;">
-                    De dierentuin is nog in aanbouw, sorry
-                </p>
+            <h2>🗺️ Plattegrond</h2>
+            <div style="text-align: center; margin: 20px 0;">
+                <img src="images/plattegrond.jpg" alt="Plattegrond Condorix" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
             </div>
-            
             <button class="btn-cta" onclick="closeModal()">Sluiten</button>
         `;
         openModal(content);
