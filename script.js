@@ -185,6 +185,8 @@ function scrollToBooking() {
 function openModal(content) {
     const modalBody = document.getElementById('modalBody');
     const modalOverlay = document.getElementById('modalOverlay');
+    const modalContent = document.querySelector('.modal-content');
+    if (modalContent) modalContent.style.maxWidth = '';
     modalBody.innerHTML = content;
     modalOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -780,30 +782,33 @@ function showSection(section) {
     } else if (section === 'kaart') {
         const content = `
             <h2>🗺️ Plattegrond</h2>
-            <div style="display: flex; gap: 30px; align-items: flex-start; flex-wrap: wrap; margin: 20px 0;">
-                <div style="flex: 1 1 400px;">
-                    <img src="images/plattegrond.png" alt="Plattegrond Condorix" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
+            <div style="display: flex; gap: 24px; align-items: flex-start; flex-wrap: nowrap; margin: 20px 0;">
+                <div style="flex: 1 1 0; min-width: 0;">
+                    <img src="images/plattegrond.png" alt="Plattegrond Condorix" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); display: block;">
                 </div>
-                <div style="flex: 0 0 220px;">
-                    <div class="info-box" style="margin: 0;">
-                        <h3 style="margin-bottom: 16px;">Legenda</h3>
-                        <p>🦁 <strong>Dierenverblijven</strong></p>
-                        <p>🍽️ <strong>Restaurant / Kiosk</strong></p>
-                        <p>🚻 <strong>Toiletten</strong></p>
-                        <p>👶 <strong>Babyverzorging</strong></p>
-                        <p>🚑 <strong>EHBO post</strong></p>
-                        <p>🅿️ <strong>Parkeerplaats</strong></p>
-                        <p>♿ <strong>Mindervaliden</strong></p>
-                        <p>🚲 <strong>Fietsenstalling</strong></p>
-                        <p>🛒 <strong>Souvenirwinkel</strong></p>
-                        <p>🌳 <strong>Picknickplaats</strong></p>
-                        <p>ℹ️ <strong>Informatiepunt</strong></p>
-                        <p>🚪 <strong>Ingang / Uitgang</strong></p>
+                <div style="flex: 0 0 200px; min-width: 180px;">
+                    <div class="info-box" style="margin: 0; padding: 20px;">
+                        <h3 style="margin-bottom: 14px; font-size: 1rem;">Legenda</h3>
+                        <p style="margin-bottom: 8px;">🦁 <strong>Dierenverblijven</strong></p>
+                        <p style="margin-bottom: 8px;">🍽️ <strong>Restaurant / Kiosk</strong></p>
+                        <p style="margin-bottom: 8px;">🚻 <strong>Toiletten</strong></p>
+                        <p style="margin-bottom: 8px;">👶 <strong>Babyverzorging</strong></p>
+                        <p style="margin-bottom: 8px;">🚑 <strong>EHBO post</strong></p>
+                        <p style="margin-bottom: 8px;">🅿️ <strong>Parkeerplaats</strong></p>
+                        <p style="margin-bottom: 8px;">♿ <strong>Mindervaliden</strong></p>
+                        <p style="margin-bottom: 8px;">🚲 <strong>Fietsenstalling</strong></p>
+                        <p style="margin-bottom: 8px;">🛒 <strong>Souvenirwinkel</strong></p>
+                        <p style="margin-bottom: 8px;">🌳 <strong>Picknickplaats</strong></p>
+                        <p style="margin-bottom: 8px;">ℹ️ <strong>Informatiepunt</strong></p>
+                        <p style="margin-bottom: 0;">🚪 <strong>Ingang / Uitgang</strong></p>
                     </div>
                 </div>
             </div>
             <button class="btn-cta" onclick="closeModal()">Sluiten</button>
         `;
+        // Vergroot de modal tijdelijk voor de plattegrond
+        const modalContent = document.querySelector('.modal-content');
+        if (modalContent) modalContent.style.maxWidth = '1100px';
         openModal(content);
     } else if (section === 'over') {
         const content = `
