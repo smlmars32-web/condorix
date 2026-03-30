@@ -792,11 +792,6 @@ function showSection(section) {
                 <div style="flex: 0 0 180px; min-width: 160px;">
                     <div class="info-box" style="margin: 0; padding: 16px;">
                         <h3 style="margin-bottom: 14px; font-size: 1rem;">Legenda</h3>
-                        <p style="margin-bottom: 8px;">&#127825; <strong>Safari zone</strong></p>
-                        <p style="margin-bottom: 8px;">&#128309; <strong>Ocean zone</strong></p>
-                        <p style="margin-bottom: 8px;">&#128994; <strong>Rimba zone</strong></p>
-                        <p style="margin-bottom: 8px;">&#128993; <strong>Bush zone</strong></p>
-                        <p style="margin-bottom: 8px;">&#127807; <strong>Mangrove zone</strong></p>
                         <p style="margin-bottom: 8px;">&#127860; <strong>Restaurant</strong></p>
                         <p style="margin-bottom: 8px;">&#128699; <strong>Toiletten</strong></p>
                         <p style="margin-bottom: 8px;">&#9855; <strong>Rolstoeltoegankelijk</strong></p>
