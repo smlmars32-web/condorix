@@ -792,30 +792,27 @@ function showSection(section) {
                 <div style="flex: 0 0 180px; min-width: 160px;">
                     <div class="info-box" style="margin: 0; padding: 16px;">
                         <h3 style="margin-bottom: 14px; font-size: 1rem;">Legenda</h3>
-                        <p style="margin-bottom: 8px;">🦁 <strong>Dierenverblijven</strong></p>
-                        <p style="margin-bottom: 8px;">🍽️ <strong>Restaurant / Kiosk</strong></p>
-                        <p style="margin-bottom: 8px;">🚻 <strong>Toiletten</strong></p>
-                        <p style="margin-bottom: 8px;">👶 <strong>Babyverzorging</strong></p>
+                        <p style="margin-bottom: 8px;">🟠 <strong>Safari zone</strong></p>
+                        <p style="margin-bottom: 8px;">🔵 <strong>Ocean zone</strong></p>
+                        <p style="margin-bottom: 8px;">� <strong>Rimba zone</strong></p>
+                        <p style="margin-bottom: 8px;">� <strong>Bush zone</strong></p>
+                        <p style="margin-bottom: 8px;">� <strong>Mangrove zone</strong></p>
+                        <p style="margin-bottom: 8px;">🍽️ <strong>Restaurant</strong></p>
+                        <p style="margin-bottom: 8px;">� <strong>Toiletten</strong></p>
                         <p style="margin-bottom: 8px;">🚑 <strong>EHBO post</strong></p>
-                        <p style="margin-bottom: 8px;">🅿️ <strong>Parkeerplaats</strong></p>
-                        <p style="margin-bottom: 8px;">♿ <strong>Mindervaliden</strong></p>
-                        <p style="margin-bottom: 8px;">🚲 <strong>Fietsenstalling</strong></p>
-                        <p style="margin-bottom: 8px;">🛒 <strong>Souvenirwinkel</strong></p>
-                        <p style="margin-bottom: 8px;">🌳 <strong>Picknickplaats</strong></p>
-                        <p style="margin-bottom: 8px;">ℹ️ <strong>Informatiepunt</strong></p>
                         <p style="margin-bottom: 0;">🚪 <strong>Ingang / Uitgang</strong></p>
                     </div>
                 </div>
             </div>
             <button class="btn-cta" onclick="closeModal()">Sluiten</button>
         `;
-        // Vergroot de modal voor de plattegrond
+        openModal(content);
+        // Vergroot de modal NA openModal (anders wordt het gereset)
         const modalContent = document.querySelector('.modal-content');
         if (modalContent) {
             modalContent.style.maxWidth = '92vw';
             modalContent.style.width = '92vw';
         }
-        openModal(content);
     } else if (section === 'over') {
         const content = `
             <h2>OVER CONDORIX</h2>
