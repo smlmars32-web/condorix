@@ -780,8 +780,27 @@ function showSection(section) {
     } else if (section === 'kaart') {
         const content = `
             <h2>🗺️ Plattegrond</h2>
-            <div style="text-align: center; margin: 20px 0;">
-                <img src="images/plattegrond.jpg" alt="Plattegrond Condorix" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
+            <div style="display: flex; gap: 30px; align-items: flex-start; flex-wrap: wrap; margin: 20px 0;">
+                <div style="flex: 1 1 400px;">
+                    <img src="images/plattegrond.png" alt="Plattegrond Condorix" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
+                </div>
+                <div style="flex: 0 0 220px;">
+                    <div class="info-box" style="margin: 0;">
+                        <h3 style="margin-bottom: 16px;">Legenda</h3>
+                        <p>🦁 <strong>Dierenverblijven</strong></p>
+                        <p>🍽️ <strong>Restaurant / Kiosk</strong></p>
+                        <p>🚻 <strong>Toiletten</strong></p>
+                        <p>👶 <strong>Babyverzorging</strong></p>
+                        <p>🚑 <strong>EHBO post</strong></p>
+                        <p>🅿️ <strong>Parkeerplaats</strong></p>
+                        <p>♿ <strong>Mindervaliden</strong></p>
+                        <p>🚲 <strong>Fietsenstalling</strong></p>
+                        <p>🛒 <strong>Souvenirwinkel</strong></p>
+                        <p>🌳 <strong>Picknickplaats</strong></p>
+                        <p>ℹ️ <strong>Informatiepunt</strong></p>
+                        <p>🚪 <strong>Ingang / Uitgang</strong></p>
+                    </div>
+                </div>
             </div>
             <button class="btn-cta" onclick="closeModal()">Sluiten</button>
         `;
