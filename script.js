@@ -800,7 +800,8 @@ function showSection(section) {
                         <p style="margin-bottom: 8px;">&#127860; <strong>Restaurant</strong></p>
                         <p style="margin-bottom: 8px;">&#128699; <strong>Toiletten</strong></p>
                         <p style="margin-bottom: 8px;">&#9855; <strong>Rolstoeltoegankelijk</strong></p>
-                        <p style="margin-bottom: 0;">&#127873; <strong>Souvenirshop</strong></p>
+                        <p style="margin-bottom: 8px;">&#127873; <strong>Souvenirshop</strong></p>
+                        <p style="margin-bottom: 0;"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#1565c0;color:#fff;border-radius:50%;font-size:0.75rem;font-weight:bold;margin-right:4px;">1</span> <strong>Speeltuin</strong></p>
                     </div>
                 </div>
             </div>
