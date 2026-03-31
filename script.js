@@ -280,6 +280,7 @@ function approveLegoPhoto(id) {
 }
 
 function deleteLegoPhoto(id) {
+    if (!confirm('Weet je zeker dat je deze foto wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')) return;
     const photos = getLegoPhotos().filter(p => p.id !== id);
     saveLegoPhotos(photos);
     openLegoBeheer();
