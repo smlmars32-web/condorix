@@ -117,7 +117,9 @@ function saveLegoPhotos(photos) {
 
 function isSven() {
     const user = getCurrentUser();
-    return user && user.email.toLowerCase() === 'svendegroot@wereldkidz.nl';
+    return user &&
+        user.email.toLowerCase() === 'svenbaedegroot@gmail.com' &&
+        user.name.toLowerCase() === 'sven de groot';
 }
 
 // Bezoeker: foto insturen
