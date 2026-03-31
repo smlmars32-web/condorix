@@ -102,6 +102,187 @@ window.addEventListener('load', () => {
     updateAccountButton();
 });
 
+// =============================================
+// LEGO GALERIJ SYSTEEM
+// =============================================
+
+function getLegoPhotos() {
+    const data = localStorage.getItem('legoPhotos');
+    return data ? JSON.parse(data) : [];
+}
+
+function saveLegoPhotos(photos) {
+    localStorage.setItem('legoPhotos', JSON.stringify(photos));
+}
+
+function isSven() {
+    const user = getCurrentUser();
+    return user && user.email.toLowerCase() === 'svendegroot@wereldkidz.nl';
+}
+
+// Bezoeker: foto insturen
+function openLegoUpload() {
+    const content = `
+        <h2>&#129507; Stuur je LEGO-foto in</h2>
+        <p style="margin-bottom: 20px;">Heb jij een gaaf LEGO-dier gebouwd? Stuur je foto in en kom in de galerij!</p>
+        <div class="modal-form">
+            <div>
+                <label style="font-weight:600; display:block; margin-bottom:6px;">Jouw naam</label>
+                <input type="text" id="legoUploaderName" placeholder="Bijv. Emma" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; font-size:1rem;">
+            </div>
+            <div>
+                <label style="font-weight:600; display:block; margin-bottom:6px;">Foto selecteren</label>
+                <input type="file" id="legoFileInput" accept="image/*" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:6px;">
+            </div>
+            <div id="legoPreviewBox" style="display:none; text-align:center; margin-top:8px;">
+                <img id="legoPreviewImg" style="max-width:100%; max-height:200px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+            </div>
+            <p id="legoUploadMsg" style="color:green; display:none; font-weight:600;"></p>
+            <div style="display:flex; gap:12px;">
+                <button class="btn-cta" onclick="submitLegoPhoto()">Insturen</button>
+                <button class="btn-secondary" onclick="openLegoGallery()">Annuleren</button>
+            </div>
+        </div>
+        <script>
+            document.getElementById('legoFileInput').addEventListener('change', function() {
+                const file = this.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('legoPreviewImg').src = e.target.result;
+                    document.getElementById('legoPreviewBox').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            });
+        <\/script>
+    `;
+    openModal(content);
+}
+
+function submitLegoPhoto() {
+    const name = document.getElementById('legoUploaderName').value.trim();
+    const fileInput = document.getElementById('legoFileInput');
+    const msg = document.getElementById('legoUploadMsg');
+
+    if (!name) { alert('Vul je naam in!'); return; }
+    if (!fileInput.files[0]) { alert('Selecteer een foto!'); return; }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const photos = getLegoPhotos();
+        photos.push({
+            id: Date.now(),
+            name: name,
+            src: e.target.result,
+            approved: false,
+            date: new Date().toLocaleDateString('nl-NL')
+        });
+        saveLegoPhotos(photos);
+        msg.textContent = 'Je foto is ingestuurd! Sven bekijkt hem zo snel mogelijk.';
+        msg.style.display = 'block';
+        document.getElementById('legoUploaderName').value = '';
+        fileInput.value = '';
+        document.getElementById('legoPreviewBox').style.display = 'none';
+        setTimeout(() => openLegoGallery(), 2000);
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+}
+
+// Galerij weergeven
+function openLegoGallery() {
+    const photos = getLegoPhotos().filter(p => p.approved);
+    const adminBtn = isSven() ? `<button class="btn-secondary" style="margin-left:12px;" onclick="openLegoBeheer()">&#128274; Beheer foto\'s</button>` : '';
+
+    let grid = '';
+    if (photos.length === 0) {
+        grid = `<p style="text-align:center; color:#888; padding:40px 0;">Nog geen foto\'s in de galerij. Stuur als eerste jouw LEGO-dier in!</p>`;
+    } else {
+        grid = `<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:14px;">`;
+        photos.forEach(p => {
+            grid += `
+                <div style="border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.12); background:#fff;">
+                    <img src="${p.src}" style="width:100%; height:130px; object-fit:cover; display:block;">
+                    <div style="padding:8px; font-size:0.85rem; color:#555; text-align:center;">
+                        <strong>${p.name}</strong><br>${p.date}
+                    </div>
+                </div>`;
+        });
+        grid += `</div>`;
+    }
+
+    const content = `
+        <h2>&#129507; LEGO Galerij</h2>
+        <p style="margin-bottom:16px;">Bekijk alle ingestuurde LEGO-creaties van onze bezoekers!</p>
+        ${grid}
+        <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;">
+            <button class="btn-cta" onclick="openLegoUpload()">&#128247; Stuur jouw foto in</button>
+            ${adminBtn}
+            <button class="btn-secondary" onclick="closeModal()">Sluiten</button>
+        </div>
+    `;
+    openModal(content);
+    const modalContent = document.querySelector('.modal-content');
+    if (modalContent) { modalContent.style.maxWidth = '800px'; modalContent.style.width = '92vw'; }
+}
+
+// Sven: foto's goedkeuren/verwijderen
+function openLegoBeheer() {
+    if (!isSven()) return;
+    const photos = getLegoPhotos();
+    const pending = photos.filter(p => !p.approved);
+    const approved = photos.filter(p => p.approved);
+
+    let pendingHTML = pending.length === 0
+        ? '<p style="color:#888;">Geen foto\'s wachtend op goedkeuring.</p>'
+        : pending.map(p => `
+            <div style="display:flex; gap:12px; align-items:center; padding:10px; background:#f9f9f9; border-radius:8px; margin-bottom:8px;">
+                <img src="${p.src}" style="width:70px; height:70px; object-fit:cover; border-radius:6px; flex-shrink:0;">
+                <div style="flex:1;">
+                    <strong>${p.name}</strong> &mdash; ${p.date}
+                </div>
+                <button class="btn-cta" style="padding:6px 12px; font-size:0.85rem;" onclick="approveLegoPhoto(${p.id})">&#10003; Goedkeuren</button>
+                <button class="btn-secondary" style="padding:6px 12px; font-size:0.85rem;" onclick="deleteLegoPhoto(${p.id})">&#10005; Verwijderen</button>
+            </div>`).join('');
+
+    let approvedHTML = approved.length === 0
+        ? '<p style="color:#888;">Geen goedgekeurde foto\'s.</p>'
+        : approved.map(p => `
+            <div style="display:flex; gap:12px; align-items:center; padding:10px; background:#f0fff4; border-radius:8px; margin-bottom:8px;">
+                <img src="${p.src}" style="width:70px; height:70px; object-fit:cover; border-radius:6px; flex-shrink:0;">
+                <div style="flex:1;">
+                    <strong>${p.name}</strong> &mdash; ${p.date}
+                </div>
+                <button class="btn-secondary" style="padding:6px 12px; font-size:0.85rem;" onclick="deleteLegoPhoto(${p.id})">&#10005; Verwijderen</button>
+            </div>`).join('');
+
+    const content = `
+        <h2>&#128274; Beheer LEGO Galerij</h2>
+        <h3 style="margin:16px 0 8px; color:var(--primary-color);">Wachtend op goedkeuring (${pending.length})</h3>
+        ${pendingHTML}
+        <h3 style="margin:20px 0 8px; color:var(--primary-color);">Goedgekeurde foto's (${approved.length})</h3>
+        ${approvedHTML}
+        <div style="margin-top:20px;">
+            <button class="btn-secondary" onclick="openLegoGallery()">Terug naar galerij</button>
+        </div>
+    `;
+    openModal(content);
+    const modalContent = document.querySelector('.modal-content');
+    if (modalContent) { modalContent.style.maxWidth = '700px'; modalContent.style.width = '92vw'; }
+}
+
+function approveLegoPhoto(id) {
+    const photos = getLegoPhotos();
+    const idx = photos.findIndex(p => p.id === id);
+    if (idx !== -1) { photos[idx].approved = true; saveLegoPhotos(photos); }
+    openLegoBeheer();
+}
+
+function deleteLegoPhoto(id) {
+    const photos = getLegoPhotos().filter(p => p.id !== id);
+    saveLegoPhotos(photos);
+    openLegoBeheer();
+}
+
 // Account Management Functions
 function getCurrentUser() {
     const userSession = localStorage.getItem('currentUser');
@@ -849,14 +1030,14 @@ function showSection(section) {
                     <img src="images/kerst.jpg" alt="Kerst" style="width: 100%; height: 180px; object-fit: cover; display: block;">
                     <div style="padding: 16px;">
                         <h3 style="color: var(--primary-color); margin-bottom: 8px;">🎄 Kerst bij Condorix</h3>
-                        <p style="font-size: 0.95rem; color: #555;">Beleef de magie van kerst tussen de dieren. Sfeervolle verlichting, warme chocolademelk en een bezoek van de Kerstman!</p>
+                        <p style="font-size: 0.95rem; color: #555;">Beleef de magie van kerst tussen de dieren. Sfeervolle verlichting en warme chocolademelk!</p>
                     </div>
                 </div>
                 <div style="border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15); background: #fff;">
                     <img src="images/lego.jpg" alt="Lego" style="width: 100%; height: 180px; object-fit: cover; display: block;">
                     <div style="padding: 16px;">
                         <h3 style="color: var(--primary-color); margin-bottom: 8px;">🧱 Lego Dierentuin</h3>
-                        <p style="font-size: 0.95rem; color: #555;">Bouw je eigen dier van LEGO en ontdek reusachtige LEGO-sculpturen verspreid over het park. Leuk voor jong en oud!</p>
+                        <p style="font-size: 0.95rem; color: #555;">Bouw je eigen dier van LEGO en bekijk de mooiste creaties van andere bezoekers in de galerij. Leuk voor jong en oud! <a href="#" onclick="openLegoGallery(); return false;" style="color: var(--primary-color); font-weight: 600;">Bekijk galerij →</a></p>
                     </div>
                 </div>
                 <div style="border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15); background: #fff;">
