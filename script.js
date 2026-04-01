@@ -1157,35 +1157,40 @@ function showSection(section) {
         `;
         openModal(content);
     } else if (section === 'activiteiten') {
+        function actImg(src, alt, emoji) {
+            return `<div style="width:100%;height:180px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(212,160,23,0.15),rgba(79,125,74,0.15));font-size:4rem;" data-placeholder="${emoji}">
+                <img src="${src}" alt="${alt}" style="width:100%;height:180px;object-fit:cover;display:block;" onerror="this.parentElement.innerHTML='<span style=\\'font-size:4rem;\\'>${emoji}</span>'">
+            </div>`;
+        }
         const content = `
-            <h2>🎉 Activiteiten</h2>
+            <h2>&#127881; Activiteiten</h2>
             <p style="margin-bottom: 24px;">Ontdek onze speciale evenementen door het jaar heen!</p>
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 24px;">
                 <div style="border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15); background: #fff;">
-                    <img src="images/kerst.jpg" alt="Kerst" style="width: 100%; height: 180px; object-fit: cover; display: block;">
+                    ${actImg('images/kerst.jpg','Kerst','&#127876;')}
                     <div style="padding: 16px;">
-                        <h3 style="color: var(--primary-color); margin-bottom: 8px;">🎄 Kerst bij Condorix</h3>
+                        <h3 style="color: var(--primary-color); margin-bottom: 8px;">&#127876; Kerst bij Condorix</h3>
                         <p style="font-size: 0.95rem; color: #555;">Beleef de magie van kerst tussen de dieren. Sfeervolle verlichting en warme chocolademelk!</p>
                     </div>
                 </div>
                 <div style="border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15); background: #fff;">
-                    <img src="images/lego.jpg" alt="Lego" style="width: 100%; height: 180px; object-fit: cover; display: block;">
+                    ${actImg('images/lego.jpg','Lego','&#129521;')}
                     <div style="padding: 16px;">
-                        <h3 style="color: var(--primary-color); margin-bottom: 8px;">🧱 Lego Dierentuin</h3>
-                        <p style="font-size: 0.95rem; color: #555;">Bouw je eigen dier van LEGO en bekijk de mooiste creaties van andere bezoekers in de galerij. Leuk voor jong en oud! <a href="#" onclick="openLegoGallery(); return false;" style="color: var(--primary-color); font-weight: 600;">Bekijk galerij →</a></p>
+                        <h3 style="color: var(--primary-color); margin-bottom: 8px;">&#129521; Lego Dierentuin</h3>
+                        <p style="font-size: 0.95rem; color: #555;">Bouw je eigen dier van LEGO en bekijk de mooiste creaties van andere bezoekers in de galerij. Leuk voor jong en oud! <a href="#" onclick="openLegoGallery(); return false;" style="color: var(--primary-color); font-weight: 600;">Bekijk galerij &#8594;</a></p>
                     </div>
                 </div>
                 <div style="border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15); background: #fff;">
-                    <img src="images/dierendag.jpg" alt="Dierendag" style="width: 100%; height: 180px; object-fit: cover; display: block;">
+                    ${actImg('images/dierendag.jpg','Dierendag','&#128062;')}
                     <div style="padding: 16px;">
-                        <h3 style="color: var(--primary-color); margin-bottom: 8px;">🐾 Dierendag</h3>
+                        <h3 style="color: var(--primary-color); margin-bottom: 8px;">&#128062; Dierendag</h3>
                         <p style="font-size: 0.95rem; color: #555;">Op 4 oktober vieren we Dierendag! Extra activiteiten, rondleidingen met de verzorgers en leuke workshops voor kinderen.</p>
                     </div>
                 </div>
                 <div style="border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.15); background: #fff;">
-                    <img src="images/pasen.jpg" alt="Pasen" style="width: 100%; height: 180px; object-fit: cover; display: block;">
+                    ${actImg('images/pasen.jpg','Pasen','&#128007;')}
                     <div style="padding: 16px;">
-                        <h3 style="color: var(--primary-color); margin-bottom: 8px;">🐣 Pasen</h3>
+                        <h3 style="color: var(--primary-color); margin-bottom: 8px;">&#128007; Pasen</h3>
                         <p style="font-size: 0.95rem; color: #555;">Zoek paaseieren door het hele park, ontmoet pasgeboren dieren en geniet van lentekleuren in de hele dierentuin!</p>
                     </div>
                 </div>
