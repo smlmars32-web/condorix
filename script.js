@@ -1,4 +1,4 @@
-// Parallax Scroll Effect (Firewatch-style)
+﻿// Parallax Scroll Effect (Firewatch-style)
 let ticking = false;
 
 function updateParallax() {
@@ -123,12 +123,14 @@ function isSven() {
 }
 
 // Laad gepubliceerde galerij van repo (leesbaar voor iedereen, geen auth)
+// Valt terug op lokaal opgeslagen goedgekeurde foto's als GitHub niet bereikbaar is
 async function loadApprovedGallery() {
     try {
         const r = await fetch(`https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/${GH_GALLERY_JSON}?t=${Date.now()}`);
         if (r.ok) return await r.json();
     } catch(e) {}
-    return [];
+    // Fallback: lokaal goedgekeurde foto's (alleen zichtbaar op dit apparaat)
+    return getLocalApproved();
 }
 
 // --- Bezoeker: foto insturen ---
@@ -1046,8 +1048,8 @@ function showSection(section) {
         openModal(content);
     } else if (section === 'activiteiten') {
         function actImg(src, alt, emoji) {
-            return `<div style="width:100%;height:180px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(212,160,23,0.15),rgba(79,125,74,0.15));font-size:4rem;" data-placeholder="${emoji}">
-                <img src="${src}" alt="${alt}" style="width:100%;height:180px;object-fit:cover;display:block;" onerror="this.parentElement.innerHTML='<span style=\\'font-size:4rem;\\'>${emoji}</span>'">
+            return `<div style="width:100%;height:180px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(212,160,23,0.15),rgba(79,125,74,0.15));">
+                <span style="font-size:4rem;">${emoji}</span>
             </div>`;
         }
         const content = `
