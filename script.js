@@ -103,13 +103,211 @@ window.addEventListener('load', () => {
 });
 
 // =============================================
-// LEGO GALERIJ SYSTEEM
+// LEGO GALERIJ SYSTEEM (geen token nodig)
 // =============================================
 
-const GH_OWNER = 'smlmars32-web';
-const GH_REPO  = 'condorix';
-const GH_GALLERY_JSON    = 'data/lego-gallery.json';
-const GH_GALLERY_IMG_DIR = 'images/lego-gallery';
+const GH_OWNER        = 'smlmars32-web';
+const GH_REPO         = 'condorix';
+const GH_GALLERY_JSON = 'data/lego-gallery.json';
+
+function getPendingPhotos()       { const d = localStorage.getItem('legoPendingPhotos');  return d ? JSON.parse(d) : []; }
+function savePendingPhotos(p)     { localStorage.setItem('legoPendingPhotos',  JSON.stringify(p)); }
+function getLocalApproved()       { const d = localStorage.getItem('legoApprovedPhotos'); return d ? JSON.parse(d) : []; }
+function saveLocalApproved(p)     { localStorage.setItem('legoApprovedPhotos', JSON.stringify(p)); }
+
+function isSven() {
+    const user = getCurrentUser();
+    return user &&
+        user.email.toLowerCase() === 'svenbaedegroot@gmail.com' &&
+        user.name.toLowerCase()  === 'sven de groot';
+}
+
+// Laad gepubliceerde galerij van repo (leesbaar voor iedereen, geen auth)
+async function loadApprovedGallery() {
+    try {
+        const r = await fetch(`https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/${GH_GALLERY_JSON}?t=${Date.now()}`);
+        if (r.ok) return await r.json();
+    } catch(e) {}
+    return [];
+}
+
+// --- Bezoeker: foto insturen ---
+function openLegoUpload() {
+    openModal(`
+        <h2>&#129507; Stuur je LEGO-foto in</h2>
+        <p style="margin-bottom:20px;">Heb jij een gaaf LEGO-dier gebouwd? Stuur je foto in en kom in de galerij!</p>
+        <div class="modal-form">
+            <div>
+                <label style="font-weight:600;display:block;margin-bottom:6px;">Jouw naam</label>
+                <input type="text" id="legoUploaderName" placeholder="Bijv. Emma" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;font-size:1rem;">
+            </div>
+            <div>
+                <label style="font-weight:600;display:block;margin-bottom:6px;">Foto selecteren</label>
+                <input type="file" id="legoFileInput" accept="image/*" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;">
+            </div>
+            <div id="legoPreviewBox" style="display:none;text-align:center;margin-top:8px;">
+                <img id="legoPreviewImg" style="max-width:100%;max-height:200px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+            </div>
+            <p id="legoUploadMsg" style="color:green;display:none;font-weight:600;"></p>
+            <div style="display:flex;gap:12px;">
+                <button class="btn-cta" onclick="submitLegoPhoto()">Insturen</button>
+                <button class="btn-secondary" onclick="openLegoGallery()">Annuleren</button>
+            </div>
+        </div>
+        <script>
+            document.getElementById('legoFileInput').addEventListener('change', function() {
+                const file = this.files[0]; if (!file) return;
+                const reader = new FileReader();
+                reader.onload = e => { document.getElementById('legoPreviewImg').src = e.target.result; document.getElementById('legoPreviewBox').style.display = 'block'; };
+                reader.readAsDataURL(file);
+            });
+        <\/script>
+    `);
+}
+
+function submitLegoPhoto() {
+    const name      = document.getElementById('legoUploaderName').value.trim();
+    const fileInput = document.getElementById('legoFileInput');
+    const msg       = document.getElementById('legoUploadMsg');
+    if (!name)              { alert('Vul je naam in!');      return; }
+    if (!fileInput.files[0]){ alert('Selecteer een foto!'); return; }
+    const reader = new FileReader();
+    reader.onload = e => {
+        const pending = getPendingPhotos();
+        pending.push({ id: Date.now(), name, src: e.target.result, date: new Date().toLocaleDateString('nl-NL') });
+        savePendingPhotos(pending);
+        msg.textContent = 'Je foto is ingestuurd! Sven bekijkt hem zo snel mogelijk.';
+        msg.style.display = 'block';
+        document.getElementById('legoUploaderName').value = '';
+        fileInput.value = '';
+        document.getElementById('legoPreviewBox').style.display = 'none';
+        setTimeout(() => openLegoGallery(), 2000);
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+}
+
+// --- Galerij (leest goedgekeurde foto's van repo) ---
+function openLegoGallery() {
+    const adminBtn = isSven() ? `<button class="btn-secondary" onclick="openLegoBeheer()">&#128274; Beheer foto\'s</button>` : '';
+    openModal(`
+        <h2>&#129507; LEGO Galerij</h2>
+        <p style="text-align:center;padding:30px 0;color:#888;">Galerij laden...</p>
+        <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;">
+            <button class="btn-cta" onclick="openLegoUpload()">&#128247; Stuur jouw foto in</button>
+            ${adminBtn}
+            <button class="btn-secondary" onclick="closeModal()">Sluiten</button>
+        </div>
+    `);
+    const mc = document.querySelector('.modal-content');
+    if (mc) { mc.style.maxWidth = '800px'; mc.style.width = '92vw'; }
+
+    loadApprovedGallery().then(photos => {
+        let grid = photos.length === 0
+            ? `<p style="text-align:center;color:#888;padding:30px 0;">Nog geen foto\'s in de galerij. Stuur als eerste jouw LEGO-dier in!</p>`
+            : `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;">` +
+              photos.map(p => `
+                <div style="border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.12);background:#fff;">
+                    <img src="${p.src}" style="width:100%;height:130px;object-fit:cover;display:block;">
+                    <div style="padding:8px;font-size:0.85rem;color:#555;text-align:center;"><strong>${p.name}</strong><br>${p.date}</div>
+                </div>`).join('') + `</div>`;
+        const mb = document.getElementById('modalBody');
+        if (mb) mb.innerHTML = `
+            <h2>&#129507; LEGO Galerij</h2>
+            <p style="margin-bottom:16px;">Bekijk alle ingestuurde LEGO-creaties van onze bezoekers!</p>
+            ${grid}
+            <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+                <button class="btn-cta" onclick="openLegoUpload()">&#128247; Stuur jouw foto in</button>
+                ${adminBtn}
+                <button class="btn-secondary" onclick="closeModal()">Sluiten</button>
+            </div>`;
+    });
+}
+
+// --- Sven: beheerpaneel (geen token) ---
+function openLegoBeheer() {
+    if (!isSven()) return;
+    const pending  = getPendingPhotos();
+    const approved = getLocalApproved();
+
+    const pendingHTML = pending.length === 0
+        ? '<p style="color:#888;">Geen foto\'s wachtend op goedkeuring.</p>'
+        : pending.map(p => `
+            <div style="display:flex;gap:12px;align-items:center;padding:10px;background:#f9f9f9;border-radius:8px;margin-bottom:8px;">
+                <img src="${p.src}" style="width:70px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0;">
+                <div style="flex:1;"><strong>${p.name}</strong> &mdash; ${p.date}</div>
+                <button class="btn-cta"       style="padding:6px 12px;font-size:0.85rem;" onclick="approveLegoPhoto(${p.id})">&#10003; Goedkeuren</button>
+                <button class="btn-secondary" style="padding:6px 12px;font-size:0.85rem;" onclick="deletePendingPhoto(${p.id})">&#10005; Weggooien</button>
+            </div>`).join('');
+
+    const approvedHTML = approved.length === 0
+        ? '<p style="color:#888;">Nog geen goedgekeurde foto\'s.</p>'
+        : approved.map(p => `
+            <div style="display:flex;gap:12px;align-items:center;padding:10px;background:#f0fff4;border-radius:8px;margin-bottom:8px;">
+                <img src="${p.src}" style="width:70px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0;">
+                <div style="flex:1;"><strong>${p.name}</strong> &mdash; ${p.date}</div>
+                <button class="btn-secondary" style="padding:6px 12px;font-size:0.85rem;" onclick="deleteApprovedPhoto(${p.id})">&#10005; Verwijderen</button>
+            </div>`).join('');
+
+    const mb = document.getElementById('modalBody');
+    if (mb) mb.innerHTML = `
+        <h2>&#128274; Beheer LEGO Galerij</h2>
+        <h3 style="margin:16px 0 8px;color:var(--primary-color);">Wachtend op goedkeuring (${pending.length})</h3>
+        ${pendingHTML}
+        <h3 style="margin:20px 0 8px;color:var(--primary-color);">Goedgekeurd (${approved.length})</h3>
+        ${approvedHTML}
+        <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;">
+            <button class="btn-cta" onclick="publishLegoGallery()">&#128190; Publiceren op website</button>
+            <button class="btn-secondary" onclick="openLegoGallery()">Terug naar galerij</button>
+        </div>
+        <div id="publishInstructions" style="display:none;margin-top:16px;background:#f0fff4;border-radius:8px;padding:16px;font-size:0.9rem;">
+            <p><strong>&#10003; lego-gallery.json gedownload!</strong></p>
+            <p style="margin-top:8px;">Sla het bestand op in de map <code>data/</code> en voer dan dit commando uit in de terminal:</p>
+            <pre style="background:#1e1e1e;color:#4ec9b0;padding:12px;border-radius:6px;font-size:0.82rem;margin-top:8px;overflow-x:auto;white-space:pre-wrap;">git add data/lego-gallery.json ; git commit -m "update lego galerij" ; git push origin main</pre>
+        </div>`;
+    const mc = document.querySelector('.modal-content');
+    if (mc) { mc.style.maxWidth = '700px'; mc.style.width = '92vw'; }
+}
+
+function approveLegoPhoto(id) {
+    const pending = getPendingPhotos();
+    const photo   = pending.find(p => p.id === id);
+    if (!photo) return;
+    const approved = getLocalApproved();
+    approved.push(photo);
+    saveLocalApproved(approved);
+    savePendingPhotos(pending.filter(p => p.id !== id));
+    openLegoBeheer();
+}
+
+function deletePendingPhoto(id) {
+    if (!confirm('Weet je zeker dat je deze foto wilt weggooien?')) return;
+    savePendingPhotos(getPendingPhotos().filter(p => p.id !== id));
+    openLegoBeheer();
+}
+
+function deleteApprovedPhoto(id) {
+    if (!confirm('Weet je zeker dat je deze foto wilt verwijderen?')) return;
+    saveLocalApproved(getLocalApproved().filter(p => p.id !== id));
+    openLegoBeheer();
+}
+
+// Download lego-gallery.json → Sven zet het in de repo en pusht
+function publishLegoGallery() {
+    const approved = getLocalApproved();
+    const json     = JSON.stringify(approved.map(p => ({ id: p.id, name: p.name, date: p.date, src: p.src })), null, 2);
+    const blob     = new Blob([json], { type: 'application/json' });
+    const url      = URL.createObjectURL(blob);
+    const a        = document.createElement('a');
+    a.href = url; a.download = 'lego-gallery.json';
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
+    const instr = document.getElementById('publishInstructions');
+    if (instr) instr.style.display = 'block';
+}
+
+// Account Management Functions
+function getCurrentUser() {
+    const userSession = localStorage.getItem('currentUser');
 
 // --- Helpers localStorage (pending submissions) ---
 function getPendingPhotos() {
