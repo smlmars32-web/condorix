@@ -299,7 +299,7 @@ async function submitLegoPhoto() {
 async function openLegoGallery() {
     const adminBtn = isSven() ? `<button class="btn-secondary" onclick="openLegoBeheer()">&#128274; Beheer foto\'s</button>` : '';
     openModal(`
-        <h2>&#129507; LEGO Galerij</h2>
+        <h2>LEGO Galerij</h2>
         <p style="text-align:center;padding:30px 0;color:#888;">Galerij laden...</p>
         <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;">
             <button class="btn-cta" onclick="openLegoUpload()">&#128247; Stuur jouw foto in</button>
@@ -320,7 +320,7 @@ async function openLegoGallery() {
             </div>`).join('') + `</div>`;
     const mb = document.getElementById('modalBody');
     if (mb) mb.innerHTML = `
-        <h2>&#129507; LEGO Galerij</h2>
+        <h2>LEGO Galerij</h2>
         <p style="margin-bottom:16px;">Bekijk alle ingestuurde LEGO-creaties van onze bezoekers!</p>
         ${grid}
         <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
