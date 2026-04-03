@@ -108,6 +108,7 @@ window.addEventListener('load', () => {
 
 const SUPABASE_URL  = 'https://bpmbqjhctxqgtsouzcqs.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJwbWJxamhjdHhxZ3Rzb3V6Y3FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNjY2NDUsImV4cCI6MjA5MDY0MjY0NX0.bBuMvsPrGc5pkf2NJD00OnOuIpRxt0AXqHpGFkv5Wc8';
+const STORAGE_BUCKET = 'lego-photos';
 
 async function sbSelect(filter) {
     const r = await fetch(`${SUPABASE_URL}/rest/v1/lego_photos?${filter}&select=*`, {
@@ -116,11 +117,16 @@ async function sbSelect(filter) {
     return r.ok ? await r.json() : [];
 }
 async function sbInsert(data) {
+    console.log('Inserting to database:', data);
     const r = await fetch(`${SUPABASE_URL}/rest/v1/lego_photos`, {
         method: 'POST',
         headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${SUPABASE_ANON}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
         body: JSON.stringify(data)
     });
+    if (!r.ok) {
+        const error = await r.text();
+        console.error('Database insert failed:', error);
+    }
     return r.ok;
 }
 async function sbUpdate(id, data) {
@@ -139,6 +145,45 @@ async function sbDelete(id) {
     return r.ok;
 }
 
+// Supabase Storage functies
+async function uploadToStorage(file, fileName) {
+    const r = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${fileName}`, {
+        method: 'POST',
+        headers: { 
+            'apikey': SUPABASE_ANON, 
+            'Authorization': `Bearer ${SUPABASE_ANON}`,
+            'cache-control': '3600',
+            'content-type': 'image/jpeg'
+        },
+        body: file
+    });
+    if (r.ok) {
+        return `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${fileName}`;
+    }
+    const error = await r.text();
+    console.error('Upload failed:', error);
+    return null;
+}
+
+async function deleteFromStorage(fileName) {
+    if (!fileName) return false;
+    const files = [fileName]; // Supabase verwacht een array
+    const r = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}`, {
+        method: 'DELETE',
+        headers: { 
+            'apikey': SUPABASE_ANON, 
+            'Authorization': `Bearer ${SUPABASE_ANON}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prefixes: files })
+    });
+    if (!r.ok) {
+        const error = await r.text();
+        console.error('Storage delete failed:', error);
+    }
+    return r.ok;
+}
+
 // Verklein afbeelding vóór opslag (max 800×600, JPEG kwaliteit 75%)
 function resizeImage(file) {
     return new Promise(resolve => {
@@ -151,7 +196,7 @@ function resizeImage(file) {
             canvas.height = Math.round(img.height * ratio);
             canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
             URL.revokeObjectURL(url);
-            resolve(canvas.toDataURL('image/jpeg', 0.75));
+            canvas.toBlob(blob => resolve(blob), 'image/jpeg', 0.75);
         };
         img.src = url;
     });
@@ -210,19 +255,43 @@ async function submitLegoPhoto() {
     if (!name)               { alert('Vul je naam in!');     return; }
     if (!fileInput.files[0]) { alert('Selecteer een foto!'); return; }
     if (btn) { btn.textContent = 'Bezig...'; btn.disabled = true; }
-    const src  = await resizeImage(fileInput.files[0]);
+    
+    const resizedBlob = await resizeImage(fileInput.files[0]);
+    const timestamp = Date.now();
+    const fileName = `lego_${timestamp}_${name.replace(/[^a-zA-Z0-9]/g, '_')}.jpg`;
+    
+    console.log('Uploading to Storage:', fileName);
+    const imageUrl = await uploadToStorage(resizedBlob, fileName);
+    console.log('Upload result:', imageUrl);
+    
+    if (!imageUrl) {
+        if (btn) { btn.textContent = 'Insturen'; btn.disabled = false; }
+        alert('Uploaden naar Storage mislukt. Check console voor details. Controleer of de "lego-photos" bucket bestaat en publiek is.');
+        return;
+    }
+    
     const date = new Date().toLocaleDateString('nl-NL');
-    const ok   = await sbInsert({ name, date, src, status: 'pending' });
+    const ok = await sbInsert({ 
+        name, 
+        date, 
+        src: imageUrl,  // Voor backward compatibility (verplicht veld)
+        image_url: imageUrl, 
+        file_name: fileName, 
+        status: 'approved'  // Meteen goedgekeurd, geen moderatie nodig
+    });
+    
     if (ok) {
-        msg.textContent = 'Je foto is ingestuurd! Sven bekijkt hem zo snel mogelijk.';
+        msg.textContent = 'Gelukt! Je foto staat nu in de galerij! 🎉';
         msg.style.display = 'block';
         document.getElementById('legoUploaderName').value = '';
         fileInput.value = '';
         document.getElementById('legoPreviewBox').style.display = 'none';
         setTimeout(() => openLegoGallery(), 2000);
     } else {
+        // Als database insert faalt, verwijder de geüploade foto
+        await deleteFromStorage(fileName);
         if (btn) { btn.textContent = 'Insturen'; btn.disabled = false; }
-        alert('Er ging iets mis. Probeer het opnieuw.');
+        alert('Database opslag mislukt. Probeer het opnieuw.');
     }
 }
 
@@ -246,7 +315,7 @@ async function openLegoGallery() {
         : `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;">` +
           photos.map(p => `
             <div style="border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.12);background:#fff;">
-                <img src="${p.src}" style="width:100%;height:130px;object-fit:cover;display:block;" loading="lazy">
+                <img src="${p.image_url || p.src}" style="width:100%;height:130px;object-fit:cover;display:block;" loading="lazy">
                 <div style="padding:8px;font-size:0.85rem;color:#555;text-align:center;"><strong>${p.name}</strong><br>${p.date}</div>
             </div>`).join('') + `</div>`;
     const mb = document.getElementById('modalBody');
@@ -275,18 +344,18 @@ async function openLegoBeheer() {
         ? '<p style="color:#888;">Geen foto\'s wachtend op goedkeuring.</p>'
         : pending.map(p => `
             <div style="display:flex;gap:12px;align-items:center;padding:10px;background:#f9f9f9;border-radius:8px;margin-bottom:8px;">
-                <img src="${p.src}" style="width:70px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0;">
+                <img src="${p.image_url || p.src}" style="width:70px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0;">
                 <div style="flex:1;"><strong>${p.name}</strong> &mdash; ${p.date}</div>
                 <button class="btn-cta"       style="padding:6px 12px;font-size:0.85rem;" onclick="approveLegoPhoto('${p.id}')">&#10003; Goedkeuren</button>
-                <button class="btn-secondary" style="padding:6px 12px;font-size:0.85rem;" onclick="deletePendingPhoto('${p.id}')">&#10005; Weggooien</button>
+                <button class="btn-secondary" style="padding:6px 12px;font-size:0.85rem;" onclick="deletePendingPhoto('${p.id}', '${p.file_name || ''}')">&#10005; Weggooien</button>
             </div>`).join('');
     const approvedHTML = approved.length === 0
         ? '<p style="color:#888;">Nog geen goedgekeurde foto\'s.</p>'
         : approved.map(p => `
             <div style="display:flex;gap:12px;align-items:center;padding:10px;background:#f0fff4;border-radius:8px;margin-bottom:8px;">
-                <img src="${p.src}" style="width:70px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0;">
+                <img src="${p.image_url || p.src}" style="width:70px;height:70px;object-fit:cover;border-radius:6px;flex-shrink:0;">
                 <div style="flex:1;"><strong>${p.name}</strong> &mdash; ${p.date}</div>
-                <button class="btn-secondary" style="padding:6px 12px;font-size:0.85rem;" onclick="deleteApprovedPhoto('${p.id}')">&#10005; Verwijderen</button>
+                <button class="btn-secondary" style="padding:6px 12px;font-size:0.85rem;" onclick="deleteApprovedPhoto('${p.id}', '${p.file_name || ''}')">&#10005; Verwijderen</button>
             </div>`).join('');
     const mb = document.getElementById('modalBody');
     if (mb) mb.innerHTML = `
@@ -305,14 +374,16 @@ async function approveLegoPhoto(id) {
     openLegoBeheer();
 }
 
-async function deletePendingPhoto(id) {
+async function deletePendingPhoto(id, fileName) {
     if (!confirm('Weet je zeker dat je deze foto wilt weggooien?')) return;
+    if (fileName) await deleteFromStorage(fileName);
     await sbDelete(id);
     openLegoBeheer();
 }
 
-async function deleteApprovedPhoto(id) {
+async function deleteApprovedPhoto(id, fileName) {
     if (!confirm('Weet je zeker dat je deze foto wilt verwijderen?')) return;
+    if (fileName) await deleteFromStorage(fileName);
     await sbDelete(id);
     openLegoBeheer();
 }
