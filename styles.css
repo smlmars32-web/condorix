@@ -301,7 +301,7 @@ body {
     letter-spacing: 2px;
 }
 
-.main-nav ul {
+.main-nav > ul {
     display: flex;
     list-style: none;
     gap: clamp(8px, 1.5vw, 22px);
@@ -752,7 +752,7 @@ body {
         gap: 10px;
     }
 
-    .main-nav ul {
+    .main-nav > ul {
         flex-wrap: nowrap;
         justify-content: center;
     }
