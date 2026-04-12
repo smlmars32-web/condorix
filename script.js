@@ -1658,6 +1658,7 @@ function runPlatformGame(animal) {
 
     function loadNextLevel() {
         currentLevel++;
+        lives = 3;
         window._swingLevel = currentLevel;
         window._swingScore = score;
         window._swingLives = lives;
@@ -1670,9 +1671,23 @@ function runPlatformGame(animal) {
         respawn(); updateHUD();
     }
 
+    function restartFromPrevLevel() {
+        currentLevel = Math.max(1, currentLevel - 1);
+        lives = 3;
+        window._swingLevel = currentLevel;
+        window._swingScore = score;
+        window._swingLives = lives;
+        lvData = generateLevel(currentLevel);
+        hooks = lvData.hooks; trampolines = lvData.trampolines;
+        LEVEL_W = lvData.lw; FINISH_X = lvData.finX; FINISH_Y = lvData.finY;
+        gameOver = false; won = false; wonTimer = 0;
+        bounceFlash = -1; bounceFlashTimer = 0;
+        hooksPassed = new Set();
+        respawn(); updateHUD();
+    }
+
     function grabOrRelease() {
-        if (gameOver) return;
-        if (won) { if (wonTimer > 40 && currentLevel < MAX_LEVELS) loadNextLevel(); return; }
+        if (gameOver || won) return;
         if (attached) {
             attached = false; hookIdx = -1;
         } else {
@@ -1725,12 +1740,19 @@ function runPlatformGame(animal) {
         if (bounceFlashTimer > 0) bounceFlashTimer--;
         if (py > H + 100) {
             lives--; updateHUD();
-            if (lives <= 0) { gameOver = true; return; }
+            if (lives <= 0) {
+                gameOver = true;
+                setTimeout(() => { if (active && document.getElementById('gameCanvas')) restartFromPrevLevel(); }, 3000);
+                return;
+            }
             respawn();
         }
-        if (Math.abs(px - FINISH_X) < 70 && Math.abs(py - FINISH_Y) < 70) {
+        if (!won && px > FINISH_X) {
             const bonus = Math.max(50, 200 - (currentLevel - 1) * 2);
-            won = true; score += bonus; updateHUD();
+            won = true; wonTimer = 0; score += bonus; updateHUD();
+        }
+        if (won && currentLevel < MAX_LEVELS && wonTimer === 180) {
+            loadNextLevel();
         }
         const tc = px - W / 3;
         camX += (tc - camX) * 0.1;
@@ -1846,19 +1868,27 @@ function runPlatformGame(animal) {
             ctx.shadowBlur = 0;
         }
 
-        // Finish
+        // Finish line — full height
         const fx = FINISH_X - camX;
-        if (fx > -80 && fx < W + 80) {
-            const pulse = 1 + Math.sin(Date.now() / 300) * 0.12;
+        if (fx > -20 && fx < W + 20) {
+            const pulse = 0.5 + Math.abs(Math.sin(Date.now() / 400)) * 0.5;
+            // Glowing vertical line
             ctx.save();
-            ctx.translate(fx, FINISH_Y);
-            ctx.scale(pulse, pulse);
-            ctx.shadowColor = '#FFD700'; ctx.shadowBlur = 30;
-            ctx.font = '38px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-            ctx.fillText('??', 0, 0);
-            ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 2;
-            ctx.beginPath(); ctx.arc(0, 0, 34, 0, Math.PI * 2); ctx.stroke();
+            ctx.shadowColor = '#FFD700'; ctx.shadowBlur = 24;
+            const finGrad = ctx.createLinearGradient(0, 0, 0, H);
+            finGrad.addColorStop(0,   `rgba(255,215,0,${0.15 + pulse * 0.5})`);
+            finGrad.addColorStop(0.5, `rgba(255,215,0,${0.6  + pulse * 0.3})`);
+            finGrad.addColorStop(1,   `rgba(255,215,0,${0.15 + pulse * 0.5})`);
+            ctx.strokeStyle = finGrad;
+            ctx.lineWidth = 4;
+            ctx.setLineDash([14, 8]);
+            ctx.beginPath(); ctx.moveTo(fx, 0); ctx.lineTo(fx, H); ctx.stroke();
+            ctx.setLineDash([]);
             ctx.shadowBlur = 0;
+            // Checkered flag icons along the line
+            ctx.font = '22px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            const flagY = [40, 100, 160, 220, 280, 340];
+            for (const fy of flagY) ctx.fillText('\uD83C\uDFC1', fx, fy);
             ctx.restore();
         }
 
@@ -1892,14 +1922,17 @@ function runPlatformGame(animal) {
             ctx.fillStyle = 'rgba(0,0,0,0.75)'; ctx.fillRect(0, 0, W, H);
             ctx.shadowColor = '#FF6B6B'; ctx.shadowBlur = 25;
             ctx.fillStyle = '#FF6B6B'; ctx.font = 'bold 34px sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('?? Game Over', W/2, H/2 - 22);
-            ctx.shadowBlur = 0; ctx.fillStyle = '#aaa'; ctx.font = '15px sans-serif';
-            ctx.fillText('Klik op "Ander dier" om opnieuw te spelen', W/2, H/2 + 14);
+            ctx.fillText('\uD83D\uDCA5 Game Over', W/2, H/2 - 28);
+            ctx.shadowBlur = 0; ctx.fillStyle = '#fff'; ctx.font = '16px sans-serif';
+            const backTo = Math.max(1, currentLevel - 1);
+            ctx.fillText('Je gaat terug naar level ' + backTo + ' met 3 levens\u2026', W/2, H/2 + 6);
+            ctx.fillStyle = '#888'; ctx.font = '13px sans-serif';
+            ctx.fillText('(over 3 seconden automatisch)', W/2, H/2 + 28);
         }
         if (won) {
-            const a = Math.min(wonTimer / 40, 0.75);
+            const a = Math.min(wonTimer / 60, 0.72);
             ctx.fillStyle = `rgba(0,0,0,${a})`; ctx.fillRect(0, 0, W, H);
-            if (wonTimer > 12) {
+            if (wonTimer > 10) {
                 if (currentLevel >= MAX_LEVELS) {
                     ctx.shadowColor = '#FFD700'; ctx.shadowBlur = 30;
                     ctx.fillStyle = '#FFD700'; ctx.font = 'bold 26px sans-serif'; ctx.textAlign = 'center';
@@ -1911,11 +1944,13 @@ function runPlatformGame(animal) {
                 } else {
                     ctx.shadowColor = '#4ECDC4'; ctx.shadowBlur = 20;
                     ctx.fillStyle = '#4ECDC4'; ctx.font = 'bold 30px sans-serif'; ctx.textAlign = 'center';
-                    ctx.fillText('\u2B50 Level ' + currentLevel + ' klaar!', W/2, H/2 - 30);
+                    ctx.fillText('\uD83C\uDFC1 Gehaald!', W/2, H/2 - 30);
                     ctx.shadowBlur = 0; ctx.fillStyle = '#fff'; ctx.font = '17px sans-serif';
-                    ctx.fillText('Score: ' + score, W/2, H/2 + 4);
+                    ctx.fillText('Level ' + currentLevel + ' \u2022 Score: ' + score, W/2, H/2 + 4);
+                    // Countdown (180 frames = 3s @ 60fps)
+                    const secsLeft = Math.ceil((180 - wonTimer) / 60);
                     ctx.fillStyle = '#aaa'; ctx.font = '14px sans-serif';
-                    if (wonTimer > 40) ctx.fillText('Klik om door te gaan \u2192 Level ' + (currentLevel + 1) + '/50', W/2, H/2 + 30);
+                    ctx.fillText('Volgende level over ' + secsLeft + ' seconde' + (secsLeft !== 1 ? 'n' : '') + '\u2026', W/2, H/2 + 30);
                 }
             }
         }
