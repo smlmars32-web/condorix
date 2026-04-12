@@ -304,7 +304,7 @@ body {
 .main-nav > ul {
     display: flex;
     list-style: none;
-    gap: clamp(8px, 1.5vw, 22px);
+    gap: clamp(4px, 1vw, 14px);
     flex-wrap: nowrap;
     white-space: nowrap;
 }
@@ -314,7 +314,7 @@ body {
     color: var(--text-color);
     font-weight: 600;
     transition: color 0.3s;
-    font-size: clamp(0.65rem, 1.1vw, 0.9rem);
+    font-size: clamp(0.55rem, 0.85vw, 0.78rem);
 }
 
 .main-nav a:hover {
@@ -373,6 +373,8 @@ body {
     background-color: transparent;
     border: 2px solid rgba(255, 255, 255, 0.8);
     color: white;
+    padding: 6px 12px;
+    font-size: clamp(0.55rem, 0.85vw, 0.78rem);
 }
 
 .main-header.scrolled .btn-tickets {
