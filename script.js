@@ -1554,18 +1554,22 @@ function openDierenPlatformGame() {
 
 function startDierenPlatform(animalIndex) {
     const animal = window._swingAnimals[animalIndex];
+    window._swingLevel = 1;
+    window._swingScore = 0;
+    window._swingLives = 3;
     openModal(`
         <div style="background:#0a0a1a;color:#fff;border-radius:8px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;padding:0 2px;">
                 <h2 style="margin:0;color:#fff;">${animal.emoji} ${animal.name}</h2>
-                <div style="display:flex;gap:20px;font-weight:600;font-size:1rem;color:#fff;">
+                <div style="display:flex;gap:14px;font-weight:600;font-size:0.92rem;color:#fff;">
+                    <span>&#127919; <span id="gameLevel">1</span>/50</span>
                     <span>&#9829; <span id="gameLives">3</span></span>
                     <span>&#11088; <span id="gameScore">0</span></span>
                 </div>
             </div>
             <canvas id="gameCanvas" width="680" height="360" style="display:block;border-radius:8px;outline:none;cursor:pointer;" tabindex="0"></canvas>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;flex-wrap:wrap;gap:8px;">
-                <span style="font-size:0.78rem;color:#666;">&#128432; Klik/tik als bolletje gloeit om te grijpen &amp;mdash; klik nogmaals om los te laten</span>
+                <span style="font-size:0.78rem;color:#666;">&#128432; Klik/tik als bolletje gloeit &#8212; klik nogmaals om los te laten</span>
                 <div style="display:flex;gap:8px;">
                     <button class="btn-secondary" style="padding:6px 14px;font-size:0.85rem;" onclick="openDierenPlatformGame()">&#8617; Ander dier</button>
                     <button class="btn-secondary" style="padding:6px 14px;font-size:0.85rem;" onclick="closeModal()">Sluiten</button>
@@ -1586,65 +1590,89 @@ function runPlatformGame(animal) {
 
     if (window._gameLoopId) { cancelAnimationFrame(window._gameLoopId); window._gameLoopId = null; }
 
-    const LEVEL_W = 4200;
-    const GRAVITY  = animal.grav;
-    const GRAB_R   = animal.grab;
-
-    // Hooks (x, y) � hung from ceiling
-    const hooks = [
-        [160,  55], [330,  45], [500,  60], [670,  40],
-        [850,  55], [1030, 40], [1210, 60], [1400, 42],
-        [1590, 58], [1780, 44], [1970, 62], [2170, 45],
-        [2370, 58], [2570, 42], [2770, 60], [2980, 44],
-        [3190, 58], [3400, 42], [3620, 56], [3840, 45],
-    ];
-    const FINISH_X = 4000, FINISH_Y = 80;
-
+    const MAX_LEVELS = 50;
+    const GRAVITY = animal.grav;
+    const GRAB_R  = animal.grab;
     const HOOK_COLORS = ['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#FF9F43','#A29BFE'];
-
-    // Trampolines [x, y, width] — near bottom of canvas
-    const trampolines = [
-        [420,  310, 80],
-        [740,  290, 80],
-        [1100, 305, 80],
-        [1500, 295, 80],
-        [1850, 310, 80],
-        [2250, 300, 80],
-        [2650, 310, 80],
-        [3050, 295, 80],
-        [3450, 305, 80],
-        [3800, 300, 80],
-    ];
     const TRAMPOLINE_BOUNCE = -22;
+
+    let currentLevel = window._swingLevel || 1;
+    let score        = window._swingScore || 0;
+    let lives        = (window._swingLives !== undefined) ? window._swingLives : 3;
+
+    function generateLevel(lvl) {
+        const t        = (lvl - 1) / (MAX_LEVELS - 1);
+        const lw       = Math.round(2000 + t * 4000);
+        const spacing  = Math.round(140 + t * 165);
+        const yBase    = Math.round(72 - t * 38);
+        const yVar     = Math.round(8  + t * 42);
+        const tramCount = Math.max(0, Math.round(10 - t * 11));
+        const hs = [], ts = [];
+        let x = 160;
+        while (x < lw - 280) {
+            const y = Math.max(28, Math.min(118, yBase + (Math.random() * 2 - 1) * yVar));
+            hs.push([Math.round(x), Math.round(y)]);
+            x += spacing + Math.round(Math.random() * spacing * 0.45);
+        }
+        if (tramCount > 0) {
+            const step = lw / (tramCount + 1);
+            for (let i = 0; i < tramCount; i++) {
+                ts.push([Math.round(step * (i + 1)), Math.round(285 + Math.random() * 40), 80]);
+            }
+        }
+        return { hooks: hs, trampolines: ts, lw, finX: lw - 180, finY: 72 };
+    }
+
+    let lvData      = generateLevel(currentLevel);
+    let hooks       = lvData.hooks;
+    let trampolines = lvData.trampolines;
+    let LEVEL_W     = lvData.lw;
+    let FINISH_X    = lvData.finX;
+    let FINISH_Y    = lvData.finY;
+
     let bounceFlash = -1, bounceFlashTimer = 0;
 
     let px, py, vx, vy;
     let attached = false, hookIdx = -1, ropeLen = 0;
-    let camX = 0, score = 0, lives = 3;
+    let camX = 0;
     let gameOver = false, won = false, wonTimer = 0;
     let active = true;
     let hooksPassed = new Set();
 
-    function respawn() {
-        attached = true;
-        hookIdx = 0;
-        ropeLen = 130;
-        px = hooks[0][0];
-        py = hooks[0][1] + ropeLen;
-        vx = 7; vy = 0;
-        camX = 0;
-    }
-    respawn();
-
     function updateHUD() {
-        const s = document.getElementById('gameScore');
-        const l = document.getElementById('gameLives');
-        if (s) s.textContent = score;
-        if (l) l.textContent = lives;
+        const s  = document.getElementById('gameScore');
+        const l  = document.getElementById('gameLives');
+        const lv = document.getElementById('gameLevel');
+        if (s)  s.textContent  = score;
+        if (l)  l.textContent  = lives;
+        if (lv) lv.textContent = currentLevel;
+    }
+
+    function respawn() {
+        if (!hooks.length) return;
+        attached = true; hookIdx = 0; ropeLen = 130;
+        px = hooks[0][0]; py = hooks[0][1] + ropeLen;
+        vx = 7; vy = 0; camX = 0;
+    }
+    respawn(); updateHUD();
+
+    function loadNextLevel() {
+        currentLevel++;
+        window._swingLevel = currentLevel;
+        window._swingScore = score;
+        window._swingLives = lives;
+        lvData = generateLevel(currentLevel);
+        hooks = lvData.hooks; trampolines = lvData.trampolines;
+        LEVEL_W = lvData.lw; FINISH_X = lvData.finX; FINISH_Y = lvData.finY;
+        won = false; wonTimer = 0;
+        bounceFlash = -1; bounceFlashTimer = 0;
+        hooksPassed = new Set();
+        respawn(); updateHUD();
     }
 
     function grabOrRelease() {
-        if (gameOver || won) return;
+        if (gameOver) return;
+        if (won) { if (wonTimer > 40 && currentLevel < MAX_LEVELS) loadNextLevel(); return; }
         if (attached) {
             attached = false; hookIdx = -1;
         } else {
@@ -1658,11 +1686,7 @@ function runPlatformGame(animal) {
                 const dx = hooks[best][0] - px, dy = hooks[best][1] - py;
                 ropeLen = Math.sqrt(dx * dx + dy * dy);
                 attached = true; hookIdx = best;
-                if (!hooksPassed.has(best)) {
-                    hooksPassed.add(best);
-                    score += 10;
-                    updateHUD();
-                }
+                if (!hooksPassed.has(best)) { hooksPassed.add(best); score += 10; updateHUD(); }
             }
         }
     }
@@ -1705,7 +1729,8 @@ function runPlatformGame(animal) {
             respawn();
         }
         if (Math.abs(px - FINISH_X) < 70 && Math.abs(py - FINISH_Y) < 70) {
-            won = true; score += 50; updateHUD();
+            const bonus = Math.max(50, 200 - (currentLevel - 1) * 2);
+            won = true; score += bonus; updateHUD();
         }
         const tc = px - W / 3;
         camX += (tc - camX) * 0.1;
@@ -1714,8 +1739,9 @@ function runPlatformGame(animal) {
     }
 
     function draw() {
-        // Background
-        ctx.fillStyle = '#08081a';
+        // Background shifts hue with level difficulty
+        const td = (currentLevel - 1) / (MAX_LEVELS - 1);
+        ctx.fillStyle = `rgb(${Math.round(8+td*18)},8,${Math.round(26+td*8)})`;
         ctx.fillRect(0, 0, W, H);
 
         // Subtle grid
@@ -1725,11 +1751,11 @@ function runPlatformGame(animal) {
         for (let x = -gox; x < W; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
         for (let y = 0; y < H; y += 60) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
 
-        // Ceiling
+        // Ceiling color shifts teal→purple with level
         const ceilGrad = ctx.createLinearGradient(0, 0, W, 0);
-        ceilGrad.addColorStop(0, 'rgba(78,205,196,0.4)');
-        ceilGrad.addColorStop(0.5, 'rgba(165,105,189,0.4)');
-        ceilGrad.addColorStop(1, 'rgba(78,205,196,0.4)');
+        ceilGrad.addColorStop(0, `rgba(${Math.round(78-td*30)},${Math.round(205-td*100)},${Math.round(196-td*30)},0.45)`);
+        ceilGrad.addColorStop(0.5, `rgba(${Math.round(120+td*135)},${Math.round(50+td*20)},${Math.round(189-td*50)},0.55)`);
+        ceilGrad.addColorStop(1, `rgba(${Math.round(78-td*30)},${Math.round(205-td*100)},${Math.round(196-td*30)},0.45)`);
         ctx.fillStyle = ceilGrad;
         ctx.fillRect(0, 0, W, 6);
 
@@ -1874,13 +1900,23 @@ function runPlatformGame(animal) {
             const a = Math.min(wonTimer / 40, 0.75);
             ctx.fillStyle = `rgba(0,0,0,${a})`; ctx.fillRect(0, 0, W, H);
             if (wonTimer > 12) {
-                ctx.shadowColor = '#FFD700'; ctx.shadowBlur = 30;
-                ctx.fillStyle = '#FFD700'; ctx.font = 'bold 34px sans-serif'; ctx.textAlign = 'center';
-                ctx.fillText('?? Gewonnen! ??', W/2, H/2 - 24);
-                ctx.shadowBlur = 0; ctx.fillStyle = '#fff'; ctx.font = '18px sans-serif';
-                ctx.fillText('Score: ' + score, W/2, H/2 + 12);
-                ctx.fillStyle = '#4ECDC4'; ctx.font = '14px sans-serif';
-                ctx.fillText(animal.emoji + ' ' + animal.name + ' heeft het gehaald!', W/2, H/2 + 38);
+                if (currentLevel >= MAX_LEVELS) {
+                    ctx.shadowColor = '#FFD700'; ctx.shadowBlur = 30;
+                    ctx.fillStyle = '#FFD700'; ctx.font = 'bold 26px sans-serif'; ctx.textAlign = 'center';
+                    ctx.fillText('\uD83C\uDF89 Alle 50 levels gehaald! \uD83C\uDF89', W/2, H/2 - 32);
+                    ctx.shadowBlur = 0; ctx.fillStyle = '#fff'; ctx.font = '20px sans-serif';
+                    ctx.fillText('Totale score: ' + score, W/2, H/2 + 6);
+                    ctx.fillStyle = '#4ECDC4'; ctx.font = '14px sans-serif';
+                    ctx.fillText(animal.emoji + ' ' + animal.name + ' is een absolute kampioen!', W/2, H/2 + 34);
+                } else {
+                    ctx.shadowColor = '#4ECDC4'; ctx.shadowBlur = 20;
+                    ctx.fillStyle = '#4ECDC4'; ctx.font = 'bold 30px sans-serif'; ctx.textAlign = 'center';
+                    ctx.fillText('\u2B50 Level ' + currentLevel + ' klaar!', W/2, H/2 - 30);
+                    ctx.shadowBlur = 0; ctx.fillStyle = '#fff'; ctx.font = '17px sans-serif';
+                    ctx.fillText('Score: ' + score, W/2, H/2 + 4);
+                    ctx.fillStyle = '#aaa'; ctx.font = '14px sans-serif';
+                    if (wonTimer > 40) ctx.fillText('Klik om door te gaan \u2192 Level ' + (currentLevel + 1) + '/50', W/2, H/2 + 30);
+                }
             }
         }
     }
