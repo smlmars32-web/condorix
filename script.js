@@ -1594,7 +1594,7 @@ function runPlatformGame(animal) {
     const GRAVITY = animal.grav;
     const GRAB_R  = animal.grab;
     const HOOK_COLORS = ['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#FF9F43','#A29BFE'];
-    const TRAMPOLINE_BOUNCE = -22;
+    const TRAMPOLINE_BOUNCE = -13;
 
     let currentLevel = window._swingLevel || 1;
     let score        = window._swingScore || 0;
