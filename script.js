@@ -1480,6 +1480,44 @@ function toggleMobileMenu() {
     nav.classList.toggle('active');
 }
 
+// =============================================
+// GAMES DROPDOWN
+// =============================================
+(function() {
+    function initGamesDropdown() {
+        const wrap = document.getElementById('gamesNavItem');
+        if (!wrap) return;
+        let hideTimer = null;
+
+        function show() {
+            clearTimeout(hideTimer);
+            wrap.classList.add('open');
+        }
+        function scheduleHide() {
+            hideTimer = setTimeout(() => wrap.classList.remove('open'), 120);
+        }
+
+        wrap.addEventListener('mouseenter', show);
+        wrap.addEventListener('mouseleave', scheduleHide);
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initGamesDropdown);
+    } else {
+        initGamesDropdown();
+    }
+})();
+
+function openGame(game) {
+    const titles = { dierenquiz: '&#10067; Dieren Quiz', zoekplaatje: '&#128270; Zoek het Dier', geheugenspel: '&#129504; Geheugenspel' };
+    openModal(`
+        <h2>${titles[game] || 'Game'}</h2>
+        <p style="text-align:center;padding:40px 0;color:#888;font-size:1.1rem;">&#127918; Deze game komt binnenkort!</p>
+        <div style="text-align:center;">
+            <button class="btn-secondary" onclick="closeModal()">Sluiten</button>
+        </div>
+    `);
+}
+
 // Slidedown animatie voor cookie banner
 const style = document.createElement('style');
 style.textContent = `
