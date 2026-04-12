@@ -1602,6 +1602,22 @@ function runPlatformGame(animal) {
 
     const HOOK_COLORS = ['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#FF9F43','#A29BFE'];
 
+    // Trampolines [x, y, width] — near bottom of canvas
+    const trampolines = [
+        [420,  310, 80],
+        [740,  290, 80],
+        [1100, 305, 80],
+        [1500, 295, 80],
+        [1850, 310, 80],
+        [2250, 300, 80],
+        [2650, 310, 80],
+        [3050, 295, 80],
+        [3450, 305, 80],
+        [3800, 300, 80],
+    ];
+    const TRAMPOLINE_BOUNCE = -22;
+    let bounceFlash = -1, bounceFlashTimer = 0;
+
     let px, py, vx, vy;
     let attached = false, hookIdx = -1, ropeLen = 0;
     let camX = 0, score = 0, lives = 3;
@@ -1673,6 +1689,16 @@ function runPlatformGame(animal) {
         } else {
             px += vx; py += vy;
         }
+        // Trampoline collision
+        for (let t = 0; t < trampolines.length; t++) {
+            const [tx, ty, tw] = trampolines[t];
+            if (px > tx - 10 && px < tx + tw + 10 && py >= ty - 8 && py <= ty + 12 && vy > 0) {
+                vy = TRAMPOLINE_BOUNCE;
+                py = ty - 8;
+                bounceFlash = t; bounceFlashTimer = 18;
+            }
+        }
+        if (bounceFlashTimer > 0) bounceFlashTimer--;
         if (py > H + 100) {
             lives--; updateHUD();
             if (lives <= 0) { gameOver = true; return; }
@@ -1752,6 +1778,35 @@ function runPlatformGame(animal) {
             ctx.beginPath(); ctx.moveTo(hx, hy); ctx.lineTo(px - camX, py); ctx.stroke();
             ctx.setLineDash([]);
             ctx.restore();
+        }
+
+        // Trampolines
+        for (let t = 0; t < trampolines.length; t++) {
+            const [tx, ty, tw] = trampolines[t];
+            const sx = tx - camX;
+            if (sx > W + 100 || sx + tw < -100) continue;
+            const isFlashing = bounceFlash === t && bounceFlashTimer > 0;
+            const flashAlpha = isFlashing ? (bounceFlashTimer / 18) : 0;
+            // Shadow/glow
+            ctx.shadowColor = '#39FF14'; ctx.shadowBlur = isFlashing ? 28 : 12;
+            // Base bar
+            const grad = ctx.createLinearGradient(sx, ty, sx, ty + 14);
+            grad.addColorStop(0, isFlashing ? `rgba(100,255,80,${0.7 + flashAlpha * 0.3})` : 'rgba(57,255,20,0.85)');
+            grad.addColorStop(1, 'rgba(20,120,10,0.7)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(sx, ty, tw, 14);
+            // Shine
+            ctx.fillStyle = `rgba(255,255,255,${isFlashing ? 0.6 : 0.25})`;
+            ctx.fillRect(sx + 6, ty + 2, tw - 12, 4);
+            // Legs
+            ctx.strokeStyle = 'rgba(57,255,20,0.6)'; ctx.lineWidth = 3; ctx.setLineDash([]);
+            ctx.beginPath(); ctx.moveTo(sx + 14, ty + 14); ctx.lineTo(sx + 6, ty + 30); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(sx + tw - 14, ty + 14); ctx.lineTo(sx + tw - 6, ty + 30); ctx.stroke();
+            // Emoji indicator
+            ctx.shadowBlur = 0;
+            ctx.font = '16px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText('🤸', sx + tw / 2, ty - 14);
+            ctx.shadowBlur = 0;
         }
 
         // Rope (solid, when attached)
