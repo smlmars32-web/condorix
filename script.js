@@ -1565,7 +1565,7 @@ function startDierenPlatform(animalIndex) {
             </div>
             <canvas id="gameCanvas" width="680" height="360" style="display:block;border-radius:8px;outline:none;cursor:pointer;" tabindex="0"></canvas>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;flex-wrap:wrap;gap:8px;">
-                <span style="font-size:0.78rem;color:#666;">&#128432; Klik of tik om te grijpen / loslaten</span>
+                <span style="font-size:0.78rem;color:#666;">&#128432; Klik/tik als bolletje gloeit om te grijpen &amp;mdash; klik nogmaals om los te laten</span>
                 <div style="display:flex;gap:8px;">
                     <button class="btn-secondary" style="padding:6px 14px;font-size:0.85rem;" onclick="openDierenPlatformGame()">&#8617; Ander dier</button>
                     <button class="btn-secondary" style="padding:6px 14px;font-size:0.85rem;" onclick="closeModal()">Sluiten</button>
@@ -1707,32 +1707,60 @@ function runPlatformGame(animal) {
         ctx.fillStyle = ceilGrad;
         ctx.fillRect(0, 0, W, 6);
 
+        // Find nearest reachable hook when not attached (for preview)
+        let nearIdx = -1, nearDist = Infinity;
+        if (!attached && !gameOver && !won) {
+            for (let i = 0; i < hooks.length; i++) {
+                const dx = hooks[i][0] - px, dy = hooks[i][1] - py;
+                const d = Math.sqrt(dx * dx + dy * dy);
+                if (d < GRAB_R && d < nearDist) { nearDist = d; nearIdx = i; }
+            }
+        }
+
         // Hooks
         for (let i = 0; i < hooks.length; i++) {
             const hx = hooks[i][0] - camX, hy = hooks[i][1];
             if (hx < -30 || hx > W + 30) continue;
             const col = HOOK_COLORS[i % HOOK_COLORS.length];
             const isActive = attached && hookIdx === i;
+            const isNear   = !attached && i === nearIdx;
 
             // Wire from ceiling
-            ctx.strokeStyle = isActive ? col : 'rgba(255,255,255,0.15)';
-            ctx.lineWidth = isActive ? 2 : 1;
+            ctx.strokeStyle = isActive ? col : isNear ? col : 'rgba(255,255,255,0.15)';
+            ctx.lineWidth = isActive ? 2 : isNear ? 1.5 : 1;
             ctx.setLineDash([]);
             ctx.beginPath(); ctx.moveTo(hx, 0); ctx.lineTo(hx, hy); ctx.stroke();
 
             // Glow
-            if (isActive) { ctx.shadowColor = col; ctx.shadowBlur = 20; }
-            ctx.fillStyle = isActive ? col : 'rgba(200,200,200,0.5)';
-            ctx.beginPath(); ctx.arc(hx, hy, isActive ? 10 : 7, 0, Math.PI * 2); ctx.fill();
+            if (isActive || isNear) { ctx.shadowColor = col; ctx.shadowBlur = isNear ? 14 : 20; }
+            const pulse = isNear ? 9 + Math.sin(Date.now() / 150) * 2.5 : 0;
+            ctx.fillStyle = isActive ? col : isNear ? col : 'rgba(200,200,200,0.5)';
+            ctx.beginPath(); ctx.arc(hx, hy, isActive ? 10 : isNear ? pulse : 7, 0, Math.PI * 2); ctx.fill();
             ctx.shadowBlur = 0;
         }
 
-        // Rope
+        // Preview line (dashed) to nearest reachable hook when not attached
+        if (nearIdx >= 0) {
+            const hx = hooks[nearIdx][0] - camX, hy = hooks[nearIdx][1];
+            const col = HOOK_COLORS[nearIdx % HOOK_COLORS.length];
+            const alpha = 0.4 + Math.sin(Date.now() / 200) * 0.25;
+            ctx.save();
+            ctx.globalAlpha = alpha;
+            ctx.setLineDash([8, 6]);
+            ctx.strokeStyle = col;
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(hx, hy); ctx.lineTo(px - camX, py); ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.restore();
+        }
+
+        // Rope (solid, when attached)
         if (attached && hookIdx >= 0) {
             const hx = hooks[hookIdx][0] - camX, hy = hooks[hookIdx][1];
             const col = HOOK_COLORS[hookIdx % HOOK_COLORS.length];
             ctx.shadowColor = col; ctx.shadowBlur = 10;
             ctx.strokeStyle = col; ctx.lineWidth = 2.5;
+            ctx.setLineDash([]);
             ctx.beginPath(); ctx.moveTo(hx, hy); ctx.lineTo(px - camX, py); ctx.stroke();
             ctx.shadowBlur = 0;
         }
