@@ -294,6 +294,12 @@ body {
     gap: 20px;
 }
 
+.header-nav-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .logo h1 {
     color: var(--primary-color);
     font-size: 2rem;
