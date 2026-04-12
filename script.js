@@ -1615,7 +1615,7 @@ function runPlatformGame(animal) {
         ropeLen = 130;
         px = hooks[0][0];
         py = hooks[0][1] + ropeLen;
-        vx = 3.5; vy = 0;
+        vx = 7; vy = 0;
         camX = 0;
     }
     respawn();
