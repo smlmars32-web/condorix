@@ -1481,8 +1481,30 @@ function toggleMobileMenu() {
 }
 
 // =============================================
-// GAMES DROPDOWN — afgehandeld via CSS :hover
+// GAMES DROPDOWN — 5 seconden vertraging bij weggaan
 // =============================================
+(function() {
+    function initGamesDropdown() {
+        const wrap = document.getElementById('gamesNavItem');
+        if (!wrap) return;
+        let hideTimer = null;
+
+        wrap.addEventListener('mouseenter', function() {
+            clearTimeout(hideTimer);
+            wrap.classList.add('open');
+        });
+        wrap.addEventListener('mouseleave', function() {
+            hideTimer = setTimeout(function() {
+                wrap.classList.remove('open');
+            }, 5000);
+        });
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initGamesDropdown);
+    } else {
+        initGamesDropdown();
+    }
+})();
 
 function openGame(game) {
     const titles = { dierenquiz: '&#10067; Dieren Quiz', zoekplaatje: '&#128270; Zoek het Dier', geheugenspel: '&#129504; Geheugenspel' };
