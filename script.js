@@ -1799,6 +1799,7 @@ function runPlatformGame(animal) {
             const col = HOOK_COLORS[i % HOOK_COLORS.length];
             const isActive = attached && hookIdx === i;
             const isNear   = !attached && i === nearIdx;
+            const r = isActive ? 14 : isNear ? 11 + Math.sin(Date.now() / 150) * 2.5 : 10;
 
             // Wire from ceiling
             ctx.strokeStyle = isActive ? col : isNear ? col : 'rgba(255,255,255,0.15)';
@@ -1806,12 +1807,22 @@ function runPlatformGame(animal) {
             ctx.setLineDash([]);
             ctx.beginPath(); ctx.moveTo(hx, 0); ctx.lineTo(hx, hy); ctx.stroke();
 
-            // Glow
-            if (isActive || isNear) { ctx.shadowColor = col; ctx.shadowBlur = isNear ? 14 : 20; }
-            const pulse = isNear ? 9 + Math.sin(Date.now() / 150) * 2.5 : 0;
-            ctx.fillStyle = isActive ? col : isNear ? col : 'rgba(200,200,200,0.5)';
-            ctx.beginPath(); ctx.arc(hx, hy, isActive ? 10 : isNear ? pulse : 7, 0, Math.PI * 2); ctx.fill();
+            // Circle background
+            if (isActive || isNear) { ctx.shadowColor = col; ctx.shadowBlur = isNear ? 14 : 22; }
+            ctx.fillStyle = isActive ? col : isNear ? col : 'rgba(40,40,70,0.92)';
+            ctx.beginPath(); ctx.arc(hx, hy, r, 0, Math.PI * 2); ctx.fill();
+            // Circle border
+            ctx.strokeStyle = isActive ? '#fff' : col;
+            ctx.lineWidth = isActive ? 2 : 1.5;
+            ctx.beginPath(); ctx.arc(hx, hy, r, 0, Math.PI * 2); ctx.stroke();
             ctx.shadowBlur = 0;
+
+            // Animal emoji inside circle
+            ctx.save();
+            ctx.font = `${Math.round(r * 1.25)}px serif`;
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText(animal.emoji, hx, hy + 1);
+            ctx.restore();
         }
 
         // Preview line (dashed) to nearest reachable hook when not attached
