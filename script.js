@@ -1701,6 +1701,9 @@ function runPlatformGame(animal) {
                 const dx = hooks[best][0] - px, dy = hooks[best][1] - py;
                 ropeLen = Math.sqrt(dx * dx + dy * dy);
                 attached = true; hookIdx = best;
+                // Small speed boost on grab instead of losing momentum
+                const speed = Math.sqrt(vx * vx + vy * vy);
+                if (speed > 0) { vx = vx / speed * (speed + 1.8); vy = vy / speed * (speed + 1.8); }
                 if (!hooksPassed.has(best)) { hooksPassed.add(best); score += 10; updateHUD(); }
             }
         }
