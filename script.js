@@ -1507,7 +1507,7 @@ function toggleMobileMenu() {
 })();
 
 function openGame(game) {
-    const titles = { dierenquiz: '&#10067; Dieren Quiz', zoekplaatje: '&#128270; Zoek het Dier', geheugenspel: '&#129504; Geheugenspel' };
+    const titles = { zoekplaatje: '&#128270; Zoek het Dier', geheugenspel: '&#129504; Geheugenspel' };
     openModal(`
         <h2>${titles[game] || 'Game'}</h2>
         <p style="text-align:center;padding:40px 0;color:#888;font-size:1.1rem;">&#127918; Deze game komt binnenkort!</p>
@@ -1516,6 +1516,381 @@ function openGame(game) {
         </div>
     `);
 }
+
+// =============================================
+// DIEREN PLATFORM GAME
+// =============================================
+function openDierenPlatformGame() {
+    const animals = [
+        { emoji: '🦁', name: 'Leeuw',     speed: 4,   jump: 12, desc: '&#9889; Sterk & snel' },
+        { emoji: '🦘', name: 'Kangoeroe', speed: 3,   jump: 16, desc: '&#128692; Springt het hoogst' },
+        { emoji: '🐧', name: 'Pinguïn',   speed: 3.5, jump: 11, desc: '&#10052; Stabiel' },
+        { emoji: '🦊', name: 'Vos',       speed: 5.5, jump: 12, desc: '&#9889; Snelste' },
+        { emoji: '🐸', name: 'Kikker',    speed: 3.5, jump: 15, desc: '&#127919; Springt ver' },
+        { emoji: '🐒', name: 'Aap',       speed: 4.5, jump: 13, desc: '&#11088; Veelzijdig' },
+    ];
+    window._platformAnimals = animals;
+    openModal(`
+        <h2>&#127918; Kies je dier!</h2>
+        <p style="margin-bottom:16px;color:#666;text-align:center;">Elk dier heeft zijn eigen krachten!</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;">
+            ${animals.map((a, i) => `
+                <button onclick="startDierenPlatform(${i})" style="background:#f9f9f9;border:2px solid #ddd;border-radius:10px;padding:16px 8px;cursor:pointer;font-family:inherit;transition:all 0.2s;" onmouseover="this.style.borderColor='#4F7D4A';this.style.background='#f0fff4'" onmouseout="this.style.borderColor='#ddd';this.style.background='#f9f9f9'">
+                    <div style="font-size:2.5rem;">${a.emoji}</div>
+                    <div style="font-weight:600;margin-top:6px;">${a.name}</div>
+                    <div style="font-size:0.73rem;color:#888;margin-top:2px;">${a.desc}</div>
+                </button>
+            `).join('')}
+        </div>
+        <div style="text-align:center;">
+            <button class="btn-secondary" onclick="closeModal()">Sluiten</button>
+        </div>
+    `);
+    const mc = document.querySelector('.modal-content');
+    if (mc) { mc.style.maxWidth = '480px'; mc.style.width = '92vw'; }
+}
+
+function startDierenPlatform(animalIndex) {
+    const animal = window._platformAnimals[animalIndex];
+    openModal(`
+        <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <h2 style="margin:0;">${animal.emoji} ${animal.name}</h2>
+                <div style="display:flex;gap:20px;font-weight:600;font-size:1rem;">
+                    <span>&#9829; <span id="gameLives">3</span></span>
+                    <span>&#11088; <span id="gameScore">0</span></span>
+                </div>
+            </div>
+            <canvas id="gameCanvas" width="680" height="360" style="display:block;border-radius:8px;outline:none;cursor:default;" tabindex="0"></canvas>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;flex-wrap:wrap;gap:8px;">
+                <span style="font-size:0.78rem;color:#888;">&#8592;&#8594; bewegen &nbsp;|&nbsp; &#8593; of <kbd>spatie</kbd> springen</span>
+                <div style="display:flex;gap:8px;">
+                    <button class="btn-secondary" style="padding:6px 14px;font-size:0.85rem;" onclick="openDierenPlatformGame()">&#8617; Ander dier</button>
+                    <button class="btn-secondary" style="padding:6px 14px;font-size:0.85rem;" onclick="closeModal()">Sluiten</button>
+                </div>
+            </div>
+        </div>
+    `);
+    const mc = document.querySelector('.modal-content');
+    if (mc) { mc.style.maxWidth = '740px'; mc.style.width = '96vw'; }
+    setTimeout(() => runPlatformGame(animal), 60);
+}
+
+function runPlatformGame(animal) {
+    const canvas = document.getElementById('gameCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+
+    if (window._gameLoopId) { cancelAnimationFrame(window._gameLoopId); window._gameLoopId = null; }
+
+    // Level: platforms [x, y, w, h]
+    const platforms = [
+        [0,    320, 280, 40],
+        [320,  290, 140, 18],
+        [510,  255, 120, 18],
+        [690,  290, 160, 18],
+        [910,  255, 120, 18],
+        [1090, 215, 150, 18],
+        [1300, 255, 100, 18],
+        [1450, 200, 140, 18],
+        [1640, 235, 120, 18],
+        [1820, 270, 110, 18],
+        [1990, 230, 150, 18],
+        [2200, 195, 120, 18],
+        [2380, 235, 130, 18],
+        [2570, 195, 110, 18],
+        [2740, 250, 130, 18],
+        [2930, 210, 150, 18],
+        [3140, 255, 110, 18],
+        [3310, 295, 130, 18],
+        [3500, 235, 120, 18],
+        [3680, 195, 180, 18],
+        [3910, 255, 220, 55], // eindplatform
+    ];
+
+    const LEVEL_W = 4200;
+
+    const coins = platforms.slice(1, -1).map(p => ({
+        x: p[0] + p[2] / 2,
+        y: p[1] - 26,
+        r: 0,
+        collected: false
+    }));
+
+    const flag = { x: 4000, y: 160 };
+
+    const player = {
+        x: 60, y: 270,
+        vx: 0, vy: 0,
+        w: 34, h: 34,
+        onGround: false,
+        facing: 1,
+    };
+
+    const keys = {};
+    let score = 0;
+    let lives = 3;
+    let camX = 0;
+    let gameOver = false;
+    let won = false;
+    let wonTimer = 0;
+    let active = true;
+
+    function updateHUD() {
+        const s = document.getElementById('gameScore');
+        const l = document.getElementById('gameLives');
+        if (s) s.textContent = score;
+        if (l) l.textContent = lives;
+    }
+
+    function onKeyDown(e) {
+        keys[e.key] = true;
+        if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' '].includes(e.key)) e.preventDefault();
+    }
+    function onKeyUp(e) { keys[e.key] = false; }
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keyup',   onKeyUp);
+    canvas.focus();
+
+    function respawn() {
+        player.x = 60; player.y = 270;
+        player.vx = 0; player.vy = 0;
+        camX = 0;
+    }
+
+    function roundRect(x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y);
+        ctx.arcTo(x + w, y, x + w, y + r, r);
+        ctx.lineTo(x + w, y + h - r);
+        ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+        ctx.lineTo(x + r, y + h);
+        ctx.arcTo(x, y + h, x, y + h - r, r);
+        ctx.lineTo(x, y + r);
+        ctx.arcTo(x, y, x + r, y, r);
+        ctx.closePath();
+    }
+
+    function update() {
+        if (!active) return;
+        if (gameOver || won) { if (won) wonTimer++; return; }
+
+        const left  = keys['ArrowLeft']  || keys['a'] || keys['A'];
+        const right = keys['ArrowRight'] || keys['d'] || keys['D'];
+        const jump  = keys['ArrowUp'] || keys[' ']   || keys['w'] || keys['W'];
+
+        player.vx = 0;
+        if (left)  { player.vx = -animal.speed; player.facing = -1; }
+        if (right) { player.vx =  animal.speed; player.facing =  1; }
+        if (jump && player.onGround) {
+            player.vy = -animal.jump;
+            player.onGround = false;
+        }
+
+        player.vy += 0.55;
+        if (player.vy > 14) player.vy = 14;
+        player.x += player.vx;
+        player.y += player.vy;
+        player.onGround = false;
+
+        for (const [px, py, pw, ph] of platforms) {
+            if (player.x + player.w > px && player.x < px + pw &&
+                player.y + player.h > py &&
+                player.y + player.h < py + ph + Math.abs(player.vy) + 2 &&
+                player.vy >= 0) {
+                player.y = py - player.h;
+                player.vy = 0;
+                player.onGround = true;
+            }
+        }
+
+        if (player.x < 0) player.x = 0;
+        if (player.x + player.w > LEVEL_W) player.x = LEVEL_W - player.w;
+
+        if (player.y > H + 80) {
+            lives--;
+            updateHUD();
+            if (lives <= 0) { gameOver = true; } else { respawn(); }
+        }
+
+        for (const c of coins) {
+            if (!c.collected &&
+                Math.abs((player.x + player.w / 2) - c.x) < 24 &&
+                Math.abs((player.y + player.h / 2) - c.y) < 24) {
+                c.collected = true;
+                score += 10;
+                updateHUD();
+            }
+            c.r += 0.05;
+        }
+
+        if (player.x + player.w / 2 > flag.x - 40 && player.y < flag.y + 140) {
+            won = true;
+            score += 100;
+            updateHUD();
+        }
+
+        const targetCam = player.x - W / 3;
+        camX += (targetCam - camX) * 0.12;
+        if (camX < 0) camX = 0;
+        if (camX > LEVEL_W - W) camX = LEVEL_W - W;
+    }
+
+    function draw() {
+        // Sky
+        const sky = ctx.createLinearGradient(0, 0, 0, H);
+        sky.addColorStop(0, '#5BB8E8');
+        sky.addColorStop(1, '#C8EAFB');
+        ctx.fillStyle = sky;
+        ctx.fillRect(0, 0, W, H);
+
+        // Clouds (parallax)
+        ctx.fillStyle = 'rgba(255,255,255,0.85)';
+        const cloudXs = [150, 500, 900, 1400, 1900, 2400, 2900, 3400, 3900];
+        for (const cx of cloudXs) {
+            const sx = ((cx - camX * 0.25 % (LEVEL_W)) + LEVEL_W * 2) % (LEVEL_W) - 200;
+            if (sx < -200 || sx > W + 200) continue;
+            ctx.beginPath();
+            ctx.arc(sx,      H * 0.18, 28, 0, Math.PI * 2);
+            ctx.arc(sx + 34, H * 0.15, 34, 0, Math.PI * 2);
+            ctx.arc(sx + 68, H * 0.18, 24, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Ground strip
+        ctx.fillStyle = '#3a6b35';
+        ctx.fillRect(0, H - 8, W, 8);
+
+        // Platforms
+        for (const [px, py, pw, ph] of platforms) {
+            const sx = px - camX;
+            if (sx > W + 4 || sx + pw < -4) continue;
+            // Grass top
+            ctx.fillStyle = '#4F7D4A';
+            ctx.fillRect(sx, py, pw, 8);
+            // Dirt body
+            ctx.fillStyle = '#8B6333';
+            ctx.fillRect(sx, py + 8, pw, ph - 8);
+            // Grass highlight line
+            ctx.fillStyle = '#6aA860';
+            ctx.fillRect(sx, py, pw, 3);
+        }
+
+        // Coins
+        const t = Date.now() / 1000;
+        for (const c of coins) {
+            if (c.collected) continue;
+            const sx = c.x - camX;
+            if (sx < -30 || sx > W + 30) continue;
+            const bounce = Math.sin(t * 3 + c.x * 0.01) * 4;
+            ctx.save();
+            ctx.font = '18px serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('⭐', sx, c.y + bounce);
+            ctx.restore();
+        }
+
+        // Flag
+        const fsx = flag.x - camX;
+        if (fsx > -50 && fsx < W + 50) {
+            ctx.strokeStyle = '#aaa';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(fsx, flag.y);
+            ctx.lineTo(fsx, flag.y + 130);
+            ctx.stroke();
+            ctx.fillStyle = '#D4A017';
+            ctx.beginPath();
+            ctx.moveTo(fsx, flag.y);
+            ctx.lineTo(fsx + 38, flag.y + 15);
+            ctx.lineTo(fsx, flag.y + 30);
+            ctx.closePath();
+            ctx.fill();
+            ctx.font = '20px serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🏆', fsx, flag.y + 148);
+        }
+
+        // Player
+        const psx = player.x - camX;
+        ctx.save();
+        ctx.font = '32px serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        if (player.facing === -1) {
+            ctx.translate(psx + player.w / 2, player.y + player.h / 2);
+            ctx.scale(-1, 1);
+            ctx.fillText(animal.emoji, 0, 0);
+        } else {
+            ctx.fillText(animal.emoji, psx + player.w / 2, player.y + player.h / 2);
+        }
+        ctx.restore();
+
+        // Progress bar
+        const progress = Math.min(player.x / (LEVEL_W - 300), 1);
+        ctx.fillStyle = 'rgba(0,0,0,0.25)';
+        roundRect(W / 2 - 100, 10, 200, 10, 5);
+        ctx.fill();
+        ctx.fillStyle = '#D4A017';
+        roundRect(W / 2 - 100, 10, 200 * progress, 10, 5);
+        ctx.fill();
+        ctx.font = '14px serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('🏆', W / 2 + 102, 19);
+
+        // Game over overlay
+        if (gameOver) {
+            ctx.fillStyle = 'rgba(0,0,0,0.65)';
+            ctx.fillRect(0, 0, W, H);
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 34px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Game Over 💀', W / 2, H / 2 - 28);
+            ctx.font = '20px sans-serif';
+            ctx.fillText('Score: ' + score, W / 2, H / 2 + 10);
+            ctx.font = '14px sans-serif';
+            ctx.fillStyle = '#ccc';
+            ctx.fillText('Klik op "Ander dier" om opnieuw te starten', W / 2, H / 2 + 44);
+        }
+
+        // Won overlay
+        if (won) {
+            const a = Math.min(wonTimer / 40, 0.75);
+            ctx.fillStyle = `rgba(0,0,0,${a})`;
+            ctx.fillRect(0, 0, W, H);
+            if (wonTimer > 12) {
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 34px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('🎉 Gewonnen! 🎉', W / 2, H / 2 - 28);
+                ctx.font = '20px sans-serif';
+                ctx.fillText('Score: ' + score, W / 2, H / 2 + 10);
+                ctx.font = '14px sans-serif';
+                ctx.fillStyle = '#D4A017';
+                ctx.fillText('Geweldige prestatie, ' + animal.name + '!', W / 2, H / 2 + 44);
+            }
+        }
+    }
+
+    function loop() {
+        if (!document.getElementById('gameCanvas')) {
+            active = false;
+            document.removeEventListener('keydown', onKeyDown);
+            document.removeEventListener('keyup',   onKeyUp);
+            return;
+        }
+        update();
+        draw();
+        window._gameLoopId = requestAnimationFrame(loop);
+    }
+
+    window._gameLoopId = requestAnimationFrame(loop);
+}
+
 
 // Slidedown animatie voor cookie banner
 const style = document.createElement('style');
