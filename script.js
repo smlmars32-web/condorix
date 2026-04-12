@@ -1712,7 +1712,11 @@ function runPlatformGame(animal) {
 
     function update() {
         if (!active || gameOver) return;
-        if (won) { wonTimer++; return; }
+        if (won) {
+            wonTimer++;
+            if (currentLevel < MAX_LEVELS && wonTimer >= 180) loadNextLevel();
+            return;
+        }
         vy += GRAVITY;
         if (attached && hookIdx >= 0) {
             const hx = hooks[hookIdx][0], hy = hooks[hookIdx][1];
@@ -1750,9 +1754,6 @@ function runPlatformGame(animal) {
         if (!won && px > FINISH_X) {
             const bonus = Math.max(50, 200 - (currentLevel - 1) * 2);
             won = true; wonTimer = 0; score += bonus; updateHUD();
-        }
-        if (won && currentLevel < MAX_LEVELS && wonTimer >= 180) {
-            loadNextLevel();
         }
         const tc = px - W / 3;
         camX += (tc - camX) * 0.1;
