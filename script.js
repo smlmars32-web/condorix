@@ -1,4 +1,4 @@
-// Parallax Scroll Effect (Firewatch-style)
+﻿// Parallax Scroll Effect (Firewatch-style)
 let ticking = false;
 
 function updateParallax() {
@@ -281,7 +281,7 @@ async function submitLegoPhoto() {
     });
     
     if (ok) {
-        msg.textContent = 'Gelukt! Je foto staat nu in de galerij! ??';
+        msg.textContent = 'Gelukt! Je foto staat nu in de galerij! \uD83C\uDF89';
         msg.style.display = 'block';
         document.getElementById('legoUploaderName').value = '';
         fileInput.value = '';
@@ -494,7 +494,7 @@ function openTicketModal() {
     const userEmail = currentUser ? currentUser.email : '';
     
     const content = `
-        <h2>??? Bestel Tickets</h2>
+        <h2>\uD83C\uDFAB Bestel Tickets</h2>
         <p>Kies je tickets en profiteer van onze Early Bird korting!</p>
         
         <div class="price-card">
@@ -589,12 +589,12 @@ function submitTicketForm(event) {
             <p><strong>Datum:</strong> ${date.toLocaleDateString('nl-NL')}</p>
             <p><strong>Volwassenen:</strong> ${adults} � �${adultPrice} = �${adults * adultPrice}</p>
             <p><strong>Kinderen:</strong> ${children} � �${childPrice} = �${children * childPrice}</p>
-            ${isEarlyBird ? `<p style="color: var(--accent-color);"><strong>?? Early Bird Korting: -�${savings}</strong></p>` : ''}
+            ${isEarlyBird ? `<p style="color: var(--accent-color);"><strong>\uD83C\uDF89 Early Bird Korting: -�${savings}</strong></p>` : ''}
             <p style="font-size: 1.5rem; color: var(--primary-color);"><strong>Totaal: �${totalPrice}</strong></p>
         </div>
         <p>Een bevestigingsmail is verstuurd naar <strong>${email}</strong></p>
         ${currentUser ? '<p style="color: var(--primary-color);">? Deze reservering is opgeslagen in je account!</p>' : ''}
-        <p>We kijken ernaar uit je te verwelkomen bij Condorix! ??</p>
+        <p>We kijken ernaar uit je te verwelkomen bij Condorix! \uD83D\uDE0A</p>
         <button class="btn-cta" onclick="closeModal()">Sluiten</button>
     `;
     openModal(confirmContent);
@@ -617,7 +617,7 @@ function openAccountModal() {
         if (reservations.length > 0) {
             reservationsList = reservations.map(r => `
                 <div style="padding: 15px; background: rgba(255,255,255,0.5); border-radius: 8px; margin-bottom: 10px;">
-                    <p><strong>?? ${r.date}</strong></p>
+                    <p><strong>\uD83D\uDCC5 ${r.date}</strong></p>
                     <p>Volwassenen: ${r.adults} | Kinderen: ${r.children}</p>
                     <p>Totaal: �${r.totalPrice} ${r.isEarlyBird ? '(Early Bird ?)' : ''}</p>
                     <p style="font-size: 0.9rem; color: #666;">Geboekt op: ${r.bookedOn}</p>
@@ -628,7 +628,7 @@ function openAccountModal() {
         }
         
         const content = `
-            <h2>?? Welkom, ${user.name}!</h2>
+            <h2>\uD83D\uDC4B Welkom, ${user.name}!</h2>
             <div class="info-box">
                 <h3>Account Gegevens</h3>
                 <p><strong>Email:</strong> ${user.email}</p>
@@ -647,7 +647,7 @@ function openAccountModal() {
     } else {
         // Show login form if not logged in
         const content = `
-            <h2>?? Mijn Account</h2>
+            <h2>\uD83D\uDC64 Mijn Account</h2>
             <p>Log in of maak een account aan om je reserveringen te beheren.</p>
             
             <form class="modal-form" onsubmit="submitLogin(event)">
@@ -693,7 +693,7 @@ function submitLogin(event) {
 
 function showRegistration() {
     const content = `
-        <h2>?? Account Aanmaken</h2>
+        <h2>\uD83D\uDC64 Account Aanmaken</h2>
         <form class="modal-form" onsubmit="submitRegistration(event)">
             <div class="form-group">
                 <label>Naam:</label>
@@ -752,7 +752,7 @@ function submitRegistration(event) {
     updateAccountButton();
     
     const content = `
-        <h2>?? Account Aangemaakt!</h2>
+        <h2>\u2705 Account Aangemaakt!</h2>
         <p>Welkom ${name}! Je account is succesvol aangemaakt en je bent ingelogd.</p>
         <p>Je kunt nu reserveringen maken en al je bezoeken beheren in je account.</p>
         <button class="btn-cta" onclick="closeModal()">Begin met Reserveren</button>
@@ -762,7 +762,7 @@ function submitRegistration(event) {
 
 function showPasswordReset() {
     const content = `
-        <h2>?? Wachtwoord Herstellen</h2>
+        <h2>\uD83D\uDD12 Wachtwoord Herstellen</h2>
         <p>Voer je emailadres in en we sturen je een link om je wachtwoord opnieuw in te stellen.</p>
         
         <form class="modal-form" onsubmit="submitPasswordReset(event)">
@@ -781,7 +781,7 @@ function submitPasswordReset(event) {
     event.preventDefault();
     const email = event.target.email.value;
     const content = `
-        <h2>?? Email Verzonden</h2>
+        <h2>\u2709\uFE0F Email Verzonden</h2>
         <p>We hebben een herstel link gestuurd naar <strong>${email}</strong></p>
         <p>Controleer je inbox en volg de instructies om je wachtwoord opnieuw in te stellen.</p>
         <button class="btn-cta" onclick="closeModal()">Sluiten</button>
@@ -792,7 +792,7 @@ function submitPasswordReset(event) {
 // Contact Modal
 function openContactModal() {
     const content = `
-        <h2>?? Contact</h2>
+        <h2>\uD83D\uDCDE Contact</h2>
         <div class="info-box">
             <h3>Bezoekadres</h3>
             <p>Condorix Park 1<br>3911 AB Doorn</p>
@@ -800,9 +800,9 @@ function openContactModal() {
         
         <div class="info-box">
             <h3>Contactgegevens</h3>
-            <p>?? Telefoon: 0317 - 650 200</p>
-            <p>?? Email: info@condorix.nl</p>
-            <p>?? Ma-Vr: 09:00 - 17:00</p>
+            <p>\uD83D\uDCF1 Telefoon: 0317 - 650 200</p>
+            <p>\uD83D\uDCE7 Email: info@condorix.nl</p>
+            <p>\uD83D\uDD57 Ma-Vr: 09:00 - 17:00</p>
         </div>
         
         <form id="contactForm" class="modal-form" onsubmit="submitContactForm(event)">
@@ -869,7 +869,7 @@ function submitContactForm(event) {
     // Toon gebruikersvriendelijke instructie
     setTimeout(() => {
         const content = `
-            <h2>?? Gmail Geopend</h2>
+            <h2>\uD83D\uDCEC Gmail Geopend</h2>
             <p>Er is een nieuw Gmail tabblad geopend met je bericht voorbereid voor Condorix.</p>
             <div class="info-box" style="background: #e8f4f8; border-left: 4px solid #4f7d4a; padding: 15px; margin: 15px 0;">
                 <p style="margin: 0 0 10px 0; font-weight: 600;">? Wat er in je Gmail staat:</p>
@@ -880,7 +880,7 @@ function submitContactForm(event) {
                 </ul>
             </div>
             <div class="info-box" style="background: #fff3cd; padding: 15px; margin: 15px 0;">
-                <p style="margin: 0;"><strong>?? Laatste stap:</strong> Klik in het Gmail tabblad op de blauwe <strong>"Verzenden"</strong> knop.</p>
+                <p style="margin: 0;"><strong>\uD83D\uDC49 Laatste stap:</strong> Klik in het Gmail tabblad op de blauwe <strong>"Verzenden"</strong> knop.</p>
             </div>
             <button class="btn-cta" onclick="closeModal()">Begrepen</button>
         `;
@@ -926,7 +926,7 @@ function openFAQModal() {
 // Newsletter Modal
 function openNewsletterModal() {
     const content = `
-        <h2>?? Nieuwsbrief</h2>
+        <h2>\uD83D\uDCE8 Nieuwsbrief</h2>
         <p>Blijf op de hoogte van al het nieuws, speciale aanbiedingen en evenementen!</p>
         
         <form class="modal-form" onsubmit="submitNewsletter(event)">
@@ -956,7 +956,7 @@ function openNewsletterModal() {
 function submitNewsletter(event) {
     event.preventDefault();
     const content = `
-        <h2>?? Welkom bij onze nieuwsbrief!</h2>
+        <h2>\uD83C\uDF89 Welkom bij onze nieuwsbrief!</h2>
         <p>Je bent succesvol aangemeld. Je ontvangt binnenkort je eerste nieuwsbrief met exclusieve aanbiedingen!</p>
         <button class="btn-cta" onclick="closeModal()">Sluiten</button>
     `;
@@ -969,7 +969,7 @@ function openInfoModal(type) {
     
     if (type === 'openingstijden') {
         content = `
-            <h2>?? Openingstijden</h2>
+            <h2>\uD83D\uDD57 Openingstijden</h2>
             <div class="info-box">
                 <h3>Reguliere Openingstijden</h3>
                 <p><strong>Maandag - Zondag:</strong> 09:00 - 18:00 uur</p>
@@ -992,7 +992,7 @@ function openInfoModal(type) {
         `;
     } else if (type === 'parkeren') {
         content = `
-            <h2>?? Parkeren</h2>
+            <h2>\uD83D\uDE97 Parkeren</h2>
             <div class="info-box">
                 <h3>Gratis Parkeren</h3>
                 <p>We hebben ruime gratis parkeergelegenheid direct bij de ingang.</p>
@@ -1016,7 +1016,7 @@ function openInfoModal(type) {
         `;
     } else if (type === 'privacy') {
         content = `
-            <h2>?? Privacybeleid</h2>
+            <h2>\uD83D\uDD12 Privacybeleid</h2>
             <p>Condorix respecteert je privacy en gaat zorgvuldig om met je persoonlijke gegevens.</p>
             
             <div class="info-box">
@@ -1041,7 +1041,7 @@ function openInfoModal(type) {
 // Map Modal
 function openMapModal() {
     const content = `
-        <h2>??? Plattegrond</h2>
+        <h2>\uD83D\uDDFA\uFE0F Plattegrond</h2>
         <p>Download onze interactieve plattegrond om je bezoek optimaal te plannen!</p>
         
         <div class="info-box">
@@ -1071,7 +1071,7 @@ function showSection(section) {
         }
     } else if (section === 'kaart') {
         const content = `
-            <h2>??? Plattegrond</h2>
+            <h2>\uD83D\uDDFA\uFE0F Plattegrond</h2>
             <div style="display: flex; gap: 24px; align-items: flex-start; flex-wrap: nowrap; margin: 20px 0;">
                 <div style="flex: 1 1 0; min-width: 0;">
                     <img src="images/plattegrond.png" alt="Plattegrond Condorix" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); display: block;">
@@ -1176,7 +1176,7 @@ function showSection(section) {
         }
     } else {
         const content = `
-            <h2>?? ${section.toUpperCase()}</h2>
+            <h2>\uD83D\uDC3E ${section.toUpperCase()}</h2>
             <p>Deze sectie is momenteel in ontwikkeling. Binnenkort vind je hier meer informatie over ${section}!</p>
             
             <div class="info-box">
@@ -1293,21 +1293,21 @@ document.addEventListener('keydown', (e) => {
 // Conservation Modal
 function openConservationModal() {
     const content = `
-        <h2>?? Natuurbescherming & Conservatie</h2>
+        <h2>\uD83C\uDF3F Natuurbescherming & Conservatie</h2>
         <p>Condorix zet zich actief in voor het behoud van bedreigde diersoorten en hun leefgebieden.</p>
         
         <div class="info-box">
             <h3>Onze Beschermingsprogramma's</h3>
-            <p><strong>?? Rode Panda Bescherming</strong><br>
+            <p><strong>\uD83D\uDC3C Rode Panda Bescherming</strong><br>
             We steunen het Red Panda Network dat werkt aan habitatbescherming in Nepal en India.</p>
             
-            <p><strong>?? Tijger Conservatie</strong><br>
+            <p><strong>\uD83D\uDC2F Tijger Conservatie</strong><br>
             Via het Global Tiger Initiative helpen we bij het beschermen van tijgerpopulaties in Azi�.</p>
             
-            <p><strong>?? Olifanten Project</strong><br>
+            <p><strong>\uD83D\uDC18 Olifanten Project</strong><br>
             We dragen bij aan anti-stroperij programma's en het cre�ren van veilige migratieroutes.</p>
             
-            <p><strong>?? Zeeschildpad Redding</strong><br>
+            <p><strong>\uD83D\uDC22 Zeeschildpad Redding</strong><br>
             Ondersteuning van nestelstranden en rehabilitatie van gewonde zeeschildpadden.</p>
         </div>
         
@@ -1328,10 +1328,10 @@ function openConservationModal() {
             <h3>Word Conservation Vriend</h3>
             <p>Wil je extra bijdragen? Word Conservation Vriend vanaf �5,- per maand en ontvang:</p>
             <ul>
-                <li>?? 10% korting op alle tickets</li>
-                <li>?? Kwartaalmagazine met projectupdates</li>
-                <li>?? Exclusieve Conservation Events</li>
-                <li>?? Speciale geschenken</li>
+                <li>\uD83C\uDFAB 10% korting op alle tickets</li>
+                <li>\uD83D\uDCD6 Kwartaalmagazine met projectupdates</li>
+                <li>\uD83C\uDF1F Exclusieve Conservation Events</li>
+                <li>\uD83C\uDF81 Speciale geschenken</li>
             </ul>
             <button class="btn-cta" onclick="openConservationSignup()">Word Conservation Vriend</button>
         </div>
@@ -1343,7 +1343,7 @@ function openConservationModal() {
 
 function openConservationSignup() {
     const content = `
-        <h2>?? Word Conservation Vriend</h2>
+        <h2>\uD83D\uDC9A Word Conservation Vriend</h2>
         <p>Samen maken we het verschil voor bedreigde dieren!</p>
         
         <form class="modal-form" onsubmit="submitConservationSignup(event)">
@@ -1393,7 +1393,7 @@ function submitConservationSignup(event) {
     const amount = formData.get('amount');
     
     const content = `
-        <h2>?? Welkom Conservation Vriend!</h2>
+        <h2>\uD83C\uDF89 Welkom Conservation Vriend!</h2>
         <p>Bedankt ${name}! Je bent nu officieel Conservation Vriend van Condorix!</p>
         
         <div class="info-box">
@@ -1404,7 +1404,7 @@ function submitConservationSignup(event) {
             <p>? Je bijdrage van �${amount},- per maand start volgende maand</p>
         </div>
         
-        <p>Dankzij jouw steun kunnen we doorgaan met het beschermen van bedreigde diersoorten! ????</p>
+        <p>Dankzij jouw steun kunnen we doorgaan met het beschermen van bedreigde diersoorten! \uD83D\uDC3C\uD83D\uDC2F\uD83D\uDC18\uD83D\uDC22</p>
         
         <button class="btn-cta" onclick="closeModal()">Naar Mijn Account</button>
     `;
@@ -1522,12 +1522,12 @@ function openGame(game) {
 // =============================================
 function openDierenPlatformGame() {
     const animals = [
-        { emoji: '??', name: 'Leeuw',     grav: 0.45, grab: 230, desc: '&#9878; Gebalanceerd' },
-        { emoji: '??', name: 'Kangoeroe', grav: 0.35, grab: 260, desc: '&#127919; Lang touw' },
-        { emoji: '??', name: 'Aap',       grav: 0.50, grab: 250, desc: '&#9889; Behendig' },
-        { emoji: '??', name: 'Vos',       grav: 0.40, grab: 270, desc: '&#10024; Groot bereik' },
-        { emoji: '??', name: 'Kikker',    grav: 0.55, grab: 210, desc: '&#128279; Zwaar' },
-        { emoji: '??', name: 'Adelaar',   grav: 0.28, grab: 290, desc: '&#129413; Zweeft' },
+        { emoji: '\uD83E\uDD81', name: 'Leeuw',     grav: 0.45, grab: 230, desc: '&#9878; Gebalanceerd' },
+        { emoji: '\uD83E\uDD98', name: 'Kangoeroe', grav: 0.35, grab: 260, desc: '&#127919; Lang touw' },
+        { emoji: '\uD83D\uDC12', name: 'Aap',       grav: 0.50, grab: 250, desc: '&#9889; Behendig' },
+        { emoji: '\uD83E\uDD8A', name: 'Vos',       grav: 0.40, grab: 270, desc: '&#10024; Groot bereik' },
+        { emoji: '\uD83D\uDC38', name: 'Kikker',    grav: 0.55, grab: 210, desc: '&#128007; Zwaar' },
+        { emoji: '\uD83E\uDD85', name: 'Adelaar',   grav: 0.28, grab: 290, desc: '&#129413; Zweeft' },
     ];
     window._swingAnimals = animals;
     openModal(`
@@ -1927,7 +1927,7 @@ function runPlatformGame(animal) {
         ctx.fillStyle = pg;
         ctx.fillRect(W/2 - 100, 12, 200 * prog, 8);
         ctx.font = '14px serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#FFD700';
-        ctx.fillText('??', W/2 + 104, 16);
+        ctx.fillText('\uD83C\uDFC6', W/2 + 104, 16);
 
         // Overlays
         if (gameOver) {
@@ -1996,4 +1996,4 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-console.log('Condorix website geladen! ??');
+console.log('Condorix website geladen! \uD83E\uDD81');
