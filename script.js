@@ -1,4 +1,4 @@
-﻿// Parallax Scroll Effect (Firewatch-style)
+// Parallax Scroll Effect (Firewatch-style)
 let ticking = false;
 
 function updateParallax() {
@@ -103,7 +103,7 @@ window.addEventListener('load', () => {
 });
 
 // =============================================
-// LEGO GALERIJ SYSTEEM — Supabase
+// LEGO GALERIJ SYSTEEM � Supabase
 // =============================================
 
 const SUPABASE_URL  = 'https://bpmbqjhctxqgtsouzcqs.supabase.co';
@@ -184,7 +184,7 @@ async function deleteFromStorage(fileName) {
     return r.ok;
 }
 
-// Verklein afbeelding vóór opslag (max 800×600, JPEG kwaliteit 75%)
+// Verklein afbeelding v��r opslag (max 800�600, JPEG kwaliteit 75%)
 function resizeImage(file) {
     return new Promise(resolve => {
         const img = new Image();
@@ -281,14 +281,14 @@ async function submitLegoPhoto() {
     });
     
     if (ok) {
-        msg.textContent = 'Gelukt! Je foto staat nu in de galerij! 🎉';
+        msg.textContent = 'Gelukt! Je foto staat nu in de galerij! ??';
         msg.style.display = 'block';
         document.getElementById('legoUploaderName').value = '';
         fileInput.value = '';
         document.getElementById('legoPreviewBox').style.display = 'none';
         setTimeout(() => openLegoGallery(), 2000);
     } else {
-        // Als database insert faalt, verwijder de geüploade foto
+        // Als database insert faalt, verwijder de ge�ploade foto
         await deleteFromStorage(fileName);
         if (btn) { btn.textContent = 'Insturen'; btn.disabled = false; }
         alert('Database opslag mislukt. Probeer het opnieuw.');
@@ -494,24 +494,24 @@ function openTicketModal() {
     const userEmail = currentUser ? currentUser.email : '';
     
     const content = `
-        <h2>🎟️ Bestel Tickets</h2>
+        <h2>??? Bestel Tickets</h2>
         <p>Kies je tickets en profiteer van onze Early Bird korting!</p>
         
         <div class="price-card">
             <h3>Early Bird Ticket (7+ dagen vooruit)</h3>
-            <p class="price">€15,00</p>
-            <p>Normale prijs: €18,00 | Bespaar €3,00!</p>
+            <p class="price">�15,00</p>
+            <p>Normale prijs: �18,00 | Bespaar �3,00!</p>
         </div>
         
         <div class="price-card">
             <h3>Standaard Ticket</h3>
-            <p class="price">€18,00</p>
+            <p class="price">�18,00</p>
             <p>Voor bezoek binnen 7 dagen</p>
         </div>
         
         <div class="price-card">
             <h3>Kind Ticket (3-12 jaar)</h3>
-            <p class="price">€12,00</p>
+            <p class="price">�12,00</p>
             <p>Kinderen tot 3 jaar gratis!</p>
         </div>
         
@@ -583,18 +583,18 @@ function submitTicketForm(event) {
     }
     
     const confirmContent = `
-        <h2>✅ Reservering Bevestigd!</h2>
+        <h2>? Reservering Bevestigd!</h2>
         <div class="info-box">
             <h3>Jouw Reservering</h3>
             <p><strong>Datum:</strong> ${date.toLocaleDateString('nl-NL')}</p>
-            <p><strong>Volwassenen:</strong> ${adults} × €${adultPrice} = €${adults * adultPrice}</p>
-            <p><strong>Kinderen:</strong> ${children} × €${childPrice} = €${children * childPrice}</p>
-            ${isEarlyBird ? `<p style="color: var(--accent-color);"><strong>🎉 Early Bird Korting: -€${savings}</strong></p>` : ''}
-            <p style="font-size: 1.5rem; color: var(--primary-color);"><strong>Totaal: €${totalPrice}</strong></p>
+            <p><strong>Volwassenen:</strong> ${adults} � �${adultPrice} = �${adults * adultPrice}</p>
+            <p><strong>Kinderen:</strong> ${children} � �${childPrice} = �${children * childPrice}</p>
+            ${isEarlyBird ? `<p style="color: var(--accent-color);"><strong>?? Early Bird Korting: -�${savings}</strong></p>` : ''}
+            <p style="font-size: 1.5rem; color: var(--primary-color);"><strong>Totaal: �${totalPrice}</strong></p>
         </div>
         <p>Een bevestigingsmail is verstuurd naar <strong>${email}</strong></p>
-        ${currentUser ? '<p style="color: var(--primary-color);">✓ Deze reservering is opgeslagen in je account!</p>' : ''}
-        <p>We kijken ernaar uit je te verwelkomen bij Condorix! 🎉</p>
+        ${currentUser ? '<p style="color: var(--primary-color);">? Deze reservering is opgeslagen in je account!</p>' : ''}
+        <p>We kijken ernaar uit je te verwelkomen bij Condorix! ??</p>
         <button class="btn-cta" onclick="closeModal()">Sluiten</button>
     `;
     openModal(confirmContent);
@@ -617,9 +617,9 @@ function openAccountModal() {
         if (reservations.length > 0) {
             reservationsList = reservations.map(r => `
                 <div style="padding: 15px; background: rgba(255,255,255,0.5); border-radius: 8px; margin-bottom: 10px;">
-                    <p><strong>📅 ${r.date}</strong></p>
+                    <p><strong>?? ${r.date}</strong></p>
                     <p>Volwassenen: ${r.adults} | Kinderen: ${r.children}</p>
-                    <p>Totaal: €${r.totalPrice} ${r.isEarlyBird ? '(Early Bird ✓)' : ''}</p>
+                    <p>Totaal: �${r.totalPrice} ${r.isEarlyBird ? '(Early Bird ?)' : ''}</p>
                     <p style="font-size: 0.9rem; color: #666;">Geboekt op: ${r.bookedOn}</p>
                 </div>
             `).join('');
@@ -628,7 +628,7 @@ function openAccountModal() {
         }
         
         const content = `
-            <h2>👤 Welkom, ${user.name}!</h2>
+            <h2>?? Welkom, ${user.name}!</h2>
             <div class="info-box">
                 <h3>Account Gegevens</h3>
                 <p><strong>Email:</strong> ${user.email}</p>
@@ -647,7 +647,7 @@ function openAccountModal() {
     } else {
         // Show login form if not logged in
         const content = `
-            <h2>👤 Mijn Account</h2>
+            <h2>?? Mijn Account</h2>
             <p>Log in of maak een account aan om je reserveringen te beheren.</p>
             
             <form class="modal-form" onsubmit="submitLogin(event)">
@@ -658,7 +658,7 @@ function openAccountModal() {
                 
                 <div class="form-group">
                     <label>Wachtwoord:</label>
-                    <input type="password" name="password" required placeholder="••••••••">
+                    <input type="password" name="password" required placeholder="��������">
                 </div>
                 
                 <button type="submit" class="btn-cta">Inloggen</button>
@@ -681,7 +681,7 @@ function submitLogin(event) {
     if (loginUser(email, password)) {
         updateAccountButton();
         const content = `
-            <h2>✅ Welkom Terug!</h2>
+            <h2>? Welkom Terug!</h2>
             <p>Je bent succesvol ingelogd!</p>
             <button class="btn-cta" onclick="closeModal(); openAccountModal();">Bekijk Mijn Account</button>
         `;
@@ -693,7 +693,7 @@ function submitLogin(event) {
 
 function showRegistration() {
     const content = `
-        <h2>📝 Account Aanmaken</h2>
+        <h2>?? Account Aanmaken</h2>
         <form class="modal-form" onsubmit="submitRegistration(event)">
             <div class="form-group">
                 <label>Naam:</label>
@@ -707,7 +707,7 @@ function showRegistration() {
             
             <div class="form-group">
                 <label>Wachtwoord:</label>
-                <input type="password" name="password" required placeholder="••••••••">
+                <input type="password" name="password" required placeholder="��������">
             </div>
             
             <div class="form-group">
@@ -752,7 +752,7 @@ function submitRegistration(event) {
     updateAccountButton();
     
     const content = `
-        <h2>🎉 Account Aangemaakt!</h2>
+        <h2>?? Account Aangemaakt!</h2>
         <p>Welkom ${name}! Je account is succesvol aangemaakt en je bent ingelogd.</p>
         <p>Je kunt nu reserveringen maken en al je bezoeken beheren in je account.</p>
         <button class="btn-cta" onclick="closeModal()">Begin met Reserveren</button>
@@ -762,7 +762,7 @@ function submitRegistration(event) {
 
 function showPasswordReset() {
     const content = `
-        <h2>🔑 Wachtwoord Herstellen</h2>
+        <h2>?? Wachtwoord Herstellen</h2>
         <p>Voer je emailadres in en we sturen je een link om je wachtwoord opnieuw in te stellen.</p>
         
         <form class="modal-form" onsubmit="submitPasswordReset(event)">
@@ -781,7 +781,7 @@ function submitPasswordReset(event) {
     event.preventDefault();
     const email = event.target.email.value;
     const content = `
-        <h2>📧 Email Verzonden</h2>
+        <h2>?? Email Verzonden</h2>
         <p>We hebben een herstel link gestuurd naar <strong>${email}</strong></p>
         <p>Controleer je inbox en volg de instructies om je wachtwoord opnieuw in te stellen.</p>
         <button class="btn-cta" onclick="closeModal()">Sluiten</button>
@@ -792,7 +792,7 @@ function submitPasswordReset(event) {
 // Contact Modal
 function openContactModal() {
     const content = `
-        <h2>📞 Contact</h2>
+        <h2>?? Contact</h2>
         <div class="info-box">
             <h3>Bezoekadres</h3>
             <p>Condorix Park 1<br>3911 AB Doorn</p>
@@ -800,9 +800,9 @@ function openContactModal() {
         
         <div class="info-box">
             <h3>Contactgegevens</h3>
-            <p>📞 Telefoon: 0317 - 650 200</p>
-            <p>📧 Email: info@condorix.nl</p>
-            <p>🕐 Ma-Vr: 09:00 - 17:00</p>
+            <p>?? Telefoon: 0317 - 650 200</p>
+            <p>?? Email: info@condorix.nl</p>
+            <p>?? Ma-Vr: 09:00 - 17:00</p>
         </div>
         
         <form id="contactForm" class="modal-form" onsubmit="submitContactForm(event)">
@@ -869,10 +869,10 @@ function submitContactForm(event) {
     // Toon gebruikersvriendelijke instructie
     setTimeout(() => {
         const content = `
-            <h2>📧 Gmail Geopend</h2>
+            <h2>?? Gmail Geopend</h2>
             <p>Er is een nieuw Gmail tabblad geopend met je bericht voorbereid voor Condorix.</p>
             <div class="info-box" style="background: #e8f4f8; border-left: 4px solid #4f7d4a; padding: 15px; margin: 15px 0;">
-                <p style="margin: 0 0 10px 0; font-weight: 600;">✅ Wat er in je Gmail staat:</p>
+                <p style="margin: 0 0 10px 0; font-weight: 600;">? Wat er in je Gmail staat:</p>
                 <ul style="margin: 0; padding-left: 20px; text-align: left;">
                     <li>Naar: svendegroot@wereldkidz.nl</li>
                     <li>Onderwerp: ${subject}</li>
@@ -880,7 +880,7 @@ function submitContactForm(event) {
                 </ul>
             </div>
             <div class="info-box" style="background: #fff3cd; padding: 15px; margin: 15px 0;">
-                <p style="margin: 0;"><strong>👉 Laatste stap:</strong> Klik in het Gmail tabblad op de blauwe <strong>"Verzenden"</strong> knop.</p>
+                <p style="margin: 0;"><strong>?? Laatste stap:</strong> Klik in het Gmail tabblad op de blauwe <strong>"Verzenden"</strong> knop.</p>
             </div>
             <button class="btn-cta" onclick="closeModal()">Begrepen</button>
         `;
@@ -891,7 +891,7 @@ function submitContactForm(event) {
 // FAQ Modal
 function openFAQModal() {
     const content = `
-        <h2>❓ Veelgestelde Vragen</h2>
+        <h2>? Veelgestelde Vragen</h2>
         
         <div class="info-box">
             <h3>Wat zijn de openingstijden?</h3>
@@ -926,7 +926,7 @@ function openFAQModal() {
 // Newsletter Modal
 function openNewsletterModal() {
     const content = `
-        <h2>📧 Nieuwsbrief</h2>
+        <h2>?? Nieuwsbrief</h2>
         <p>Blijf op de hoogte van al het nieuws, speciale aanbiedingen en evenementen!</p>
         
         <form class="modal-form" onsubmit="submitNewsletter(event)">
@@ -956,7 +956,7 @@ function openNewsletterModal() {
 function submitNewsletter(event) {
     event.preventDefault();
     const content = `
-        <h2>🎉 Welkom bij onze nieuwsbrief!</h2>
+        <h2>?? Welkom bij onze nieuwsbrief!</h2>
         <p>Je bent succesvol aangemeld. Je ontvangt binnenkort je eerste nieuwsbrief met exclusieve aanbiedingen!</p>
         <button class="btn-cta" onclick="closeModal()">Sluiten</button>
     `;
@@ -969,7 +969,7 @@ function openInfoModal(type) {
     
     if (type === 'openingstijden') {
         content = `
-            <h2>🕐 Openingstijden</h2>
+            <h2>?? Openingstijden</h2>
             <div class="info-box">
                 <h3>Reguliere Openingstijden</h3>
                 <p><strong>Maandag - Zondag:</strong> 09:00 - 18:00 uur</p>
@@ -992,7 +992,7 @@ function openInfoModal(type) {
         `;
     } else if (type === 'parkeren') {
         content = `
-            <h2>🚗 Parkeren</h2>
+            <h2>?? Parkeren</h2>
             <div class="info-box">
                 <h3>Gratis Parkeren</h3>
                 <p>We hebben ruime gratis parkeergelegenheid direct bij de ingang.</p>
@@ -1000,10 +1000,10 @@ function openInfoModal(type) {
             
             <div class="info-box">
                 <h3>Faciliteiten</h3>
-                <p>✓ 500+ gratis parkeerplaatsen</p>
-                <p>✓ Mindervaliden parkeerplaatsen</p>
-                <p>✓ Bushalte op 5 minuten loopafstand</p>
-                <p>✓ Fietsenstalling</p>
+                <p>? 500+ gratis parkeerplaatsen</p>
+                <p>? Mindervaliden parkeerplaatsen</p>
+                <p>? Bushalte op 5 minuten loopafstand</p>
+                <p>? Fietsenstalling</p>
             </div>
             
             <div class="info-box">
@@ -1016,14 +1016,14 @@ function openInfoModal(type) {
         `;
     } else if (type === 'privacy') {
         content = `
-            <h2>🔒 Privacybeleid</h2>
+            <h2>?? Privacybeleid</h2>
             <p>Condorix respecteert je privacy en gaat zorgvuldig om met je persoonlijke gegevens.</p>
             
             <div class="info-box">
                 <h3>Wat doen we met je gegevens?</h3>
-                <p>• We gebruiken je gegevens alleen voor je reservering en communicatie</p>
-                <p>• We delen je gegevens nooit met derden zonder toestemming</p>
-                <p>• Je kunt altijd je gegevens inzien, wijzigen of verwijderen</p>
+                <p>� We gebruiken je gegevens alleen voor je reservering en communicatie</p>
+                <p>� We delen je gegevens nooit met derden zonder toestemming</p>
+                <p>� Je kunt altijd je gegevens inzien, wijzigen of verwijderen</p>
             </div>
             
             <div class="info-box">
@@ -1041,16 +1041,16 @@ function openInfoModal(type) {
 // Map Modal
 function openMapModal() {
     const content = `
-        <h2>🗺️ Plattegrond</h2>
+        <h2>??? Plattegrond</h2>
         <p>Download onze interactieve plattegrond om je bezoek optimaal te plannen!</p>
         
         <div class="info-box">
             <h3>Op de plattegrond vind je:</h3>
-            <p>✓ Alle attracties en belevenissen</p>
-            <p>✓ Restaurants en kiosken</p>
-            <p>✓ Toiletten en baby verzorgingsruimtes</p>
-            <p>✓ EHBO posten</p>
-            <p>✓ Picknickplaatsen</p>
+            <p>? Alle attracties en belevenissen</p>
+            <p>? Restaurants en kiosken</p>
+            <p>? Toiletten en baby verzorgingsruimtes</p>
+            <p>? EHBO posten</p>
+            <p>? Picknickplaatsen</p>
         </div>
         
         <button class="btn-cta" onclick="alert('Plattegrond wordt gedownload!')">Download PDF</button>
@@ -1071,7 +1071,7 @@ function showSection(section) {
         }
     } else if (section === 'kaart') {
         const content = `
-            <h2>🗺️ Plattegrond</h2>
+            <h2>??? Plattegrond</h2>
             <div style="display: flex; gap: 24px; align-items: flex-start; flex-wrap: nowrap; margin: 20px 0;">
                 <div style="flex: 1 1 0; min-width: 0;">
                     <img src="images/plattegrond.png" alt="Plattegrond Condorix" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); display: block;">
@@ -1176,14 +1176,14 @@ function showSection(section) {
         }
     } else {
         const content = `
-            <h2>🔍 ${section.toUpperCase()}</h2>
+            <h2>?? ${section.toUpperCase()}</h2>
             <p>Deze sectie is momenteel in ontwikkeling. Binnenkort vind je hier meer informatie over ${section}!</p>
             
             <div class="info-box">
                 <h3>In de tussentijd:</h3>
-                <p>• Bekijk onze <a href="#" onclick="openFAQModal(); return false;">veelgestelde vragen</a></p>
-                <p>• <a href="#" onclick="openTicketModal(); return false;">Bestel tickets</a> voor je bezoek</p>
-                <p>• <a href="#" onclick="openContactModal(); return false;">Neem contact</a> op voor meer informatie</p>
+                <p>� Bekijk onze <a href="#" onclick="openFAQModal(); return false;">veelgestelde vragen</a></p>
+                <p>� <a href="#" onclick="openTicketModal(); return false;">Bestel tickets</a> voor je bezoek</p>
+                <p>� <a href="#" onclick="openContactModal(); return false;">Neem contact</a> op voor meer informatie</p>
             </div>
             
             <button class="btn-cta" onclick="closeModal()">Sluiten</button>
@@ -1293,45 +1293,45 @@ document.addEventListener('keydown', (e) => {
 // Conservation Modal
 function openConservationModal() {
     const content = `
-        <h2>🌍 Natuurbescherming & Conservatie</h2>
+        <h2>?? Natuurbescherming & Conservatie</h2>
         <p>Condorix zet zich actief in voor het behoud van bedreigde diersoorten en hun leefgebieden.</p>
         
         <div class="info-box">
             <h3>Onze Beschermingsprogramma's</h3>
-            <p><strong>🐼 Rode Panda Bescherming</strong><br>
+            <p><strong>?? Rode Panda Bescherming</strong><br>
             We steunen het Red Panda Network dat werkt aan habitatbescherming in Nepal en India.</p>
             
-            <p><strong>🐯 Tijger Conservatie</strong><br>
-            Via het Global Tiger Initiative helpen we bij het beschermen van tijgerpopulaties in Azië.</p>
+            <p><strong>?? Tijger Conservatie</strong><br>
+            Via het Global Tiger Initiative helpen we bij het beschermen van tijgerpopulaties in Azi�.</p>
             
-            <p><strong>🐘 Olifanten Project</strong><br>
-            We dragen bij aan anti-stroperij programma's en het creëren van veilige migratieroutes.</p>
+            <p><strong>?? Olifanten Project</strong><br>
+            We dragen bij aan anti-stroperij programma's en het cre�ren van veilige migratieroutes.</p>
             
-            <p><strong>🐢 Zeeschildpad Redding</strong><br>
+            <p><strong>?? Zeeschildpad Redding</strong><br>
             Ondersteuning van nestelstranden en rehabilitatie van gewonde zeeschildpadden.</p>
         </div>
         
         <div class="info-box">
             <h3>Jouw Bijdrage</h3>
-            <p>Van elk verkocht ticket gaat €2,- direct naar onze beschermingsprojecten.</p>
-            <p><strong>Dit jaar al verzameld: €127.500</strong></p>
+            <p>Van elk verkocht ticket gaat �2,- direct naar onze beschermingsprojecten.</p>
+            <p><strong>Dit jaar al verzameld: �127.500</strong></p>
             <p>Dankzij onze bezoekers konden we:</p>
             <ul>
-                <li>✓ 50 hectare regenwoud beschermen</li>
-                <li>✓ 15 anti-stroperij patrouilles financieren</li>
-                <li>✓ 200+ zeeschildpadden redden en vrijlaten</li>
-                <li>✓ 3 nieuwe onderzoeksprojecten starten</li>
+                <li>? 50 hectare regenwoud beschermen</li>
+                <li>? 15 anti-stroperij patrouilles financieren</li>
+                <li>? 200+ zeeschildpadden redden en vrijlaten</li>
+                <li>? 3 nieuwe onderzoeksprojecten starten</li>
             </ul>
         </div>
         
         <div class="info-box">
             <h3>Word Conservation Vriend</h3>
-            <p>Wil je extra bijdragen? Word Conservation Vriend vanaf €5,- per maand en ontvang:</p>
+            <p>Wil je extra bijdragen? Word Conservation Vriend vanaf �5,- per maand en ontvang:</p>
             <ul>
-                <li>🎫 10% korting op alle tickets</li>
-                <li>📰 Kwartaalmagazine met projectupdates</li>
-                <li>🎉 Exclusieve Conservation Events</li>
-                <li>🎁 Speciale geschenken</li>
+                <li>?? 10% korting op alle tickets</li>
+                <li>?? Kwartaalmagazine met projectupdates</li>
+                <li>?? Exclusieve Conservation Events</li>
+                <li>?? Speciale geschenken</li>
             </ul>
             <button class="btn-cta" onclick="openConservationSignup()">Word Conservation Vriend</button>
         </div>
@@ -1343,7 +1343,7 @@ function openConservationModal() {
 
 function openConservationSignup() {
     const content = `
-        <h2>🌿 Word Conservation Vriend</h2>
+        <h2>?? Word Conservation Vriend</h2>
         <p>Samen maken we het verschil voor bedreigde dieren!</p>
         
         <form class="modal-form" onsubmit="submitConservationSignup(event)">
@@ -1360,10 +1360,10 @@ function openConservationSignup() {
             <div class="form-group">
                 <label>Kies je bijdrage:</label>
                 <select name="amount" required>
-                    <option value="5">€5,- per maand</option>
-                    <option value="10">€10,- per maand</option>
-                    <option value="25">€25,- per maand</option>
-                    <option value="50">€50,- per maand</option>
+                    <option value="5">�5,- per maand</option>
+                    <option value="10">�10,- per maand</option>
+                    <option value="25">�25,- per maand</option>
+                    <option value="50">�50,- per maand</option>
                     <option value="custom">Anders...</option>
                 </select>
             </div>
@@ -1393,18 +1393,18 @@ function submitConservationSignup(event) {
     const amount = formData.get('amount');
     
     const content = `
-        <h2>🎉 Welkom Conservation Vriend!</h2>
+        <h2>?? Welkom Conservation Vriend!</h2>
         <p>Bedankt ${name}! Je bent nu officieel Conservation Vriend van Condorix!</p>
         
         <div class="info-box">
             <h3>Wat gebeurt er nu?</h3>
-            <p>✓ Je ontvangt een welkomstpakket per post</p>
-            <p>✓ Je eerste magazine komt binnen 2 weken</p>
-            <p>✓ Je kortingscode wordt per email verstuurd</p>
-            <p>✓ Je bijdrage van €${amount},- per maand start volgende maand</p>
+            <p>? Je ontvangt een welkomstpakket per post</p>
+            <p>? Je eerste magazine komt binnen 2 weken</p>
+            <p>? Je kortingscode wordt per email verstuurd</p>
+            <p>? Je bijdrage van �${amount},- per maand start volgende maand</p>
         </div>
         
-        <p>Dankzij jouw steun kunnen we doorgaan met het beschermen van bedreigde diersoorten! 🌍💚</p>
+        <p>Dankzij jouw steun kunnen we doorgaan met het beschermen van bedreigde diersoorten! ????</p>
         
         <button class="btn-cta" onclick="closeModal()">Naar Mijn Account</button>
     `;
@@ -1481,7 +1481,7 @@ function toggleMobileMenu() {
 }
 
 // =============================================
-// GAMES DROPDOWN — 5 seconden vertraging bij weggaan
+// GAMES DROPDOWN � 5 seconden vertraging bij weggaan
 // =============================================
 (function() {
     function initGamesDropdown() {
@@ -1518,24 +1518,26 @@ function openGame(game) {
 }
 
 // =============================================
-// DIEREN PLATFORM GAME
+// DIEREN SWING GAME (Stickman Hook stijl)
 // =============================================
 function openDierenPlatformGame() {
     const animals = [
-        { emoji: '🦁', name: 'Leeuw',     speed: 4,   jump: 12, desc: '&#9889; Sterk & snel' },
-        { emoji: '🦘', name: 'Kangoeroe', speed: 3,   jump: 16, desc: '&#128692; Springt het hoogst' },
-        { emoji: '🐧', name: 'Pinguïn',   speed: 3.5, jump: 11, desc: '&#10052; Stabiel' },
-        { emoji: '🦊', name: 'Vos',       speed: 5.5, jump: 12, desc: '&#9889; Snelste' },
-        { emoji: '🐸', name: 'Kikker',    speed: 3.5, jump: 15, desc: '&#127919; Springt ver' },
-        { emoji: '🐒', name: 'Aap',       speed: 4.5, jump: 13, desc: '&#11088; Veelzijdig' },
+        { emoji: '??', name: 'Leeuw',     grav: 0.45, grab: 230, desc: '&#9878; Gebalanceerd' },
+        { emoji: '??', name: 'Kangoeroe', grav: 0.35, grab: 260, desc: '&#127919; Lang touw' },
+        { emoji: '??', name: 'Aap',       grav: 0.50, grab: 250, desc: '&#9889; Behendig' },
+        { emoji: '??', name: 'Vos',       grav: 0.40, grab: 270, desc: '&#10024; Groot bereik' },
+        { emoji: '??', name: 'Kikker',    grav: 0.55, grab: 210, desc: '&#128279; Zwaar' },
+        { emoji: '??', name: 'Adelaar',   grav: 0.28, grab: 290, desc: '&#129413; Zweeft' },
     ];
-    window._platformAnimals = animals;
+    window._swingAnimals = animals;
     openModal(`
         <h2>&#127918; Kies je dier!</h2>
-        <p style="margin-bottom:16px;color:#666;text-align:center;">Elk dier heeft zijn eigen krachten!</p>
+        <p style="margin-bottom:16px;color:#aaa;text-align:center;">Swing van haak tot haak � klik of tik om te grijpen &amp; loslaten!</p>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;">
             ${animals.map((a, i) => `
-                <button onclick="startDierenPlatform(${i})" style="background:#f9f9f9;border:2px solid #ddd;border-radius:10px;padding:16px 8px;cursor:pointer;font-family:inherit;transition:all 0.2s;" onmouseover="this.style.borderColor='#4F7D4A';this.style.background='#f0fff4'" onmouseout="this.style.borderColor='#ddd';this.style.background='#f9f9f9'">
+                <button onclick="startDierenPlatform(${i})" style="background:#111;border:2px solid #333;border-radius:10px;padding:16px 8px;cursor:pointer;font-family:inherit;color:#fff;transition:all 0.2s;"
+                    onmouseover="this.style.borderColor='#4ECDC4';this.style.background='#0a2020'"
+                    onmouseout="this.style.borderColor='#333';this.style.background='#111'">
                     <div style="font-size:2.5rem;">${a.emoji}</div>
                     <div style="font-weight:600;margin-top:6px;">${a.name}</div>
                     <div style="font-size:0.73rem;color:#888;margin-top:2px;">${a.desc}</div>
@@ -1547,23 +1549,23 @@ function openDierenPlatformGame() {
         </div>
     `);
     const mc = document.querySelector('.modal-content');
-    if (mc) { mc.style.maxWidth = '480px'; mc.style.width = '92vw'; }
+    if (mc) { mc.style.maxWidth = '480px'; mc.style.width = '92vw'; mc.style.background = '#0a0a1a'; mc.style.color = '#fff'; }
 }
 
 function startDierenPlatform(animalIndex) {
-    const animal = window._platformAnimals[animalIndex];
+    const animal = window._swingAnimals[animalIndex];
     openModal(`
-        <div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                <h2 style="margin:0;">${animal.emoji} ${animal.name}</h2>
-                <div style="display:flex;gap:20px;font-weight:600;font-size:1rem;">
+        <div style="background:#0a0a1a;color:#fff;border-radius:8px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;padding:0 2px;">
+                <h2 style="margin:0;color:#fff;">${animal.emoji} ${animal.name}</h2>
+                <div style="display:flex;gap:20px;font-weight:600;font-size:1rem;color:#fff;">
                     <span>&#9829; <span id="gameLives">3</span></span>
                     <span>&#11088; <span id="gameScore">0</span></span>
                 </div>
             </div>
-            <canvas id="gameCanvas" width="680" height="360" style="display:block;border-radius:8px;outline:none;cursor:default;" tabindex="0"></canvas>
+            <canvas id="gameCanvas" width="680" height="360" style="display:block;border-radius:8px;outline:none;cursor:pointer;" tabindex="0"></canvas>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;flex-wrap:wrap;gap:8px;">
-                <span style="font-size:0.78rem;color:#888;">&#8592;&#8594; bewegen &nbsp;|&nbsp; &#8593; of <kbd>spatie</kbd> springen</span>
+                <span style="font-size:0.78rem;color:#666;">&#128432; Klik of tik om te grijpen / loslaten</span>
                 <div style="display:flex;gap:8px;">
                     <button class="btn-secondary" style="padding:6px 14px;font-size:0.85rem;" onclick="openDierenPlatformGame()">&#8617; Ander dier</button>
                     <button class="btn-secondary" style="padding:6px 14px;font-size:0.85rem;" onclick="closeModal()">Sluiten</button>
@@ -1572,7 +1574,7 @@ function startDierenPlatform(animalIndex) {
         </div>
     `);
     const mc = document.querySelector('.modal-content');
-    if (mc) { mc.style.maxWidth = '740px'; mc.style.width = '96vw'; }
+    if (mc) { mc.style.maxWidth = '740px'; mc.style.width = '96vw'; mc.style.background = '#0a0a1a'; mc.style.color = '#fff'; }
     setTimeout(() => runPlatformGame(animal), 60);
 }
 
@@ -1584,58 +1586,39 @@ function runPlatformGame(animal) {
 
     if (window._gameLoopId) { cancelAnimationFrame(window._gameLoopId); window._gameLoopId = null; }
 
-    // Level: platforms [x, y, w, h]
-    const platforms = [
-        [0,    320, 280, 40],
-        [320,  290, 140, 18],
-        [510,  255, 120, 18],
-        [690,  290, 160, 18],
-        [910,  255, 120, 18],
-        [1090, 215, 150, 18],
-        [1300, 255, 100, 18],
-        [1450, 200, 140, 18],
-        [1640, 235, 120, 18],
-        [1820, 270, 110, 18],
-        [1990, 230, 150, 18],
-        [2200, 195, 120, 18],
-        [2380, 235, 130, 18],
-        [2570, 195, 110, 18],
-        [2740, 250, 130, 18],
-        [2930, 210, 150, 18],
-        [3140, 255, 110, 18],
-        [3310, 295, 130, 18],
-        [3500, 235, 120, 18],
-        [3680, 195, 180, 18],
-        [3910, 255, 220, 55], // eindplatform
-    ];
-
     const LEVEL_W = 4200;
+    const GRAVITY  = animal.grav;
+    const GRAB_R   = animal.grab;
 
-    const coins = platforms.slice(1, -1).map(p => ({
-        x: p[0] + p[2] / 2,
-        y: p[1] - 26,
-        r: 0,
-        collected: false
-    }));
+    // Hooks (x, y) � hung from ceiling
+    const hooks = [
+        [160,  55], [330,  45], [500,  60], [670,  40],
+        [850,  55], [1030, 40], [1210, 60], [1400, 42],
+        [1590, 58], [1780, 44], [1970, 62], [2170, 45],
+        [2370, 58], [2570, 42], [2770, 60], [2980, 44],
+        [3190, 58], [3400, 42], [3620, 56], [3840, 45],
+    ];
+    const FINISH_X = 4000, FINISH_Y = 80;
 
-    const flag = { x: 4000, y: 160 };
+    const HOOK_COLORS = ['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#FF9F43','#A29BFE'];
 
-    const player = {
-        x: 60, y: 270,
-        vx: 0, vy: 0,
-        w: 34, h: 34,
-        onGround: false,
-        facing: 1,
-    };
-
-    const keys = {};
-    let score = 0;
-    let lives = 3;
-    let camX = 0;
-    let gameOver = false;
-    let won = false;
-    let wonTimer = 0;
+    let px, py, vx, vy;
+    let attached = false, hookIdx = -1, ropeLen = 0;
+    let camX = 0, score = 0, lives = 3;
+    let gameOver = false, won = false, wonTimer = 0;
     let active = true;
+    let hooksPassed = new Set();
+
+    function respawn() {
+        attached = true;
+        hookIdx = 0;
+        ropeLen = 130;
+        px = hooks[0][0];
+        py = hooks[0][1] + ropeLen;
+        vx = 3.5; vy = 0;
+        camX = 0;
+    }
+    respawn();
 
     function updateHUD() {
         const s = document.getElementById('gameScore');
@@ -1644,234 +1627,177 @@ function runPlatformGame(animal) {
         if (l) l.textContent = lives;
     }
 
-    function onKeyDown(e) {
-        keys[e.key] = true;
-        if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' '].includes(e.key)) e.preventDefault();
+    function grabOrRelease() {
+        if (gameOver || won) return;
+        if (attached) {
+            attached = false; hookIdx = -1;
+        } else {
+            let best = -1, bestD = GRAB_R;
+            for (let i = 0; i < hooks.length; i++) {
+                const dx = hooks[i][0] - px, dy = hooks[i][1] - py;
+                const d = Math.sqrt(dx * dx + dy * dy);
+                if (d < bestD) { bestD = d; best = i; }
+            }
+            if (best >= 0) {
+                const dx = hooks[best][0] - px, dy = hooks[best][1] - py;
+                ropeLen = Math.sqrt(dx * dx + dy * dy);
+                attached = true; hookIdx = best;
+                if (!hooksPassed.has(best)) {
+                    hooksPassed.add(best);
+                    score += 10;
+                    updateHUD();
+                }
+            }
+        }
     }
-    function onKeyUp(e) { keys[e.key] = false; }
-    document.addEventListener('keydown', onKeyDown);
-    document.addEventListener('keyup',   onKeyUp);
+
+    canvas.addEventListener('click', grabOrRelease);
+    canvas.addEventListener('touchstart', function(e) { e.preventDefault(); grabOrRelease(); }, { passive: false });
     canvas.focus();
 
-    function respawn() {
-        player.x = 60; player.y = 270;
-        player.vx = 0; player.vy = 0;
-        camX = 0;
-    }
-
-    function roundRect(x, y, w, h, r) {
-        ctx.beginPath();
-        ctx.moveTo(x + r, y);
-        ctx.lineTo(x + w - r, y);
-        ctx.arcTo(x + w, y, x + w, y + r, r);
-        ctx.lineTo(x + w, y + h - r);
-        ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
-        ctx.lineTo(x + r, y + h);
-        ctx.arcTo(x, y + h, x, y + h - r, r);
-        ctx.lineTo(x, y + r);
-        ctx.arcTo(x, y, x + r, y, r);
-        ctx.closePath();
-    }
-
     function update() {
-        if (!active) return;
-        if (gameOver || won) { if (won) wonTimer++; return; }
-
-        const left  = keys['ArrowLeft']  || keys['a'] || keys['A'];
-        const right = keys['ArrowRight'] || keys['d'] || keys['D'];
-        const jump  = keys['ArrowUp'] || keys[' ']   || keys['w'] || keys['W'];
-
-        player.vx = 0;
-        if (left)  { player.vx = -animal.speed; player.facing = -1; }
-        if (right) { player.vx =  animal.speed; player.facing =  1; }
-        if (jump && player.onGround) {
-            player.vy = -animal.jump;
-            player.onGround = false;
-        }
-
-        player.vy += 0.55;
-        if (player.vy > 14) player.vy = 14;
-        player.x += player.vx;
-        player.y += player.vy;
-        player.onGround = false;
-
-        for (const [px, py, pw, ph] of platforms) {
-            if (player.x + player.w > px && player.x < px + pw &&
-                player.y + player.h > py &&
-                player.y + player.h < py + ph + Math.abs(player.vy) + 2 &&
-                player.vy >= 0) {
-                player.y = py - player.h;
-                player.vy = 0;
-                player.onGround = true;
+        if (!active || gameOver) return;
+        if (won) { wonTimer++; return; }
+        vy += GRAVITY;
+        if (attached && hookIdx >= 0) {
+            const hx = hooks[hookIdx][0], hy = hooks[hookIdx][1];
+            px += vx; py += vy;
+            const dx = px - hx, dy = py - hy;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist > ropeLen) {
+                const nx = dx / dist, ny = dy / dist;
+                const dot = vx * nx + vy * ny;
+                vx -= dot * nx; vy -= dot * ny;
+                px = hx + nx * ropeLen; py = hy + ny * ropeLen;
             }
+        } else {
+            px += vx; py += vy;
         }
-
-        if (player.x < 0) player.x = 0;
-        if (player.x + player.w > LEVEL_W) player.x = LEVEL_W - player.w;
-
-        if (player.y > H + 80) {
-            lives--;
-            updateHUD();
-            if (lives <= 0) { gameOver = true; } else { respawn(); }
+        if (py > H + 100) {
+            lives--; updateHUD();
+            if (lives <= 0) { gameOver = true; return; }
+            respawn();
         }
-
-        for (const c of coins) {
-            if (!c.collected &&
-                Math.abs((player.x + player.w / 2) - c.x) < 24 &&
-                Math.abs((player.y + player.h / 2) - c.y) < 24) {
-                c.collected = true;
-                score += 10;
-                updateHUD();
-            }
-            c.r += 0.05;
+        if (Math.abs(px - FINISH_X) < 70 && Math.abs(py - FINISH_Y) < 70) {
+            won = true; score += 50; updateHUD();
         }
-
-        if (player.x + player.w / 2 > flag.x - 40 && player.y < flag.y + 140) {
-            won = true;
-            score += 100;
-            updateHUD();
-        }
-
-        const targetCam = player.x - W / 3;
-        camX += (targetCam - camX) * 0.12;
+        const tc = px - W / 3;
+        camX += (tc - camX) * 0.1;
         if (camX < 0) camX = 0;
         if (camX > LEVEL_W - W) camX = LEVEL_W - W;
     }
 
     function draw() {
-        // Sky
-        const sky = ctx.createLinearGradient(0, 0, 0, H);
-        sky.addColorStop(0, '#5BB8E8');
-        sky.addColorStop(1, '#C8EAFB');
-        ctx.fillStyle = sky;
+        // Background
+        ctx.fillStyle = '#08081a';
         ctx.fillRect(0, 0, W, H);
 
-        // Clouds (parallax)
-        ctx.fillStyle = 'rgba(255,255,255,0.85)';
-        const cloudXs = [150, 500, 900, 1400, 1900, 2400, 2900, 3400, 3900];
-        for (const cx of cloudXs) {
-            const sx = ((cx - camX * 0.25 % (LEVEL_W)) + LEVEL_W * 2) % (LEVEL_W) - 200;
-            if (sx < -200 || sx > W + 200) continue;
-            ctx.beginPath();
-            ctx.arc(sx,      H * 0.18, 28, 0, Math.PI * 2);
-            ctx.arc(sx + 34, H * 0.15, 34, 0, Math.PI * 2);
-            ctx.arc(sx + 68, H * 0.18, 24, 0, Math.PI * 2);
-            ctx.fill();
+        // Subtle grid
+        ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+        ctx.lineWidth = 1;
+        const gox = camX % 60;
+        for (let x = -gox; x < W; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+        for (let y = 0; y < H; y += 60) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+        // Ceiling
+        const ceilGrad = ctx.createLinearGradient(0, 0, W, 0);
+        ceilGrad.addColorStop(0, 'rgba(78,205,196,0.4)');
+        ceilGrad.addColorStop(0.5, 'rgba(165,105,189,0.4)');
+        ceilGrad.addColorStop(1, 'rgba(78,205,196,0.4)');
+        ctx.fillStyle = ceilGrad;
+        ctx.fillRect(0, 0, W, 6);
+
+        // Hooks
+        for (let i = 0; i < hooks.length; i++) {
+            const hx = hooks[i][0] - camX, hy = hooks[i][1];
+            if (hx < -30 || hx > W + 30) continue;
+            const col = HOOK_COLORS[i % HOOK_COLORS.length];
+            const isActive = attached && hookIdx === i;
+
+            // Wire from ceiling
+            ctx.strokeStyle = isActive ? col : 'rgba(255,255,255,0.15)';
+            ctx.lineWidth = isActive ? 2 : 1;
+            ctx.setLineDash([]);
+            ctx.beginPath(); ctx.moveTo(hx, 0); ctx.lineTo(hx, hy); ctx.stroke();
+
+            // Glow
+            if (isActive) { ctx.shadowColor = col; ctx.shadowBlur = 20; }
+            ctx.fillStyle = isActive ? col : 'rgba(200,200,200,0.5)';
+            ctx.beginPath(); ctx.arc(hx, hy, isActive ? 10 : 7, 0, Math.PI * 2); ctx.fill();
+            ctx.shadowBlur = 0;
         }
 
-        // Ground strip
-        ctx.fillStyle = '#3a6b35';
-        ctx.fillRect(0, H - 8, W, 8);
-
-        // Platforms
-        for (const [px, py, pw, ph] of platforms) {
-            const sx = px - camX;
-            if (sx > W + 4 || sx + pw < -4) continue;
-            // Grass top
-            ctx.fillStyle = '#4F7D4A';
-            ctx.fillRect(sx, py, pw, 8);
-            // Dirt body
-            ctx.fillStyle = '#8B6333';
-            ctx.fillRect(sx, py + 8, pw, ph - 8);
-            // Grass highlight line
-            ctx.fillStyle = '#6aA860';
-            ctx.fillRect(sx, py, pw, 3);
+        // Rope
+        if (attached && hookIdx >= 0) {
+            const hx = hooks[hookIdx][0] - camX, hy = hooks[hookIdx][1];
+            const col = HOOK_COLORS[hookIdx % HOOK_COLORS.length];
+            ctx.shadowColor = col; ctx.shadowBlur = 10;
+            ctx.strokeStyle = col; ctx.lineWidth = 2.5;
+            ctx.beginPath(); ctx.moveTo(hx, hy); ctx.lineTo(px - camX, py); ctx.stroke();
+            ctx.shadowBlur = 0;
         }
 
-        // Coins
-        const t = Date.now() / 1000;
-        for (const c of coins) {
-            if (c.collected) continue;
-            const sx = c.x - camX;
-            if (sx < -30 || sx > W + 30) continue;
-            const bounce = Math.sin(t * 3 + c.x * 0.01) * 4;
+        // Finish
+        const fx = FINISH_X - camX;
+        if (fx > -80 && fx < W + 80) {
+            const pulse = 1 + Math.sin(Date.now() / 300) * 0.12;
             ctx.save();
-            ctx.font = '18px serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('⭐', sx, c.y + bounce);
+            ctx.translate(fx, FINISH_Y);
+            ctx.scale(pulse, pulse);
+            ctx.shadowColor = '#FFD700'; ctx.shadowBlur = 30;
+            ctx.font = '38px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText('??', 0, 0);
+            ctx.strokeStyle = '#FFD700'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.arc(0, 0, 34, 0, Math.PI * 2); ctx.stroke();
+            ctx.shadowBlur = 0;
             ctx.restore();
         }
 
-        // Flag
-        const fsx = flag.x - camX;
-        if (fsx > -50 && fsx < W + 50) {
-            ctx.strokeStyle = '#aaa';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.moveTo(fsx, flag.y);
-            ctx.lineTo(fsx, flag.y + 130);
-            ctx.stroke();
-            ctx.fillStyle = '#D4A017';
-            ctx.beginPath();
-            ctx.moveTo(fsx, flag.y);
-            ctx.lineTo(fsx + 38, flag.y + 15);
-            ctx.lineTo(fsx, flag.y + 30);
-            ctx.closePath();
-            ctx.fill();
-            ctx.font = '20px serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('🏆', fsx, flag.y + 148);
-        }
-
         // Player
-        const psx = player.x - camX;
+        const psx = px - camX;
         ctx.save();
-        ctx.font = '32px serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        if (player.facing === -1) {
-            ctx.translate(psx + player.w / 2, player.y + player.h / 2);
-            ctx.scale(-1, 1);
-            ctx.fillText(animal.emoji, 0, 0);
-        } else {
-            ctx.fillText(animal.emoji, psx + player.w / 2, player.y + player.h / 2);
-        }
+        ctx.translate(psx, py);
+        const swAngle = attached && hookIdx >= 0
+            ? Math.atan2(vx, -(py - hooks[hookIdx][1])) * 0.25
+            : Math.atan2(vy, vx) * 0.15;
+        ctx.rotate(swAngle);
+        ctx.shadowColor = '#4ECDC4'; ctx.shadowBlur = 18;
+        ctx.font = '28px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(animal.emoji, 0, 0);
+        ctx.shadowBlur = 0;
         ctx.restore();
 
         // Progress bar
-        const progress = Math.min(player.x / (LEVEL_W - 300), 1);
-        ctx.fillStyle = 'rgba(0,0,0,0.25)';
-        roundRect(W / 2 - 100, 10, 200, 10, 5);
-        ctx.fill();
-        ctx.fillStyle = '#D4A017';
-        roundRect(W / 2 - 100, 10, 200 * progress, 10, 5);
-        ctx.fill();
-        ctx.font = '14px serif';
-        ctx.textAlign = 'left';
-        ctx.fillText('🏆', W / 2 + 102, 19);
+        const prog = Math.min(px / (LEVEL_W - 300), 1);
+        ctx.fillStyle = 'rgba(255,255,255,0.1)';
+        ctx.fillRect(W/2 - 100, 12, 200, 8);
+        const pg = ctx.createLinearGradient(W/2 - 100, 0, W/2 + 100, 0);
+        pg.addColorStop(0, '#4ECDC4'); pg.addColorStop(1, '#FFD700');
+        ctx.fillStyle = pg;
+        ctx.fillRect(W/2 - 100, 12, 200 * prog, 8);
+        ctx.font = '14px serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#FFD700';
+        ctx.fillText('??', W/2 + 104, 16);
 
-        // Game over overlay
+        // Overlays
         if (gameOver) {
-            ctx.fillStyle = 'rgba(0,0,0,0.65)';
-            ctx.fillRect(0, 0, W, H);
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 34px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('Game Over 💀', W / 2, H / 2 - 28);
-            ctx.font = '20px sans-serif';
-            ctx.fillText('Score: ' + score, W / 2, H / 2 + 10);
-            ctx.font = '14px sans-serif';
-            ctx.fillStyle = '#ccc';
-            ctx.fillText('Klik op "Ander dier" om opnieuw te starten', W / 2, H / 2 + 44);
+            ctx.fillStyle = 'rgba(0,0,0,0.75)'; ctx.fillRect(0, 0, W, H);
+            ctx.shadowColor = '#FF6B6B'; ctx.shadowBlur = 25;
+            ctx.fillStyle = '#FF6B6B'; ctx.font = 'bold 34px sans-serif'; ctx.textAlign = 'center';
+            ctx.fillText('?? Game Over', W/2, H/2 - 22);
+            ctx.shadowBlur = 0; ctx.fillStyle = '#aaa'; ctx.font = '15px sans-serif';
+            ctx.fillText('Klik op "Ander dier" om opnieuw te spelen', W/2, H/2 + 14);
         }
-
-        // Won overlay
         if (won) {
             const a = Math.min(wonTimer / 40, 0.75);
-            ctx.fillStyle = `rgba(0,0,0,${a})`;
-            ctx.fillRect(0, 0, W, H);
+            ctx.fillStyle = `rgba(0,0,0,${a})`; ctx.fillRect(0, 0, W, H);
             if (wonTimer > 12) {
-                ctx.fillStyle = '#fff';
-                ctx.font = 'bold 34px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('🎉 Gewonnen! 🎉', W / 2, H / 2 - 28);
-                ctx.font = '20px sans-serif';
-                ctx.fillText('Score: ' + score, W / 2, H / 2 + 10);
-                ctx.font = '14px sans-serif';
-                ctx.fillStyle = '#D4A017';
-                ctx.fillText('Geweldige prestatie, ' + animal.name + '!', W / 2, H / 2 + 44);
+                ctx.shadowColor = '#FFD700'; ctx.shadowBlur = 30;
+                ctx.fillStyle = '#FFD700'; ctx.font = 'bold 34px sans-serif'; ctx.textAlign = 'center';
+                ctx.fillText('?? Gewonnen! ??', W/2, H/2 - 24);
+                ctx.shadowBlur = 0; ctx.fillStyle = '#fff'; ctx.font = '18px sans-serif';
+                ctx.fillText('Score: ' + score, W/2, H/2 + 12);
+                ctx.fillStyle = '#4ECDC4'; ctx.font = '14px sans-serif';
+                ctx.fillText(animal.emoji + ' ' + animal.name + ' heeft het gehaald!', W/2, H/2 + 38);
             }
         }
     }
@@ -1879,15 +1805,13 @@ function runPlatformGame(animal) {
     function loop() {
         if (!document.getElementById('gameCanvas')) {
             active = false;
-            document.removeEventListener('keydown', onKeyDown);
-            document.removeEventListener('keyup',   onKeyUp);
+            canvas.removeEventListener('click', grabOrRelease);
+            if (window._gameLoopId) cancelAnimationFrame(window._gameLoopId);
             return;
         }
-        update();
-        draw();
+        update(); draw();
         window._gameLoopId = requestAnimationFrame(loop);
     }
-
     window._gameLoopId = requestAnimationFrame(loop);
 }
 
@@ -1906,4 +1830,4 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-console.log('Condorix website geladen! 🎉');
+console.log('Condorix website geladen! ??');
