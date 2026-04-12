@@ -1751,7 +1751,7 @@ function runPlatformGame(animal) {
             const bonus = Math.max(50, 200 - (currentLevel - 1) * 2);
             won = true; wonTimer = 0; score += bonus; updateHUD();
         }
-        if (won && currentLevel < MAX_LEVELS && wonTimer === 180) {
+        if (won && currentLevel < MAX_LEVELS && wonTimer >= 180) {
             loadNextLevel();
         }
         const tc = px - W / 3;
