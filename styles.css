@@ -344,7 +344,7 @@ body {
     white-space: nowrap;
 }
 
-.nav-dropdown-wrap.open .nav-dropdown {
+.nav-dropdown-wrap:hover .nav-dropdown {
     display: flex;
 }
 
