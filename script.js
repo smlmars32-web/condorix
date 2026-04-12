@@ -1496,7 +1496,7 @@ function toggleMobileMenu() {
         wrap.addEventListener('mouseleave', function() {
             hideTimer = setTimeout(function() {
                 wrap.classList.remove('open');
-            }, 5000);
+            }, 3000);
         });
     }
     if (document.readyState === 'loading') {
