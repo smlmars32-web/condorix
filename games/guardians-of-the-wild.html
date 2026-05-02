@@ -55,7 +55,7 @@
 <div id="header">
   <h1>&#128270; Zoek het Dier</h1>
   <div id="hud">
-    <span class="timer">&#9201; <span id="timerEl">60</span>s</span>
+    <span class="timer">&#9201; <span id="timerEl">90</span>s</span>
     <span class="score">&#11088; <span id="scoreEl">0</span></span>
     <span class="streak">&#128293; x<span id="streakEl">1</span></span>
   </div>
@@ -140,7 +140,7 @@
   var W, H, items = [], target = null;
   var score = 0, streak = 1, timeLeft = 60;
   var timerInterval = null, running = false;
-  var foundThisSession = [], roundsLeft = 10, roundStartTime = 0;
+  var foundThisSession = [], roundStartTime = 0;
   var playerName = '';
 
   function resize() {
@@ -228,7 +228,7 @@
   });
 
   function startGame() {
-    score = 0; streak = 1; timeLeft = 60; roundsLeft = 10;
+    score = 0; streak = 1; timeLeft = 90;
     foundThisSession = [];
     updateHUD(); newRound(); buildFoundList();
     running = true;
@@ -288,8 +288,7 @@
           markFound(target.emoji);
           showHit(mx, my, '+' + pts + ' \u2B50', '#FFD700');
           showRoundMsg(target.emoji + ' Gevonden!');
-          roundsLeft--; updateHUD();
-          if (roundsLeft <= 0) { endGame(); return; }
+          updateHUD();
           setTimeout(newRound, 600);
         } else {
           streak = 1; score = Math.max(0, score - 5);
@@ -347,7 +346,7 @@
       ctx.fillText(it.animal.emoji, 0, 1);
       ctx.restore();
     }
-    var pct = timeLeft / 60;
+    var pct = timeLeft / 90;
     ctx.fillStyle = 'rgba(255,255,255,0.1)'; ctx.fillRect(0, H-5, W, 5);
     ctx.fillStyle = pct > 0.5 ? '#4ECDC4' : pct > 0.25 ? '#FFD700' : '#FF6B6B';
     ctx.fillRect(0, H-5, W*pct, 5);
