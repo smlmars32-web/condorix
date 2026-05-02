@@ -1507,9 +1507,38 @@ function toggleMobileMenu() {
 })();
 
 function openGame(game) {
-    const titles = { zoekplaatje: '&#128270; Zoek het Dier', geheugenspel: '&#129504; Geheugenspel' };
+    if (game === 'zoekplaatje') {
+        openModal(`
+            <div style="margin:-24px;line-height:0;border-radius:12px;overflow:hidden;position:relative;">
+                <iframe src="games/guardians-of-the-wild.html?v=2" style="width:100%;height:90vh;border:none;display:block;" allowfullscreen></iframe>
+            </div>
+        `);
+        const mc = document.querySelector('.modal-content');
+        if (mc) {
+            mc.style.maxWidth = '100vw';
+            mc.style.width = '98vw';
+            mc.style.padding = '24px';
+            mc.style.background = '#000';
+        }
+        return;
+    }
+    if (game === 'geheugenspel') {
+        openModal(`
+            <div style="margin:-24px;line-height:0;border-radius:12px;overflow:hidden;position:relative;">
+                <iframe src="games/condor-rush.html" style="width:100%;height:90vh;border:none;display:block;" allowfullscreen></iframe>
+            </div>
+        `);
+        const mc = document.querySelector('.modal-content');
+        if (mc) {
+            mc.style.maxWidth = '100vw';
+            mc.style.width = '98vw';
+            mc.style.padding = '24px';
+            mc.style.background = '#000';
+        }
+        return;
+    }
     openModal(`
-        <h2>${titles[game] || 'Game'}</h2>
+        <h2>${game}</h2>
         <p style="text-align:center;padding:40px 0;color:#888;font-size:1.1rem;">&#127918; Deze game komt binnenkort!</p>
         <div style="text-align:center;">
             <button class="btn-secondary" onclick="closeModal()">Sluiten</button>
