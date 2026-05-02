@@ -6,149 +6,48 @@
   <title>Zoek het Dier</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #0d1117;
-      color: #fff;
-      overflow: hidden;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    #header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 18px;
-      background: #161b22;
-      border-bottom: 2px solid #30363d;
-      flex-shrink: 0;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #0d1117; color: #fff; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+    #header { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; background: #161b22; border-bottom: 2px solid #30363d; flex-shrink: 0; gap: 12px; flex-wrap: wrap; }
     #header h1 { font-size: 1.1rem; color: #4ECDC4; }
     #hud { display: flex; gap: 18px; align-items: center; font-size: 0.9rem; }
     #hud span { background: #21262d; padding: 5px 12px; border-radius: 20px; }
     #hud .timer { color: #FFD700; }
     #hud .score { color: #4ECDC4; }
     #hud .streak { color: #FF6B6B; }
-    #closeBtn {
-      background: rgba(255,100,100,0.2);
-      border: 1px solid rgba(255,100,100,0.4);
-      color: #ff7777;
-      border-radius: 50%;
-      width: 32px; height: 32px;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-    }
+    #closeBtn { background: rgba(255,100,100,0.2); border: 1px solid rgba(255,100,100,0.4); color: #ff7777; border-radius: 50%; width: 32px; height: 32px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     #closeBtn:hover { background: rgba(255,100,100,0.4); }
-    #game-area {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-    }
-    #target-panel {
-      width: 170px;
-      flex-shrink: 0;
-      background: #161b22;
-      border-right: 2px solid #30363d;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 16px 12px;
-      gap: 10px;
-    }
+    #game-area { display: flex; flex: 1; overflow: hidden; }
+    #target-panel { width: 170px; flex-shrink: 0; background: #161b22; border-right: 2px solid #30363d; display: flex; flex-direction: column; align-items: center; padding: 16px 12px; gap: 10px; }
     #target-panel h3 { font-size: 0.78rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
     #target-emoji { font-size: 4.5rem; line-height: 1; }
     #target-name { font-size: 1.05rem; font-weight: 700; color: #fff; text-align: center; }
     #target-hint { font-size: 0.72rem; color: #888; text-align: center; line-height: 1.4; }
-    #found-list {
-      width: 100%;
-      margin-top: 8px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      justify-content: center;
-    }
+    #found-list { width: 100%; margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
     .found-badge { font-size: 1.4rem; opacity: 0.3; transition: opacity 0.3s, transform 0.3s; }
     .found-badge.done { opacity: 1; transform: scale(1.2); }
-    #canvas-wrap {
-      flex: 1;
-      position: relative;
-      overflow: hidden;
-    }
+    #canvas-wrap { flex: 1; position: relative; overflow: hidden; }
     #gameCanvas { display: block; cursor: crosshair; }
-    #overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.82);
-      z-index: 10;
-      padding: 24px;
-      text-align: center;
-    }
-    #overlay h2 { font-size: 2rem; margin-bottom: 10px; }
-    #overlay p { color: #aaa; font-size: 1rem; margin-bottom: 20px; max-width: 420px; line-height: 1.5; }
-    .btn-start {
-      padding: 12px 28px;
-      font-size: 1rem;
-      background: #4ECDC4;
-      color: #000;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: 700;
-    }
+    .overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.86); z-index: 10; padding: 24px; text-align: center; overflow-y: auto; }
+    .overlay h2 { font-size: 1.8rem; margin-bottom: 10px; }
+    .overlay p { color: #aaa; font-size: 0.95rem; margin-bottom: 16px; max-width: 420px; line-height: 1.5; }
+    .input-row { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .input-row label { color: #aaa; font-size: 0.9rem; }
+    .input-row input { padding: 10px 16px; font-size: 1.1rem; border-radius: 10px; border: 2px solid #30363d; background: #161b22; color: #fff; text-align: center; width: 220px; outline: none; }
+    .input-row input:focus { border-color: #4ECDC4; }
+    .btn-start { padding: 12px 28px; font-size: 1rem; background: #4ECDC4; color: #000; border: none; border-radius: 30px; cursor: pointer; font-weight: 700; margin-top: 4px; }
     .btn-start:hover { background: #3ab8b0; }
-    .hit-effect {
-      position: absolute;
-      pointer-events: none;
-      font-size: 1.5rem;
-      font-weight: 900;
-      animation: popfade 0.8s ease forwards;
-      z-index: 5;
-      transform: translate(-50%, -50%);
-    }
-    @keyframes popfade {
-      0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-      50%  { opacity: 1; transform: translate(-50%, -130%) scale(1.4); }
-      100% { opacity: 0; transform: translate(-50%, -200%) scale(0.8); }
-    }
-    .miss-effect {
-      position: absolute;
-      pointer-events: none;
-      width: 36px; height: 36px;
-      border: 3px solid #FF6B6B;
-      border-radius: 50%;
-      animation: missfade 0.5s ease forwards;
-      z-index: 5;
-      transform: translate(-50%, -50%);
-    }
-    @keyframes missfade {
-      0%   { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.8); }
-    }
-    #round-msg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2.2rem;
-      font-weight: 900;
-      pointer-events: none;
-      z-index: 8;
-      animation: bigpop 0.7s ease forwards;
-      text-shadow: 0 0 20px rgba(255,215,0,0.8);
-    }
-    @keyframes bigpop {
-      0%   { opacity: 0; transform: translate(-50%,-50%) scale(0.5); }
-      40%  { opacity: 1; transform: translate(-50%,-50%) scale(1.15); }
-      100% { opacity: 0; transform: translate(-50%,-50%) scale(1); }
-    }
+    .final-score { font-size: 1.05rem; color: #fff; margin-bottom: 12px; }
+    table.lb { border-collapse: collapse; width: 100%; max-width: 360px; margin: 0 auto 16px; font-size: 0.9rem; }
+    table.lb thead tr { border-bottom: 2px solid #30363d; }
+    table.lb th { padding: 6px 10px; color: #4ECDC4; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; }
+    table.lb td { padding: 7px 10px; border-bottom: 1px solid #21262d; }
+    table.lb tr.me td { background: rgba(78,205,196,0.12); font-weight: 700; color: #4ECDC4; }
+    .hit-effect { position: absolute; pointer-events: none; font-size: 1.5rem; font-weight: 900; animation: popfade 0.8s ease forwards; z-index: 5; transform: translate(-50%, -50%); }
+    @keyframes popfade { 0% { opacity:1; transform:translate(-50%,-50%) scale(1); } 50% { opacity:1; transform:translate(-50%,-130%) scale(1.4); } 100% { opacity:0; transform:translate(-50%,-200%) scale(0.8); } }
+    .miss-effect { position: absolute; pointer-events: none; width: 36px; height: 36px; border: 3px solid #FF6B6B; border-radius: 50%; animation: missfade 0.5s ease forwards; z-index: 5; transform: translate(-50%, -50%); }
+    @keyframes missfade { 0% { opacity:1; transform:translate(-50%,-50%) scale(0.5); } 100% { opacity:0; transform:translate(-50%,-50%) scale(1.8); } }
+    #round-msg { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 2.2rem; font-weight: 900; pointer-events: none; z-index: 8; animation: bigpop 0.7s ease forwards; text-shadow: 0 0 20px rgba(255,215,0,0.8); }
+    @keyframes bigpop { 0% { opacity:0; transform:translate(-50%,-50%) scale(0.5); } 40% { opacity:1; transform:translate(-50%,-50%) scale(1.15); } 100% { opacity:0; transform:translate(-50%,-50%) scale(1); } }
   </style>
 </head>
 <body>
@@ -167,26 +66,55 @@
   <div id="target-panel">
     <h3>Zoek dit:</h3>
     <div id="target-emoji">?</div>
-    <div id="target-name">Laad...</div>
+    <div id="target-name">-</div>
     <div id="target-hint"></div>
     <div id="found-list"></div>
   </div>
   <div id="canvas-wrap">
     <canvas id="gameCanvas"></canvas>
-    <div id="overlay">
+    <div id="ov-name" class="overlay">
       <h2>&#128270; Zoek het Dier!</h2>
-      <p>Vind het gevraagde dier zo snel mogelijk. Klik op het juiste dier voor punten. Hoe sneller je klikt, hoe meer punten!</p>
-      <button class="btn-start" onclick="startGame()">Spelen!</button>
+      <p>Vind het gevraagde dier zo snel mogelijk. Hoe sneller je klikt, hoe meer punten! Goede reeksen geven een multiplier.</p>
+      <div class="input-row">
+        <label for="nameInput">Jouw naam:</label>
+        <input id="nameInput" type="text" placeholder="Bijv. Emma" maxlength="20" autocomplete="off" />
+      </div>
+      <button class="btn-start" onclick="submitName()">Spelen!</button>
     </div>
+    <div id="ov-end" class="overlay" style="display:none"></div>
   </div>
 </div>
 
 <script>
-  const canvas = document.getElementById('gameCanvas');
-  const ctx = canvas.getContext('2d');
-  const wrap = document.getElementById('canvas-wrap');
+  var SB_URL = 'https://bpmbqjhctxqgtsouzcqs.supabase.co';
+  var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJwbWJxamhjdHhxZ3Rzb3V6Y3FzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNjY2NDUsImV4cCI6MjA5MDY0MjY0NX0.bBuMvsPrGc5pkf2NJD00OnOuIpRxt0AXqHpGFkv5Wc8';
 
-  const ANIMALS = [
+  async function saveScore(naam, pts) {
+    try {
+      var r = await fetch(SB_URL + '/rest/v1/zoekhetdier_scores', {
+        method: 'POST',
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ naam: naam, score: pts })
+      });
+      if (!r.ok) console.warn('Save mislukt:', await r.text());
+    } catch(e) { console.warn('Save error', e); }
+  }
+
+  async function loadLeaderboard() {
+    try {
+      var r = await fetch(SB_URL + '/rest/v1/zoekhetdier_scores?select=naam,score&order=score.desc&limit=10', {
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY }
+      });
+      if (!r.ok) return null;
+      return await r.json();
+    } catch(e) { return null; }
+  }
+
+  var canvas = document.getElementById('gameCanvas');
+  var ctx = canvas.getContext('2d');
+  var wrap = document.getElementById('canvas-wrap');
+
+  var ANIMALS = [
     { emoji: '\uD83E\uDD81', name: 'Leeuw',     hint: 'Koning van de savanne' },
     { emoji: '\uD83D\uDC18', name: 'Olifant',   hint: 'Grootste landdier' },
     { emoji: '\uD83E\uDD92', name: 'Giraffe',   hint: 'Langste nek ter wereld' },
@@ -202,37 +130,38 @@
     { emoji: '\uD83D\uDC3A', name: 'Wolf',      hint: 'Leeft in een roedel' },
     { emoji: '\uD83E\uDD8B', name: 'Vlinder',   hint: 'Kleurrijke vleugels' },
     { emoji: '\uD83D\uDC1F', name: 'Vis',       hint: 'Zweeft in water' },
-    { emoji: '\uD83D\uDC27', name: 'Pinguïn',   hint: 'Zwemt, vliegt niet' },
+    { emoji: '\uD83D\uDC27', name: 'Pingu\xEFn', hint: 'Zwemt, vliegt niet' },
     { emoji: '\uD83E\uDD86', name: 'Eend',      hint: 'Kwakt en zwemt' },
     { emoji: '\uD83E\uDD9A', name: 'Pauw',      hint: 'Pronkt met staart' },
     { emoji: '\uD83D\uDC2E', name: 'Koe',       hint: 'Geeft melk' },
-    { emoji: '\uD83D\uDC17', name: 'Zwijn',     hint: 'Wroet in de grond' },
+    { emoji: '\uD83D\uDC17', name: 'Zwijn',     hint: 'Wroet in de grond' }
   ];
 
-  let W, H, items = [], target = null;
-  let score = 0, streak = 1, timeLeft = 60;
-  let timerInterval = null, running = false;
-  let foundThisSession = [], roundsLeft = 10, roundStartTime = 0;
+  var W, H, items = [], target = null;
+  var score = 0, streak = 1, timeLeft = 60;
+  var timerInterval = null, running = false;
+  var foundThisSession = [], roundsLeft = 10, roundStartTime = 0;
+  var playerName = '';
 
   function resize() {
-    W = wrap.clientWidth;
-    H = wrap.clientHeight;
-    canvas.width = W;
-    canvas.height = H;
+    W = wrap.clientWidth; H = wrap.clientHeight;
+    canvas.width = W; canvas.height = H;
   }
-  window.addEventListener('resize', () => { resize(); if (running) spawnItems(); });
+  window.addEventListener('resize', function() { resize(); if (running) spawnItems(); });
   resize();
 
   function rand(a, b) { return a + Math.random() * (b - a); }
   function randInt(a, b) { return Math.floor(rand(a, b + 1)); }
   function shuffle(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
     }
     return arr;
   }
-
+  function escapeHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
   function updateHUD() {
     document.getElementById('timerEl').textContent = timeLeft;
     document.getElementById('scoreEl').textContent = score;
@@ -241,26 +170,20 @@
 
   function spawnItems() {
     items = [];
-    const totalCount = 16 + randInt(0, 6);
-    const pool = shuffle([...ANIMALS]);
-    const others = pool.filter(a => a.emoji !== target.emoji);
-    const picks = shuffle([target, ...others.slice(0, totalCount - 1)]);
-    for (const animal of picks) {
-      const size = rand(24, 42);
-      items.push({
-        animal, x: rand(size + 10, W - size - 10),
-        y: rand(size + 10, H - size - 10),
-        size,
-        vx: rand(-1.1, 1.1), vy: rand(-1.1, 1.1),
-        angle: rand(0, Math.PI * 2),
-        angleSpeed: rand(-0.012, 0.012),
-      });
+    var totalCount = 16 + randInt(0, 6);
+    var pool = shuffle(ANIMALS.slice());
+    var others = pool.filter(function(a) { return a.emoji !== target.emoji; });
+    var picks = shuffle([target].concat(others.slice(0, totalCount - 1)));
+    for (var i = 0; i < picks.length; i++) {
+      var size = rand(24, 42);
+      items.push({ animal: picks[i], x: rand(size+10, W-size-10), y: rand(size+10, H-size-10),
+        size: size, vx: rand(-1.1,1.1), vy: rand(-1.1,1.1), angle: rand(0, Math.PI*2), angleSpeed: rand(-0.012,0.012) });
     }
   }
 
   function newRound() {
-    const unused = ANIMALS.filter(a => !foundThisSession.includes(a.emoji));
-    const pool = unused.length >= 3 ? unused : ANIMALS;
+    var unused = ANIMALS.filter(function(a) { return foundThisSession.indexOf(a.emoji) === -1; });
+    var pool = unused.length >= 3 ? unused : ANIMALS;
     target = pool[randInt(0, pool.length - 1)];
     document.getElementById('target-emoji').textContent = target.emoji;
     document.getElementById('target-name').textContent  = target.name;
@@ -270,113 +193,137 @@
   }
 
   function buildFoundList() {
-    const el = document.getElementById('found-list');
+    var el = document.getElementById('found-list');
     el.innerHTML = '';
-    ANIMALS.slice(0, 10).forEach(a => {
-      const d = document.createElement('div');
-      d.className = 'found-badge' + (foundThisSession.includes(a.emoji) ? ' done' : '');
+    for (var i = 0; i < Math.min(10, ANIMALS.length); i++) {
+      var a = ANIMALS[i];
+      var d = document.createElement('div');
+      d.className = 'found-badge' + (foundThisSession.indexOf(a.emoji) !== -1 ? ' done' : '');
       d.id = 'badge-' + a.emoji.codePointAt(0);
       d.textContent = a.emoji;
       el.appendChild(d);
-    });
+    }
   }
 
   function markFound(emoji) {
-    if (!foundThisSession.includes(emoji)) foundThisSession.push(emoji);
-    const el = document.getElementById('badge-' + emoji.codePointAt(0));
+    if (foundThisSession.indexOf(emoji) === -1) foundThisSession.push(emoji);
+    var el = document.getElementById('badge-' + emoji.codePointAt(0));
     if (el) el.classList.add('done');
   }
 
+  function submitName() {
+    var val = document.getElementById('nameInput').value.trim();
+    if (!val) {
+      var inp = document.getElementById('nameInput');
+      inp.focus(); inp.style.border = '2px solid #FF6B6B'; return;
+    }
+    playerName = val;
+    document.getElementById('ov-name').style.display = 'none';
+    startGame();
+  }
+
+  document.getElementById('nameInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') submitName();
+    this.style.border = '';
+  });
+
   function startGame() {
-    document.getElementById('overlay').style.display = 'none';
     score = 0; streak = 1; timeLeft = 60; roundsLeft = 10;
     foundThisSession = [];
-    updateHUD();
-    newRound();
-    buildFoundList();
+    updateHUD(); newRound(); buildFoundList();
     running = true;
-    timerInterval = setInterval(() => { timeLeft--; updateHUD(); if (timeLeft <= 0) endGame(); }, 1000);
+    timerInterval = setInterval(function() {
+      timeLeft--; updateHUD();
+      if (timeLeft <= 0) endGame();
+    }, 1000);
     requestAnimationFrame(loop);
   }
 
-  function endGame() {
+  async function endGame() {
+    if (!running) return;
     running = false;
     clearInterval(timerInterval);
-    const ov = document.getElementById('overlay');
+    var ov = document.getElementById('ov-end');
     ov.style.display = 'flex';
-    ov.innerHTML = `
-      <h2 style="color:#FFD700;">&#127942; Klaar!</h2>
-      <p style="font-size:1.3rem;">Jouw score: <strong style="color:#4ECDC4;">${score}</strong> punten</p>
-      <p>Je vond ${foundThisSession.length} verschillende dieren. Goed gedaan!</p>
-      <button class="btn-start" onclick="location.reload()">Opnieuw spelen</button>
-    `;
+    ov.innerHTML = '<p style="color:#aaa">Score opslaan...</p>';
+
+    await saveScore(playerName, score);
+    var data = await loadLeaderboard();
+
+    var lbHtml = '';
+    if (data && data.length > 0) {
+      var medals = ['\uD83E\uDD47', '\uD83E\uDD48', '\uD83E\uDD49'];
+      var rows = '';
+      for (var i = 0; i < data.length; i++) {
+        var badge = i < 3 ? medals[i] : (i + 1) + '.';
+        var cls = data[i].naam === playerName ? ' class="me"' : '';
+        rows += '<tr' + cls + '><td>' + badge + '</td><td>' + escapeHtml(data[i].naam) + '</td><td>' + data[i].score + '</td></tr>';
+      }
+      lbHtml = '<table class="lb"><thead><tr><th>#</th><th>Naam</th><th>Score</th></tr></thead><tbody>' + rows + '</tbody></table>';
+    } else {
+      lbHtml = '<p style="color:#888;margin-bottom:12px">Leaderboard niet beschikbaar.</p>';
+    }
+
+    ov.innerHTML =
+      '<h2 style="color:#FFD700">&#127942; Klaar!</h2>' +
+      '<p class="final-score">' + escapeHtml(playerName) + ' &mdash; Score: <strong>' + score + '</strong> punten &bull; ' + foundThisSession.length + ' dieren gevonden</p>' +
+      '<h3 style="color:#4ECDC4;margin:10px 0 8px">&#127942; Leaderboard</h3>' +
+      lbHtml +
+      '<button class="btn-start" onclick="location.reload()">Opnieuw spelen</button>';
   }
 
-  canvas.addEventListener('click', (e) => {
+  canvas.addEventListener('click', function(e) {
     if (!running) return;
-    const rect = canvas.getBoundingClientRect();
-    const mx = e.clientX - rect.left, my = e.clientY - rect.top;
-    for (let i = items.length - 1; i >= 0; i--) {
-      const it = items[i];
-      const dx = mx - it.x, dy = my - it.y;
+    var rect = canvas.getBoundingClientRect();
+    var mx = e.clientX - rect.left, my = e.clientY - rect.top;
+    for (var i = items.length - 1; i >= 0; i--) {
+      var it = items[i];
+      var dx = mx - it.x, dy = my - it.y;
       if (dx*dx + dy*dy < it.size * it.size * 1.2) {
         if (it.animal.emoji === target.emoji) {
-          const elapsed = (Date.now() - roundStartTime) / 1000;
-          const speedBonus = Math.max(0, Math.round((5 - elapsed) * 10));
-          const pts = (10 + speedBonus) * streak;
-          score += pts;
-          streak = Math.min(streak + 1, 8);
+          var elapsed = (Date.now() - roundStartTime) / 1000;
+          var speedBonus = Math.max(0, Math.round((5 - elapsed) * 10));
+          var pts = (10 + speedBonus) * streak;
+          score += pts; streak = Math.min(streak + 1, 8);
           markFound(target.emoji);
           showHit(mx, my, '+' + pts + ' \u2B50', '#FFD700');
           showRoundMsg(target.emoji + ' Gevonden!');
-          roundsLeft--;
-          updateHUD();
+          roundsLeft--; updateHUD();
           if (roundsLeft <= 0) { endGame(); return; }
           setTimeout(newRound, 600);
         } else {
-          streak = 1;
-          score = Math.max(0, score - 5);
-          showMiss(mx, my);
-          showHit(mx, my, '-5', '#FF6B6B');
-          updateHUD();
+          streak = 1; score = Math.max(0, score - 5);
+          showMiss(mx, my); showHit(mx, my, '-5', '#FF6B6B'); updateHUD();
         }
         return;
       }
     }
-    streak = Math.max(1, streak - 1);
-    showMiss(mx, my);
-    updateHUD();
+    streak = Math.max(1, streak - 1); showMiss(mx, my); updateHUD();
   });
 
   function showHit(x, y, text, color) {
-    const el = document.createElement('div');
-    el.className = 'hit-effect';
-    el.textContent = text;
-    el.style.cssText = `left:${x}px;top:${y}px;color:${color};`;
-    wrap.appendChild(el);
-    setTimeout(() => el.remove(), 800);
+    var el = document.createElement('div');
+    el.className = 'hit-effect'; el.textContent = text;
+    el.style.cssText = 'left:' + x + 'px;top:' + y + 'px;color:' + color + ';';
+    wrap.appendChild(el); setTimeout(function() { el.remove(); }, 800);
   }
   function showMiss(x, y) {
-    const el = document.createElement('div');
+    var el = document.createElement('div');
     el.className = 'miss-effect';
-    el.style.cssText = `left:${x}px;top:${y}px;`;
-    wrap.appendChild(el);
-    setTimeout(() => el.remove(), 500);
+    el.style.cssText = 'left:' + x + 'px;top:' + y + 'px;';
+    wrap.appendChild(el); setTimeout(function() { el.remove(); }, 500);
   }
   function showRoundMsg(text) {
-    const old = document.getElementById('round-msg');
-    if (old) old.remove();
-    const el = document.createElement('div');
-    el.id = 'round-msg';
-    el.textContent = text;
-    el.style.color = '#FFD700';
-    wrap.appendChild(el);
-    setTimeout(() => el.remove(), 700);
+    var old = document.getElementById('round-msg'); if (old) old.remove();
+    var el = document.createElement('div');
+    el.id = 'round-msg'; el.textContent = text; el.style.color = '#FFD700';
+    wrap.appendChild(el); setTimeout(function() { el.remove(); }, 700);
   }
 
   function loop() {
     if (!running) return;
-    for (const it of items) {
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
       it.x += it.vx; it.y += it.vy; it.angle += it.angleSpeed;
       if (it.x < it.size)     { it.x = it.size;     it.vx *= -1; }
       if (it.x > W - it.size) { it.x = W - it.size; it.vx *= -1; }
@@ -384,35 +331,26 @@
       if (it.y > H - it.size) { it.y = H - it.size; it.vy *= -1; }
     }
     ctx.clearRect(0, 0, W, H);
-    const bg = ctx.createLinearGradient(0, 0, 0, H);
-    bg.addColorStop(0, '#0d2b1a');
-    bg.addColorStop(1, '#1a4a2a');
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, W, H);
-    for (const it of items) {
+    var bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#0d2b1a'); bg.addColorStop(1, '#1a4a2a');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
       ctx.save();
-      ctx.translate(it.x, it.y);
-      ctx.rotate(it.angle * 0.06);
-      ctx.fillStyle = it.animal.emoji === target.emoji
-        ? 'rgba(40,60,40,0.75)' : 'rgba(18,32,22,0.7)';
-      ctx.beginPath();
-      ctx.arc(0, 0, it.size, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.strokeStyle = it.animal.emoji === target.emoji
-        ? 'rgba(78,205,196,0.35)' : 'rgba(255,255,255,0.07)';
-      ctx.lineWidth = it.animal.emoji === target.emoji ? 2 : 1;
-      ctx.stroke();
+      ctx.translate(it.x, it.y); ctx.rotate(it.angle * 0.06);
+      ctx.fillStyle = 'rgba(18,32,22,0.72)';
+      ctx.beginPath(); ctx.arc(0, 0, it.size, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(0, 0, it.size, 0, Math.PI * 2); ctx.stroke();
       ctx.font = (it.size * 1.1) + 'px serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(it.animal.emoji, 0, 1);
       ctx.restore();
     }
-    const pct = timeLeft / 60;
-    ctx.fillStyle = 'rgba(255,255,255,0.1)';
-    ctx.fillRect(0, H - 5, W, 5);
+    var pct = timeLeft / 60;
+    ctx.fillStyle = 'rgba(255,255,255,0.1)'; ctx.fillRect(0, H-5, W, 5);
     ctx.fillStyle = pct > 0.5 ? '#4ECDC4' : pct > 0.25 ? '#FFD700' : '#FF6B6B';
-    ctx.fillRect(0, H - 5, W * pct, 5);
+    ctx.fillRect(0, H-5, W*pct, 5);
     requestAnimationFrame(loop);
   }
 </script>

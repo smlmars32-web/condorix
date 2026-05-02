@@ -1510,7 +1510,7 @@ function openGame(game) {
     if (game === 'zoekplaatje') {
         openModal(`
             <div style="margin:-24px;line-height:0;border-radius:12px;overflow:hidden;position:relative;">
-                <iframe src="games/guardians-of-the-wild.html?v=2" style="width:100%;height:90vh;border:none;display:block;" allowfullscreen></iframe>
+                <iframe src="games/guardians-of-the-wild.html?v=3" style="width:100%;height:90vh;border:none;display:block;" allowfullscreen></iframe>
             </div>
         `);
         const mc = document.querySelector('.modal-content');
